@@ -15,24 +15,24 @@ private:
 	public:
 		Cell() {}
 		Cell(int nrAsc) { 
-			forget_gate.reserve(nrAsc);
-			input_gate.reserve(nrAsc);
-			output_gate_activation.reserve(nrAsc);
-			output_gate.reserve(nrAsc);
-			cell_input.reserve(nrAsc);
-			cell_state.reserve(nrAsc);
+			fg.reserve(nrAsc);
+			ig.reserve(nrAsc);
+			og.reserve(nrAsc);
+			out.reserve(nrAsc);
+			ag.reserve(nrAsc);
+			state.reserve(nrAsc);
 		}
 
 		~Cell() {}
 
 	
 		//o coloana de num_unit_ascuns randuri, sau nume_unit_ascuns x 1
-		std::vector<double> forget_gate;
-		std::vector<double> input_gate;
-		std::vector<double> output_gate_activation;
-		std::vector<double> output_gate;
-		std::vector<double> cell_input;
-		std::vector<double> cell_state;
+		std::vector<double> fg;
+		std::vector<double> ig;
+		std::vector<double> og;
+		std::vector<double> out;
+		std::vector<double> ag;
+		std::vector<double> state;
 
 	};
 	class Gradient
@@ -41,34 +41,34 @@ private:
 		Gradient(){}
 		Gradient(int nrAsc)
 		{
-			grd_cell_state.reserve(nrAsc);
-			grd_forget_gate.reserve(nrAsc);
-			grd_input_gate.reserve(nrAsc);
-			grd_output_gate_activation.reserve(nrAsc);
+			grd_state.reserve(nrAsc);
+			grd_fg.reserve(nrAsc);
+			grd_ig.reserve(nrAsc);
+			grd_og.reserve(nrAsc);
 		};
 
-
-		std::vector<double> grd_forget_gate;
-		std::vector<double> grd_input_gate;
-		std::vector<double> grd_output_gate_activation;
-		std::vector<double> grd_cell_state;
+		std::vector<double> grd_ag;
+		std::vector<double> grd_fg;
+		std::vector<double> grd_ig;
+		std::vector<double> grd_og;
+		std::vector<double> grd_state;
 	};
 	Cell* cell_gates;
 	// matrici cu num_unit_ascuns randuri si num_intrari coloane. sau num_unit_ascuns x num_intrari
-	std::vector<std::vector<double>> forget_input_weight; 
-	std::vector<std::vector<double>> input_weight; 
-	std::vector<std::vector<double>> output_input_weight; 
-	std::vector<std::vector<double>> cell_input_weight; 
+	std::vector<std::vector<double>> Wf; 
+	std::vector<std::vector<double>> Wi; 
+	std::vector<std::vector<double>> Wo; 
+	std::vector<std::vector<double>> Wa; 
 	// matrici de dimensiune num_unit_ascuns x num_unit_ascuns 
-	std::vector<std::vector<double>> forget_hidden_weight; 
-	std::vector<std::vector<double>> input_hidden_weight; 
-	std::vector<std::vector<double>> output_hidden_weight; 
-	std::vector<std::vector<double>> cell_input_hidden_weight;
+	std::vector<std::vector<double>> Uf; 
+	std::vector<std::vector<double>> Ui; 
+	std::vector<std::vector<double>> Uo; 
+	std::vector<std::vector<double>> Ua;
 	// o coloana de num_unit_ascuns randuri
-	std::vector<double> bias_forget;
-	std::vector<double> bias_input;
-	std::vector<double> bias_output;
-	std::vector<double> bias_cell_input;
+	std::vector<double> bf;
+	std::vector<double> bi;
+	std::vector<double> bo;
+	std::vector<double> ba;
 
 	Interpolare* sigmoid;
 	Interpolare* tanh;
@@ -85,37 +85,38 @@ public:
 	{
 		cell_gates = new Cell(nrAsc);
 		// la matrici alocam spatiu pentru cate randuri avem nevoie
-		forget_input_weight.reserve(nrAsc); 
-		input_weight.reserve(nrAsc); 
-		output_input_weight.reserve(nrAsc); 
-		cell_input_weight.reserve(nrAsc); 
+		Wf.reserve(nrAsc); 
+		Wi.reserve(nrAsc); 
+		Wo.reserve(nrAsc); 
+		Wa.reserve(nrAsc); 
 
-		forget_hidden_weight.reserve(nrAsc); 
-		input_hidden_weight.reserve(nrAsc); 
-		output_hidden_weight.reserve(nrAsc); 
-		cell_input_hidden_weight.reserve(nrAsc);
+		Uf.reserve(nrAsc); 
+		Ui.reserve(nrAsc); 
+		Uo.reserve(nrAsc); 
+		Ua.reserve(nrAsc);
 		for (int i = 0; i < nrAsc; i++)
 		{
 
-			forget_input_weight[i].reserve(nrIn);
-			input_weight[i].reserve(nrIn);
-			output_input_weight[i].reserve(nrIn);
-			cell_input_weight[i].reserve(nrIn);
+			Wf[i].reserve(nrIn);
+			Wi[i].reserve(nrIn);
+			Wo[i].reserve(nrIn);
+			Wa[i].reserve(nrIn);
 
-			forget_hidden_weight[i].reserve(nrAsc);
-			input_hidden_weight[i].reserve(nrAsc);
-			output_hidden_weight[i].reserve(nrAsc);
-			cell_input_hidden_weight[i].reserve(nrAsc);
+			Uf[i].reserve(nrAsc);
+			Ui[i].reserve(nrAsc);
+			Uo[i].reserve(nrAsc);
+			Ua[i].reserve(nrAsc);
 		}
-		bias_forget.reserve(nrAsc);
-		bias_input.reserve(nrAsc);
-		bias_output.reserve(nrAsc);
-		bias_cell_input.reserve(nrAsc);
+		bf.reserve(nrAsc);
+		bi.reserve(nrAsc);
+		bo.reserve(nrAsc);
+		ba.reserve(nrAsc);
 
 		sigmoid = Interpolare::getSigmoid(); tanh = Interpolare::getTanh();
 	}
 	std::vector<double> ForwardPass(std::vector<double> input);
-	std::vector<double> BackwardPass(Gradient* out_grd_gates, Cell* cell_state_t, std::vector<double> input_T, std::vector<double> expected, std::vector<double> delta_out_T, std::vector<double> grd_state_t_post, std::vector<double> f_t_post, std::vector<double> cell_state_ante);
+	std::vector<double> BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, Cell* cell, Cell* cell_ante, Cell* cell_post);
 	void TrainLSTM(std::vector<double> input, int window_size);
 };
+
 
