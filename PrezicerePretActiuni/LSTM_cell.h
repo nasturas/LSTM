@@ -116,7 +116,7 @@ public:
 	}
 	std::vector<double> ForwardPass(std::vector<double> input);
 	std::vector<double> BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, Cell* cell, Cell* cell_ante, Cell* cell_post);
-	void TrainLSTM(std::vector<double> input, int window_size);
+	void TrainLSTM(std::vector<std::vector<double>> x, int window_size, int lambda);
 };
 
 

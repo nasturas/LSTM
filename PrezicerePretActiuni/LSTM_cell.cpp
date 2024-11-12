@@ -113,6 +113,28 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, int window_size, i
 		}
 	}
 	//ajustam cu viteza de invatare - lambda
+	for (int i = 0; i < num_unit_ascuns; i++)
+	{
+		for (int j = 0; i < num_intrari; j++)
+		{
+			Wa[i][j] -= lambda * grd_Wa[i][j];
+			Wf[i][j] -= lambda * grd_Wf[i][j];
+			Wi[i][j] -= lambda * grd_Wi[i][j];
+			Wo[i][j] -= lambda * grd_Wo[i][j];
+		}
+		for(int j = 0; j< num_unit_ascuns; j++)
+		{
+			Ua[i][j] -= lambda * grd_Ua[i][j];
+			Uf[i][j] -= lambda * grd_Uf[i][j];
+			Ui[i][j] -= lambda * grd_Ui[i][j];
+			Uo[i][j] -= lambda * grd_Uo[i][j];
+		}
+		ba[i] -= lambda * grd_ba[i];
+		bf[i] -= lambda * grd_bf[i];
+		bi[i] -= lambda * grd_bi[i];
+		bo[i] -= lambda * grd_bo[i];
+
+	}
 }
 
 //functia de calcul al erorilor prin porti si a erorii aparute la iesirea fiecarui pas.
