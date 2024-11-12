@@ -1,41 +1,40 @@
 #include "LSTM_cell.h"
 //executa intrarea si intoarce un output
-std::vector<double> LSTM_cell::ForwardPass(std::vector<double> input)
+std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 {
-	//forget gate, input, output, cell input se calc in acelasi timp si la fel
 	double temp_forget;
 	double temp_input;
 	double temp_output;
-	double temp_cell_input;
+	double temp_activare;
 	for (int i = 0; i < num_unit_ascuns; i++)
 	{
 		temp_forget = 0;
 		temp_input = 0;
 		temp_output = 0;
-		temp_cell_input = 0;
+		temp_activare = 0;
 		for (int k = 0; k < num_intrari; k++)
 		{
-			temp_forget += Wf[i][k] * input[k];
-			temp_input += Wi[i][k] * input[k];
-			temp_output += Wo[i][k] * input[k];
-			temp_cell_input += Wa[i][k] * input[k];
+			temp_forget += Wf[i][k] * x[k];
+			temp_input += Wi[i][k] * x[k];
+			temp_output += Wo[i][k] * x[k];
+			temp_activare += Wa[i][k] * x[k];
 		}
 		for (int n = 0; n < num_unit_ascuns; n++)
 		{
 			temp_forget += Uf[i][n] * cell_gates->out[n];
 			temp_input += Ui[i][n] * cell_gates->out[n];
 			temp_output += Uo[i][n] * cell_gates->out[n];
-			temp_cell_input += Ua[i][n] * cell_gates->out[n];
+			temp_activare += Ua[i][n] * cell_gates->out[n];
 		}
 		temp_forget += bf[i];
 		temp_input += bi[i];
 		temp_output += bo[i];
-		temp_cell_input += ba[i];
+		temp_activare += ba[i];
 
 		cell_gates->fg[i] = sigmoid->Output(temp_forget);
 		cell_gates->ig[i] = sigmoid->Output(temp_input);
 		cell_gates->og[i] = sigmoid->Output(temp_output);
-		cell_gates->ag[i] = tanh->Output(temp_cell_input);
+		cell_gates->ag[i] = tanh->Output(temp_activare);
 
 
 		//acum produs elemente de pe aceasi pozitie
