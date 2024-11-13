@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include "LSTM_cell.h"
+#include "XavierNormalised.h"
 int main()
 {
-	LSTM_cell* prezicator = new LSTM_cell(1, 1700);
-	
+	LSTM_cell cell(2, 2);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

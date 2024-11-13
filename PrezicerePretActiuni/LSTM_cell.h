@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Interpolare.h"
+#include "XavierNormalised.h"
 
 // cat sa suprapunem din ferestre de antrenament. in procente
 #define TRAINING_WINDOW_OVERLAY 50
@@ -15,12 +16,12 @@ private:
 	public:
 		Cell() {}
 		Cell(int nrAsc) { 
-			fg.reserve(nrAsc);
-			ig.reserve(nrAsc);
-			og.reserve(nrAsc);
-			out.reserve(nrAsc);
-			ag.reserve(nrAsc);
-			state.reserve(nrAsc);
+			fg.resize(nrAsc);
+			ig.resize(nrAsc);
+			og.resize(nrAsc);
+			out.resize(nrAsc);
+			ag.resize(nrAsc);
+			state.resize(nrAsc);
 
 			for (int i = 0; i < nrAsc; i++)
 			{
@@ -51,11 +52,11 @@ private:
 		Gradient(){}
 		Gradient(int nrAsc)
 		{
-			grd_state.reserve(nrAsc);
-			grd_fg.reserve(nrAsc);
-			grd_ig.reserve(nrAsc);
-			grd_og.reserve(nrAsc);
-			grd_ag.reserve(nrAsc);
+			grd_state.resize(nrAsc);
+			grd_fg.resize(nrAsc);
+			grd_ig.resize(nrAsc);
+			grd_og.resize(nrAsc);
+			grd_ag.resize(nrAsc);
 		};
 
 		std::vector<double> grd_ag;
@@ -83,47 +84,43 @@ private:
 
 	Interpolare* sigmoid;
 	Interpolare* tanh;
-
+	XavierNormalised* num_generator;
 public:
 	LSTM_cell() 
 	{
 		num_intrari = 0;
 		num_unit_ascuns = 0;
+
+		num_generator = new XavierNormalised(0,0);
 		sigmoid = Interpolare::getSigmoid(); tanh = Interpolare::getTanh();
 		cell_gates = new Cell();
 	}
 	LSTM_cell(int nrIn, int nrAsc) : num_intrari(nrIn), num_unit_ascuns(nrAsc)
 	{
 		cell_gates = new Cell(nrAsc);
-		// la matrici alocam spatiu pentru cate randuri avem nevoie
-		Wf.reserve(nrAsc); 
-		Wi.reserve(nrAsc); 
-		Wo.reserve(nrAsc); 
-		Wa.reserve(nrAsc); 
+	
+		num_generator = new XavierNormalised(nrIn, nrAsc);
+		//initializam ponderile la porti cu generatorul de numere ales. Initial folosim doar Xavier normalizat
+		//https://machinelearningmastery.com/weight-initialization-for-deep-learning-neural-networks/
+		// https://arxiv.org/abs/1912.10454 - "On the Initialization of Long Short-Term Memory Networks" de M. Ghazi et al.
+		//TODO: de creat diferite functii de initializare pentru LSTM, xavier, normalised xavier, orthogonal initialization. we will use normalised xavier.
 
-		Uf.reserve(nrAsc); 
-		Ui.reserve(nrAsc); 
-		Uo.reserve(nrAsc); 
-		Ua.reserve(nrAsc);
-		for (int i = 0; i < nrAsc; i++)
-		{
+		Wf = num_generator->generateMatrix(nrAsc, nrIn);
+		Wi = num_generator->generateMatrix(nrAsc, nrIn);
+		Wo = num_generator->generateMatrix(nrAsc, nrIn);
+		Wa = num_generator->generateMatrix(nrAsc, nrIn);
 
-			Wf[i].reserve(nrIn);
-			Wi[i].reserve(nrIn);
-			Wo[i].reserve(nrIn);
-			Wa[i].reserve(nrIn);
 
-			Uf[i].reserve(nrAsc);
-			Ui[i].reserve(nrAsc);
-			Uo[i].reserve(nrAsc);
-			Ua[i].reserve(nrAsc);
-		}
-		bf.reserve(nrAsc);
-		bi.reserve(nrAsc);
-		bo.reserve(nrAsc);
-		ba.reserve(nrAsc);
-		//TODO: initializeaza weights cu niste valori random. De vazut ce valori bune de init pot fi.
+		Uf = num_generator->generateMatrix(nrAsc, nrAsc);
+		Ui = num_generator->generateMatrix(nrAsc, nrAsc);
+		Uo = num_generator->generateMatrix(nrAsc, nrAsc);
+		Ua = num_generator->generateMatrix(nrAsc, nrAsc);
 
+		bf = num_generator->generateVector(nrAsc);
+		bi = num_generator->generateVector(nrAsc);
+		bo = num_generator->generateVector(nrAsc);
+		ba = num_generator->generateVector(nrAsc);
+		
 		sigmoid = Interpolare::getSigmoid(); tanh = Interpolare::getTanh();
 	}
 	std::vector<double> ForwardPass(std::vector<double> input);

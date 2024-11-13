@@ -79,8 +79,8 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 	//aranjam ferestrele de antrenament.
 	//TODO: ales aici de unde sa inceapa fereastra, refacut in jos algoritmu luand in calcul acest lucru, plus conditii de stop.
 	//intai facem forward un T numar de pasi
-	gates.reserve(T);
-	grd_gates.reserve(T);
+	gates.resize(T);
+	grd_gates.resize(T);
 	for (int t = 0; t < T; t++)
 	{
 		(void)ForwardPass(x[t]);
@@ -95,7 +95,7 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 		}
 	}
 	//apoi calculam grd inapoi.
-	delta_out.reserve(num_unit_ascuns);
+	delta_out.resize(num_unit_ascuns);
 	for (int i = 0; i < num_unit_ascuns; i++)
 	{
 		delta_out[i] = 0;

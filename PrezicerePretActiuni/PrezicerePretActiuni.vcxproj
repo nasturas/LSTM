@@ -131,11 +131,13 @@
     <ClCompile Include="LSTM_cell.cpp" />
     <ClCompile Include="PrezicerePretActiuni.cpp" />
     <ClCompile Include="StockPredictor.cpp" />
+    <ClCompile Include="XavierNormalised.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interpolare.h" />
     <ClInclude Include="LSTM_cell.h" />
     <ClInclude Include="StockPredictor.h" />
+    <ClInclude Include="XavierNormalised.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,6 +27,9 @@
     <ClCompile Include="StockPredictor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="XavierNormalised.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LSTM_cell.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StockPredictor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XavierNormalised.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
