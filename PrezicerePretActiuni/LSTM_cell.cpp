@@ -37,15 +37,12 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 		cell_gates->ag[i] = tanh->Output(temp_activare);
 
 
-		//acum produs elemente de pe aceasi pozitie
-		for (int i = 0; i < num_unit_ascuns; i++)
-		{
-			cell_gates->state[i] = cell_gates->fg[i] * cell_gates->state[i] + cell_gates->ig[i] * cell_gates->ag[i];
-			cell_gates->out[i] = cell_gates->og[i] * tanh->Output(cell_gates->state[i]);
-		}
 
-		return cell_gates->out;
+		cell_gates->state[i] = cell_gates->fg[i] * cell_gates->state[i] + cell_gates->ig[i] * cell_gates->ag[i];
+		cell_gates->out[i] = cell_gates->og[i] * tanh->Output(cell_gates->state[i]);
+
 	}
+	return cell_gates->out;
 }
 
 /*
@@ -54,7 +51,7 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 * Noi antrenam AI sa poata estima valoarea actiunii luand in calcul evolutia pretului in ultimele x zile. Aceste x zile alcatuiesc o fereastra de antrenament.
 * Putem sa suprapunem ferestrele sau nu. Alegem sa suprapunem 50% din fereastra (TRAINING_WINDOW_OVERLAY). Putem sa imbunatatim acest parametru.
 */
-void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, int window_size, int lambda)
+void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::vector<double>> expected, int window_size, int lambda)
 {
 	std::vector<Cell*> gates;
 	std::vector<Gradient*> grd_gates;
@@ -72,13 +69,54 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, int window_size, i
 	std::vector<double> grd_bf;
 	std::vector<double> grd_bi;
 	std::vector<double> grd_bo;
-	int T=0;
+
+	std::vector<double> delta_out;
+
+	Cell* gate_post = new Cell(num_unit_ascuns);
+	Cell* gate_ante;
+
+	int T=window_size;
 	//aranjam ferestrele de antrenament.
-
-	//intai facem forward
-
+	//TODO: ales aici de unde sa inceapa fereastra, refacut in jos algoritmu luand in calcul acest lucru, plus conditii de stop.
+	//intai facem forward un T numar de pasi
+	gates.reserve(T);
+	grd_gates.reserve(T);
+	for (int t = 0; t < T; t++)
+	{
+		(void)ForwardPass(x[t]);
+		for (int i = 0; i < num_unit_ascuns; i++)
+		{
+			gates[t]->ag[i] = cell_gates->ag[i];
+			gates[t]->fg[i] = cell_gates->fg[i];
+			gates[t]->ig[i] = cell_gates->ig[i];
+			gates[t]->og[i] = cell_gates->og[i];
+			gates[t]->state[i] = cell_gates->state[i];
+			gates[t]->out[i] = cell_gates->out[i];
+		}
+	}
 	//apoi calculam grd inapoi.
-
+	delta_out.reserve(num_unit_ascuns);
+	for (int i = 0; i < num_unit_ascuns; i++)
+	{
+		delta_out[i] = 0;
+	}
+	
+	for (int t = T-1; t >=0; t--)
+	{
+		//TODO: rescriem BackwardPass ca sa scrie in argument nu in return value pentru delta_out.
+		//TODO: ai grija de pointeri.
+		if (t == 0) 
+		{
+			gate_ante = new Cell(num_unit_ascuns);
+		}
+		else
+		{
+			gate_ante = gates[t - 1];
+		}
+		delta_out = BackwardPass(grd_gates[t], expected[t], gates[t], gate_ante, gate_post, delta_out);
+		gate_post = gates[t];
+		
+	}
 	//calculam gradient pentru weights
 	//formula e grd_wa = Sum ( grd_a * x ). grd_a e un vector de dimensiune num_unit_ascuns, x e un vector de dimensiune num_intrari 
 	for (int t = 0; t < T; t++)
@@ -141,10 +179,9 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, int window_size, i
 // folosim https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
 // t_post e in loc de t+1, t_ante e in loc de t-1
 // TODO: codu poate fi imbunatatit ca lizibilitate daca face o clasa matrice cu operatii de inmultire si adunare.. nu stiu cat de mult ajuta si la executie
-std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vector<double> expected, Cell* cell,  Cell* cell_ante, Cell* cell_post)
+std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vector<double> expected, Cell* cell,  Cell* cell_ante, Cell* cell_post, std::vector<double> delta_out_post)
 {
 	std::vector<double> delta;
-	std::vector<double> delta_out_post;
 	std::vector<double> grd_out;
 	std::vector<double> grd_state;
 	std::vector<double> grd_ag;
@@ -163,9 +200,8 @@ std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vecto
 		//delta este diferenta dintre iesirea din LSTM si valoarea corecta din vectorul de invatare.
 		delta[i] = cell->out[i] - expected[i];
 		//grd_out este suma dintre delta si delta_out calculat din pasul viitor.
-		delta_out_post[i] = 0;
 		grd_out[i] = delta[i] + delta_out_post[i];
-
+		//TODO: reverifica calculele la grd.
 		grd_state[i] = grd_out[i] * cell->og[i] * (1 - tanh->Output(cell->state[i])* tanh->Output(cell->state[i]))+cell_post->state[i]*cell_post->fg[i];
 		grd_ag[i] = grd_state[i] * cell->ig[i] * (1 - cell->ag[i] * cell->ag[i]);
 		grd_ig[i] = grd_state[i] * cell->ag[i] * cell->ig[i] * (1 - cell->ig[i]);

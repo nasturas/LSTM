@@ -6,7 +6,7 @@
 int main()
 {
 	LSTM_cell* prezicator = new LSTM_cell(1, 1700);
-	prezicator->ForwardPass();
+	
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

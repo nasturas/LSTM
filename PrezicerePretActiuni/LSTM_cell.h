@@ -15,6 +15,7 @@ private:
 	public:
 		Cell() {}
 		Cell(int nrAsc) { 
+			//TODO: initializeaza tot cu 0.
 			fg.reserve(nrAsc);
 			ig.reserve(nrAsc);
 			og.reserve(nrAsc);
@@ -45,6 +46,7 @@ private:
 			grd_fg.reserve(nrAsc);
 			grd_ig.reserve(nrAsc);
 			grd_og.reserve(nrAsc);
+			grd_ag.reserve(nrAsc);
 		};
 
 		std::vector<double> grd_ag;
@@ -111,12 +113,13 @@ public:
 		bi.reserve(nrAsc);
 		bo.reserve(nrAsc);
 		ba.reserve(nrAsc);
+		//TODO: initializeaza weights cu niste valori random. De vazut ce valori bune de init pot fi.
 
 		sigmoid = Interpolare::getSigmoid(); tanh = Interpolare::getTanh();
 	}
 	std::vector<double> ForwardPass(std::vector<double> input);
-	std::vector<double> BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, Cell* cell, Cell* cell_ante, Cell* cell_post);
-	void TrainLSTM(std::vector<std::vector<double>> x, int window_size, int lambda);
+	std::vector<double> BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, Cell* cell, Cell* cell_ante, Cell* cell_post, std::vector<double> delta_out_post);
+	void TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::vector<double>> expected, int window_size, int lambda);
 };
 
 
