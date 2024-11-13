@@ -15,13 +15,22 @@ private:
 	public:
 		Cell() {}
 		Cell(int nrAsc) { 
-			//TODO: initializeaza tot cu 0.
 			fg.reserve(nrAsc);
 			ig.reserve(nrAsc);
 			og.reserve(nrAsc);
 			out.reserve(nrAsc);
 			ag.reserve(nrAsc);
 			state.reserve(nrAsc);
+
+			for (int i = 0; i < nrAsc; i++)
+			{
+				fg[i] = 0;
+				ig[i] = 0;
+				og[i] = 0;
+				out[i] = 0;
+				ag[i] = 0;
+				state[i] = 0;
+			}
 		}
 
 		~Cell() {}
