@@ -6,7 +6,19 @@
 #include "XavierNormalised.h"
 int main()
 {
-	LSTM_cell cell(2, 2);
+	std::vector<int> vec;
+	vec.resize(2);
+	std::vector<int> c2;
+	c2.resize(2);
+	vec[0] = 1;
+	vec[1] = 2;
+	c2[0] = 123;
+	c2[1] = 124434;
+
+	c2 = vec;
+
+	std::cout << c2[0]<<","<<c2[1];
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

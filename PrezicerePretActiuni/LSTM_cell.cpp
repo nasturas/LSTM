@@ -53,8 +53,8 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 */
 void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::vector<double>> expected, int window_size, int lambda)
 {
-	std::vector<Cell*> gates;
-	std::vector<Gradient*> grd_gates;
+	std::vector<Cell> gates;
+	std::vector<Gradient> grd_gates;
 	std::vector<std::vector<double>> grd_Wa;
 	std::vector<std::vector<double>> grd_Wf;
 	std::vector<std::vector<double>> grd_Wi;
@@ -74,10 +74,10 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 
 	Cell* gate_post = new Cell(num_unit_ascuns);
 	Cell* gate_ante;
-
-	int T=window_size;
-	//aranjam ferestrele de antrenament.
-	//TODO: ales aici de unde sa inceapa fereastra, refacut in jos algoritmu luand in calcul acest lucru, plus conditii de stop.
+	//luam dimensiunea totala a datelor, le impartim in 70% fereastra de antrenament si 30% test. 
+	// lasam distanta intre ele de nr_input + nr_output sa nu se suprapuna testarea cu antrenamentu.  
+	int T=x.size();
+	
 	//intai facem forward un T numar de pasi
 	gates.resize(T);
 	grd_gates.resize(T);
@@ -86,12 +86,12 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 		(void)ForwardPass(x[t]);
 		for (int i = 0; i < num_unit_ascuns; i++)
 		{
-			gates[t]->ag[i] = cell_gates->ag[i];
-			gates[t]->fg[i] = cell_gates->fg[i];
-			gates[t]->ig[i] = cell_gates->ig[i];
-			gates[t]->og[i] = cell_gates->og[i];
-			gates[t]->state[i] = cell_gates->state[i];
-			gates[t]->out[i] = cell_gates->out[i];
+			gates[t].ag[i] = cell_gates->ag[i];
+			gates[t].fg[i] = cell_gates->fg[i];
+			gates[t].ig[i] = cell_gates->ig[i];
+			gates[t].og[i] = cell_gates->og[i];
+			gates[t].state[i] = cell_gates->state[i];
+			gates[t].out[i] = cell_gates->out[i];
 		}
 	}
 	//apoi calculam grd inapoi.
@@ -104,17 +104,28 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 	for (int t = T-1; t >=0; t--)
 	{
 		//TODO: rescriem BackwardPass ca sa scrie in argument nu in return value pentru delta_out.
-		//TODO: ai grija de pointeri.
 		if (t == 0) 
 		{
 			gate_ante = new Cell(num_unit_ascuns);
 		}
 		else
 		{
-			gate_ante = gates[t - 1];
+			gate_ante = &gates[t - 1];
 		}
-		delta_out = BackwardPass(grd_gates[t], expected[t], gates[t], gate_ante, gate_post, delta_out);
-		gate_post = gates[t];
+		delta_out = BackwardPass(&grd_gates[t], expected[t], &gates[t], gate_ante, gate_post, delta_out);
+		
+		if (t == 0)
+		{
+			delete gate_ante;
+		}
+		else
+		{
+			if (t == T - 1)
+			{
+				delete gate_post;
+			}
+		}
+		gate_post = &gates[t];
 		
 	}
 	//calculam gradient pentru weights
@@ -125,15 +136,15 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 		{
 			for (int j = 0; i < num_intrari; j++)
 			{
-				grd_Wa[i][j] += grd_gates[t]->grd_ag[i] * x[t][j];
-				grd_Wf[i][j] += grd_gates[t]->grd_fg[i] * x[t][j];
-				grd_Wi[i][j] += grd_gates[t]->grd_ig[i] * x[t][j];
-				grd_Wo[i][j] += grd_gates[t]->grd_og[i] * x[t][j];
+				grd_Wa[i][j] += grd_gates[t].grd_ag[i] * x[t][j];
+				grd_Wf[i][j] += grd_gates[t].grd_fg[i] * x[t][j];
+				grd_Wi[i][j] += grd_gates[t].grd_ig[i] * x[t][j];
+				grd_Wo[i][j] += grd_gates[t].grd_og[i] * x[t][j];
 			}
-			grd_ba[i] += grd_gates[t]->grd_ag[i];
-			grd_bf[i] += grd_gates[t]->grd_fg[i];
-			grd_bi[i] += grd_gates[t]->grd_ig[i];
-			grd_bo[i] += grd_gates[t]->grd_og[i];
+			grd_ba[i] += grd_gates[t].grd_ag[i];
+			grd_bf[i] += grd_gates[t].grd_fg[i];
+			grd_bi[i] += grd_gates[t].grd_ig[i];
+			grd_bo[i] += grd_gates[t].grd_og[i];
 		}
 	}
 
@@ -143,10 +154,10 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 		{
 			for (int j = 0; i < num_unit_ascuns; j++)
 			{
-				grd_Ua[i][j] += grd_gates[t+1]->grd_ag[i] * gates[t]->out[j];
-				grd_Uf[i][j] += grd_gates[t+1]->grd_fg[i] * gates[t]->out[j];
-				grd_Ui[i][j] += grd_gates[t+1]->grd_ig[i] * gates[t]->out[j];
-				grd_Uo[i][j] += grd_gates[t+1]->grd_og[i] * gates[t]->out[j];
+				grd_Ua[i][j] += grd_gates[t+1].grd_ag[i] * gates[t].out[j];
+				grd_Uf[i][j] += grd_gates[t+1].grd_fg[i] * gates[t].out[j];
+				grd_Ui[i][j] += grd_gates[t+1].grd_ig[i] * gates[t].out[j];
+				grd_Uo[i][j] += grd_gates[t+1].grd_og[i] * gates[t].out[j];
 			}
 		}
 	}
@@ -173,13 +184,14 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 		bo[i] -= lambda * grd_bo[i];
 
 	}
+
 }
 
 //functia de calcul al erorilor prin porti si a erorii aparute la iesirea fiecarui pas.
 // folosim https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
 // t_post e in loc de t+1, t_ante e in loc de t-1
 // TODO: codu poate fi imbunatatit ca lizibilitate daca face o clasa matrice cu operatii de inmultire si adunare.. nu stiu cat de mult ajuta si la executie
-std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vector<double> expected, Cell* cell,  Cell* cell_ante, Cell* cell_post, std::vector<double> delta_out_post)
+std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post)
 {
 	std::vector<double> delta;
 	std::vector<double> grd_out;
@@ -193,7 +205,7 @@ std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vecto
 //lasam pentru extindere si la cazul de LSTM stacked.
 	std::vector<double> grd_x;
 #endif
-	Gradient* grd_gates = new Gradient(num_unit_ascuns);
+	
 
 	for (int i = 0; i < num_unit_ascuns; i++)
 	{
