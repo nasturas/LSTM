@@ -50,6 +50,8 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 * Il vom imparti in 80% vor fi date pentru antrenament, 20% pentru testat.
 * Noi antrenam AI sa poata estima valoarea actiunii luand in calcul evolutia pretului in ultimele x zile. Aceste x zile alcatuiesc o fereastra de antrenament.
 * Putem sa suprapunem ferestrele sau nu. Alegem sa suprapunem 50% din fereastra (TRAINING_WINDOW_OVERLAY). Putem sa imbunatatim acest parametru.
+* 
+* Aici e doar o trecere pentru o epoca.
 */
 void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::vector<double>> expected, int window_size, int lambda)
 {
@@ -244,4 +246,22 @@ std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vecto
 	out_grd_gates->grd_og = grd_og;
 	out_grd_gates->grd_state = grd_state;
 	return grd_out_ante;
+}
+
+/* Functia ia un vector de intrare si creaza samples de num_intrari elemente, samples ce se suprapun in procent de TRAINING_WINDOW_OVERLAY% */
+void LSTM_cell::CreateTrainingSet(std::vector<double> x_in, std::vector<std::vector<double>>* x_out, std::vector<double>* expected_out)
+{
+	// ferestrele de antranement sa inceapa din pas_inaintare elemente in pas_inaintare.
+	// daca pas_inaintare e 2 inseamna ca fiecare fereastra sa inceapa din 2 in 2 elemente din x_in
+	// daca e numar impar (num_intrari%2 da 1) atunci dorim sa cu inca un element in plus.
+	int pas_inaintare = num_intrari * TRAINING_WINDOW_OVERLAY / 100 + num_intrari%2;
+	int i = 0;
+	for (int i = 0; i < x_in.size(); i += pas_inaintare)
+	{
+		//verificam sa nu trecem peste dimensiunea x_in cu copiatu
+		if (x_in.size() < (i + pas_inaintare))
+			break;
+		x_out->push_back(std::vector<double>(x_in.begin()+i, x_in.begin()+i + num_intrari));
+		expected_out->push_back(x_in[i + num_intrari]);
+	}
 }

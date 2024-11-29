@@ -123,9 +123,13 @@ public:
 		
 		sigmoid = Interpolare::getSigmoid(); tanh = Interpolare::getTanh();
 	}
+	
 	std::vector<double> ForwardPass(std::vector<double> input);
 	std::vector<double> BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post);
 	void TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::vector<double>> expected, int window_size, int lambda);
+	//index_test - index din x_in de unde incep valorile de test. Cele dinainte fiind folosite pentru training
+	void CreateTrainingSet(std::vector<double> x_in, std::vector<std::vector<double>>* x_out, std::vector<double> *expected_out);
+
 };
 
 
