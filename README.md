@@ -1,0 +1,2 @@
+# LSTM
+proiect de licenta
