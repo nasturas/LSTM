@@ -31,8 +31,6 @@
 *.out
 *.app
 
-
 *.ipch
 *.vsidx
 /.vs/PrezicerePretActiuni/v17/*
-
