@@ -34,3 +34,6 @@
 *.ipch
 *.vsidx
 /.vs/PrezicerePretActiuni/v17/*
+/.vs/PrezicerePretActiuni/FileContentIndex/read.lock
+/PrezicerePretActiuni/x64/Debug/*
+/x64/Debug/PrezicerePretActiuni.exe
