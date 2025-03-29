@@ -2,13 +2,11 @@
 #include <vector>
 #include "Interpolare.h"
 #include "XavierNormalised.h"
-
-// cat sa suprapunem din ferestre de antrenament. in procente
-#define TRAINING_WINDOW_OVERLAY 50
-
+#include "Test_Vector.h"
 class LSTM_cell
 {
 private:
+	//numarul de unitati ascunse este si numarul de iesiri.
 	int num_intrari, num_unit_ascuns;
 	class Cell
 	{
@@ -37,7 +35,7 @@ private:
 		~Cell() {}
 
 	
-		//o coloana de num_unit_ascuns randuri, sau nume_unit_ascuns x 1
+		//o coloana de num_unit_ascuns randuri, sau num_unit_ascuns x 1
 		std::vector<double> fg;
 		std::vector<double> ig;
 		std::vector<double> og;
@@ -123,13 +121,16 @@ public:
 		
 		sigmoid = Interpolare::getSigmoid(); tanh = Interpolare::getTanh();
 	}
-	
+	//TODO: de adaugat o initializare cu weights din vreun fisier salvat local ceva.
+
+
 	std::vector<double> ForwardPass(std::vector<double> input);
 	std::vector<double> BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post);
-	void TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::vector<double>> expected, int window_size, int lambda);
-	//index_test - index din x_in de unde incep valorile de test. Cele dinainte fiind folosite pentru training
-	void CreateTrainingSet(std::vector<double> x_in, std::vector<std::vector<double>>* x_out, std::vector<double> *expected_out);
-
+	void TrainLSTM(std::vector<Test_Vector> test_vect, double lambda);
+	// Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70%-30%
+	void PrepareTraining(std::vector<double> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride);
+	void Train(std::vector<double> in_set, int stride, double lambda);
+	double TestLSTM(std::vector<Test_Vector>* test_set);
 };
 
 

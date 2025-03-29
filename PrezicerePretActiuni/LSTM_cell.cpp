@@ -1,4 +1,7 @@
 #include "LSTM_cell.h"
+#include "Test_Vector.h"
+#include <string>
+
 //executa intrarea si intoarce un output
 std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 {
@@ -45,6 +48,66 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 	return cell_gates->out;
 }
 
+//functia de calcul al erorilor prin porti si a erorii aparute la iesirea fiecarui pas.
+// folosim https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
+// t_post e in loc de t+1, t_ante e in loc de t-1
+// TODO: codu poate fi imbunatatit ca lizibilitate daca facem o clasa matrice cu operatii de inmultire si adunare.. nu stiu cat de mult ajuta si la executie
+std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post)
+{
+	std::vector<double> delta;
+	std::vector<double> grd_out;
+	std::vector<double> grd_state;
+	std::vector<double> grd_ag;
+	std::vector<double> grd_ig;
+	std::vector<double> grd_fg;
+	std::vector<double> grd_og;
+	std::vector<double> grd_out_ante;
+#ifdef STACKED_LSTM
+	//lasam pentru extindere si la cazul de LSTM stacked.
+	std::vector<double> grd_x;
+#endif
+
+
+	for (int i = 0; i < num_unit_ascuns; i++)
+	{
+		//delta este diferenta dintre iesirea din LSTM si valoarea corecta din vectorul de invatare.
+		delta[i] = cell->out[i] - expected[i];
+		//grd_out este suma dintre delta si delta_out calculat din pasul viitor.
+		grd_out[i] = delta[i] + delta_out_post[i];
+		//TODO: reverifica calculele la grd.
+		grd_state[i] = grd_out[i] * cell->og[i] * (1 - tanh->Output(cell->state[i]) * tanh->Output(cell->state[i])) + cell_post->state[i] * cell_post->fg[i];
+		grd_ag[i] = grd_state[i] * cell->ig[i] * (1 - cell->ag[i] * cell->ag[i]);
+		grd_ig[i] = grd_state[i] * cell->ag[i] * cell->ig[i] * (1 - cell->ig[i]);
+		grd_fg[i] = grd_state[i] * cell_ante->state[i] * cell->fg[i] * (1 - cell->fg[i]);
+		grd_og[i] = grd_out[i] * tanh->Output(cell->state[i]) * cell->og[i] * (1 - cell->og[i]);
+		grd_out_ante[i] = 0;
+		for (int j = 0; j < num_unit_ascuns; j++)
+		{
+			grd_out_ante[i] += grd_ag[i] * Ua[i][j] + grd_ig[i] * Wi[i][j] + grd_fg[i] * Wf[i][j] + grd_og[i] * Wo[i][j];
+		}
+	}
+
+#ifdef STACKED_LSTM 
+	for (int i = 0; i < num_intrari; i++)
+	{
+		grd_x[i] = 0;
+		for (int j = 0; j < num_unit_ascuns; j++)
+		{
+			grd_x[i] += grd_ag[j] * Wa[j][i] + grd_ig[j] * Wi[j][i] + grd_fg[j] * Wf[j][i] + grd_og[j] * Wo[j][i];
+		}
+
+	}
+#endif
+
+	out_grd_gates->grd_ag = grd_ag;
+	out_grd_gates->grd_fg = grd_fg;
+	out_grd_gates->grd_ig = grd_ig;
+	out_grd_gates->grd_og = grd_og;
+	out_grd_gates->grd_state = grd_state;
+	return grd_out_ante;
+}
+
+
 /*
 * Luam din input care e un vector cu toate valorile actiunii de la inchiderea bursei pentru fiecare zi.
 * Il vom imparti in 80% vor fi date pentru antrenament, 20% pentru testat.
@@ -53,7 +116,7 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 * 
 * Aici e doar o trecere pentru o epoca.
 */
-void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::vector<double>> expected, int window_size, int lambda)
+void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 {
 	std::vector<Cell> gates;
 	std::vector<Gradient> grd_gates;
@@ -76,16 +139,15 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 
 	Cell* gate_post = new Cell(num_unit_ascuns);
 	Cell* gate_ante;
-	//luam dimensiunea totala a datelor, le impartim in 70% fereastra de antrenament si 30% test. 
-	// lasam distanta intre ele de nr_input + nr_output sa nu se suprapuna testarea cu antrenamentu.  
-	int T=x.size();
+	
+	int T = (int)test_vect.size();
 	
 	//intai facem forward un T numar de pasi
 	gates.resize(T);
 	grd_gates.resize(T);
 	for (int t = 0; t < T; t++)
 	{
-		(void)ForwardPass(x[t]);
+		(void)ForwardPass(test_vect[t].get_Test_Vector());
 		for (int i = 0; i < num_unit_ascuns; i++)
 		{
 			gates[t].ag[i] = cell_gates->ag[i];
@@ -114,7 +176,7 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 		{
 			gate_ante = &gates[t - 1];
 		}
-		delta_out = BackwardPass(&grd_gates[t], expected[t], &gates[t], gate_ante, gate_post, delta_out);
+		delta_out = BackwardPass(&grd_gates[t], test_vect[t].get_Rezultat_Vector(), &gates[t], gate_ante, gate_post, delta_out);
 		
 		if (t == 0)
 		{
@@ -138,10 +200,10 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 		{
 			for (int j = 0; i < num_intrari; j++)
 			{
-				grd_Wa[i][j] += grd_gates[t].grd_ag[i] * x[t][j];
-				grd_Wf[i][j] += grd_gates[t].grd_fg[i] * x[t][j];
-				grd_Wi[i][j] += grd_gates[t].grd_ig[i] * x[t][j];
-				grd_Wo[i][j] += grd_gates[t].grd_og[i] * x[t][j];
+				grd_Wa[i][j] += grd_gates[t].grd_ag[i] * test_vect[t].get_Test_Elem(j);
+				grd_Wf[i][j] += grd_gates[t].grd_fg[i] * test_vect[t].get_Test_Elem(j);
+				grd_Wi[i][j] += grd_gates[t].grd_ig[i] * test_vect[t].get_Test_Elem(j);
+				grd_Wo[i][j] += grd_gates[t].grd_og[i] * test_vect[t].get_Test_Elem(j);
 			}
 			grd_ba[i] += grd_gates[t].grd_ag[i];
 			grd_bf[i] += grd_gates[t].grd_fg[i];
@@ -189,79 +251,87 @@ void LSTM_cell::TrainLSTM(std::vector<std::vector<double>> x, std::vector<std::v
 
 }
 
-//functia de calcul al erorilor prin porti si a erorii aparute la iesirea fiecarui pas.
-// folosim https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
-// t_post e in loc de t+1, t_ante e in loc de t-1
-// TODO: codu poate fi imbunatatit ca lizibilitate daca face o clasa matrice cu operatii de inmultire si adunare.. nu stiu cat de mult ajuta si la executie
-std::vector<double> LSTM_cell::BackwardPass(Gradient * out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post)
+/**
+* @brief Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70%-30%
+*/
+void LSTM_cell::PrepareTraining(std::vector<double> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride)
 {
-	std::vector<double> delta;
-	std::vector<double> grd_out;
-	std::vector<double> grd_state;
-	std::vector<double> grd_ag;
-	std::vector<double> grd_ig;
-	std::vector<double> grd_fg;
-	std::vector<double> grd_og;
-	std::vector<double> grd_out_ante;
-#ifdef STACKED_LSTM
-//lasam pentru extindere si la cazul de LSTM stacked.
-	std::vector<double> grd_x;
-#endif
-	
-
-	for (int i = 0; i < num_unit_ascuns; i++)
+	Test_Vector tmp_set;
+	//verificam daca marimea setului e destul de mare.
+	if (num_intrari*2+num_unit_ascuns > in_set.size() * 30 / 100)
 	{
-		//delta este diferenta dintre iesirea din LSTM si valoarea corecta din vectorul de invatare.
-		delta[i] = cell->out[i] - expected[i];
-		//grd_out este suma dintre delta si delta_out calculat din pasul viitor.
-		grd_out[i] = delta[i] + delta_out_post[i];
-		//TODO: reverifica calculele la grd.
-		grd_state[i] = grd_out[i] * cell->og[i] * (1 - tanh->Output(cell->state[i])* tanh->Output(cell->state[i]))+cell_post->state[i]*cell_post->fg[i];
-		grd_ag[i] = grd_state[i] * cell->ig[i] * (1 - cell->ag[i] * cell->ag[i]);
-		grd_ig[i] = grd_state[i] * cell->ag[i] * cell->ig[i] * (1 - cell->ig[i]);
-		grd_fg[i] = grd_state[i] * cell_ante->state[i] * cell->fg[i] * (1 - cell->fg[i]);
-		grd_og[i] = grd_out[i] * tanh->Output(cell->state[i]) * cell->og[i] * (1 - cell->og[i]);
-		grd_out_ante[i] = 0;
-		for (int j = 0; j < num_unit_ascuns; j++)
-		{
-			grd_out_ante[i]+= grd_ag[i] * Ua[i][j] + grd_ig[i] * Wi[i][j] + grd_fg[i] * Wf[i][j] + grd_og[i] * Wo[i][j];
-		}
+		throw std::invalid_argument("Marimea setului de date este prea mica! Incearca sa dai un set de date de cel putin "+ std::to_string(num_intrari * 2 + num_unit_ascuns));
 	}
 	
-#ifdef STACKED_LSTM 
-	for (int i = 0; i < num_intrari; i++)
-	{
-		grd_x[i] = 0;
-		for (int j = 0; j < num_unit_ascuns; j++)
-		{
-			grd_x[i] += grd_ag[j] * Wa[j][i] + grd_ig[j] * Wi[j][i] + grd_fg[j] * Wf[j][i] + grd_og[j] * Wo[j][i];
-		}
-		
-	}
-#endif
+	// calculam indexu unde ar fi 70%
+	int num_elem_70_procent = (int)in_set.size() * 70 / 100;
+	// sliding window size e numarul_intrari
+	// vrem sa vedem care e indexul mai apropiat de acest 70% dupa ce il impartitm.
+	int num_vector_antr = (int)(num_elem_70_procent - num_intrari) / stride+1;
+	// avem un set de numar de intrari elemente, si fiidnca se suprapun se avanseaza cum stride de acum. se scade 1 ca indexu porneste de la 0.
+	int idx_ultim = (num_vector_antr - 1) * stride + num_intrari - 1;
 
-	out_grd_gates->grd_ag = grd_ag;
-	out_grd_gates->grd_fg = grd_fg;
-	out_grd_gates->grd_ig = grd_ig;
-	out_grd_gates->grd_og = grd_og;
-	out_grd_gates->grd_state = grd_state;
-	return grd_out_ante;
+	
+	//cum aflu care e indexul de pornire la test set, ca multiplu de num_intrari.
+	int idx_test_vector_start = idx_ultim + num_unit_ascuns;
+	
+	// populam vectorii de iesire. (scadem cu 1 ca sa transformam numaru in index pornit de la 0)
+	for (int i = 0; i + num_intrari + num_unit_ascuns-1 <= idx_ultim; i += stride)
+	{
+		//punem un vector de test cu iesire cu tot.
+		tmp_set.assign_Test_Elem(in_set.begin() + i, in_set.begin() + i + num_intrari);
+		tmp_set.assign_Rezultat_Elem(in_set.begin() + i + num_intrari, in_set.begin() + i + num_intrari + num_unit_ascuns);
+		training_set->push_back(tmp_set);
+	}
+
+	for (int i = idx_test_vector_start; i + num_intrari - 1 <= in_set.size(); i += stride)
+	{
+		tmp_set.assign_Test_Elem(in_set.begin() + i, in_set.begin() + i + num_intrari);
+		tmp_set.assign_Rezultat_Elem(in_set.begin() + i + num_intrari, in_set.begin() + i + num_intrari + num_unit_ascuns);
+		test_set->push_back(tmp_set);
+	}
+ 
 }
 
-/* Functia ia un vector de intrare si creaza samples de num_intrari elemente, samples ce se suprapun in procent de TRAINING_WINDOW_OVERLAY% */
-void LSTM_cell::CreateTrainingSet(std::vector<double> x_in, std::vector<std::vector<double>>* x_out, std::vector<double>* expected_out)
+void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 {
-	// ferestrele de antranement sa inceapa din pas_inaintare elemente in pas_inaintare.
-	// daca pas_inaintare e 2 inseamna ca fiecare fereastra sa inceapa din 2 in 2 elemente din x_in
-	// daca e numar impar (num_intrari%2 da 1) atunci dorim sa cu inca un element in plus.
-	int pas_inaintare = num_intrari * TRAINING_WINDOW_OVERLAY / 100 + num_intrari%2;
-	int i = 0;
-	for (int i = 0; i < x_in.size(); i += pas_inaintare)
+	std::vector<Test_Vector> train_set;
+	std::vector<Test_Vector> test_set;
+
+	PrepareTraining(in_set, &train_set, &test_set, stride);
+	//while(i < nr_max_epoc && error scade - sau nu creste de 3 ori? consec) 
+	TrainLSTM(train_set, lambda);
+
+	//acum testam daca aceasta epoca de antrenament a fost indeajuns.
+	double error = TestLSTM(&test_set);
+	
+}
+
+/**
+* @brief Functie care testeaza daca dupa o epoca de antrenament celula LSTM merge si pentru setul de test
+* returneaza eroare ca double
+* eroarea totala e media sumelor patratelor erorilor fiecarui set. 
+*/
+double LSTM_cell::TestLSTM(std::vector<Test_Vector>* test_set)
+{
+	double error = 0.0;
+	double error_pas = 0.0;
+	double err_i = 0.0;
+	
+	for(Test_Vector v : *test_set)
 	{
-		//verificam sa nu trecem peste dimensiunea x_in cu copiatu
-		if (x_in.size() < (i + pas_inaintare))
-			break;
-		x_out->push_back(std::vector<double>(x_in.begin()+i, x_in.begin()+i + num_intrari));
-		expected_out->push_back(x_in[i + num_intrari]);
+		vector<double> out = ForwardPass(v.get_Test_Vector());
+		//facem media patratului erorii pe iesiri
+		for (int i=0; i < v.get_Dim_Rezultat(); i++)
+		{
+			err_i = v.get_Rezultat_Elem(i) - out[i];
+			error_pas += err_i * err_i;
+		}
+		error_pas /= v.get_Dim_Rezultat();
+			//adaugam eroarea pasului la eroarea generala
+		error += error_pas * error_pas;
 	}
+	error /= test_set->size();
+	
+	return 0.0;
 }
