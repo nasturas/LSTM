@@ -5,37 +5,14 @@
 //#include "LSTM_cell.h"
 #include "XavierNormalised.h"
 #include "Test_Vector.h"
-
+#include "EnvironmentData.h"
 using namespace std;
 
-void functie(vector<Test_Vector>* p, vector<double> vivi)
-{
-	Test_Vector tv;
-	cout << "Marime in functie: " << p->size() << endl;
-	int size = 4;
-	for (int i = 0; i+ size <= vivi.size(); i = i + 2)
-	{
-		tv.assign_Test_Elem(vivi.begin() + i, vivi.begin() + size + i);
-		//tv.assign_Rezultat_Elem(vivi.begin() + 2 + i, vivi.begin() + 2 +1+ i);
-		p->push_back(tv);
-	}
 
-}
 int main()
 {
-	vector<double> vivi = { 0,10,20,30,40,50,60,70,80,90 };
-	vector<Test_Vector> ptr;
-
-
-	functie(&ptr, vivi);
-	cout << "Marime dupa functie: " << ptr.size() << endl;
-	for (Test_Vector v : ptr)
-	{
-		for (int i=0;i<v.get_Dim_Test();i++)
-			cout << v.get_Test_Elem(i) << " ";
-		cout << ";" << endl;
-	}
-
+	EnvironmentData* envData = EnvironmentData::getInstance(3, 95);
+	
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
