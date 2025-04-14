@@ -131,6 +131,7 @@ public:
 	void PrepareTraining(std::vector<double> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride);
 	void Train(std::vector<double> in_set, int stride, double lambda);
 	double TestLSTM(std::vector<Test_Vector>* test_set);
+	double CalcEroareTinta(std::vector<Test_Vector>* test_set)
 };
 
 

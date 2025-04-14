@@ -1,5 +1,6 @@
 #include "LSTM_cell.h"
 #include "Test_Vector.h"
+#include "EnvironmentData.h"
 #include <string>
 
 //executa intrarea si intoarce un output
@@ -293,18 +294,30 @@ void LSTM_cell::PrepareTraining(std::vector<double> in_set, std::vector<Test_Vec
  
 }
 
+/**
+* @brief Functie care antreneaza reteaua
+* antrenamentul se opreste cand numarul de antrenament atingi un numar maxim - masura de siguranta ca nu rulam la infinit
+* sau cand aproximarea e mai buna decat 95% din valoarea dorita.
+*/
 void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 {
 	std::vector<Test_Vector> train_set;
 	std::vector<Test_Vector> test_set;
+	double error = 0;
+	double eroare_tinta = CalcEroareTinta(&test_set);
+	int num_antrenari = 0;
+	EnvironmentData* env_data = EnvironmentData::getInstance(0,0);
 
 	PrepareTraining(in_set, &train_set, &test_set, stride);
-	//while(i < nr_max_epoc && error scade - sau nu creste de 3 ori? consec) 
-	TrainLSTM(train_set, lambda);
-
-	//acum testam daca aceasta epoca de antrenament a fost indeajuns.
-	double error = TestLSTM(&test_set);
 	
+	do {
+		//while(i < nr_max_epoc && error scade - sau nu creste de 3 ori? consec) 
+		TrainLSTM(train_set, lambda);
+
+		//acum testam daca aceasta epoca de antrenament a fost indeajuns.
+		error = TestLSTM(&test_set);
+		num_antrenari++;
+	} while ( num_antrenari < env_data->getNumarMaximAntrenari() && error > eroare_tinta);
 }
 
 /**
@@ -328,10 +341,38 @@ double LSTM_cell::TestLSTM(std::vector<Test_Vector>* test_set)
 			error_pas += err_i * err_i;
 		}
 		error_pas /= v.get_Dim_Rezultat();
+		error_pas = sqrt(error_pas);
 			//adaugam eroarea pasului la eroarea generala
 		error += error_pas * error_pas;
 	}
 	error /= test_set->size();
+	error = sqrt(error);
 	
-	return 0.0;
+	return error;
+}
+
+double LSTM_cell::CalcEroareTinta(std::vector<Test_Vector>* test_set)
+{
+	double error = 0.0;
+	double error_pas = 0.0;
+	double err_i = 0.0;
+	EnvironmentData* envData = EnvironmentData::getInstance(0, 0);
+
+	for (Test_Vector v : *test_set)
+	{
+		//calculam eroarea pentru o estimare care ar fi procent_precizie_antrenament% din valoarea reala
+		for (int i = 0; i < v.get_Dim_Rezultat(); i++)
+		{
+			err_i = v.get_Rezultat_Elem(i) * envData->getProcentPrecizieAntrenament() / 100;
+			error_pas += err_i * err_i;
+		}
+		error_pas /= v.get_Dim_Rezultat();
+		error_pas = sqrt(error_pas);
+		//adaugam eroarea pasului la eroarea generala
+		error += error_pas * error_pas;
+	}
+	error /= test_set->size();
+	error = sqrt(error);
+
+	return error;
 }
