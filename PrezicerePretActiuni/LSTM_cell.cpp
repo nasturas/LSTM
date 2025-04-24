@@ -2,7 +2,8 @@
 #include "Test_Vector.h"
 #include "EnvironmentData.h"
 #include <string>
-
+#include <iostream>
+using namespace std;
 //executa intrarea si intoarce un output
 std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 {
@@ -55,14 +56,14 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 // TODO: codu poate fi imbunatatit ca lizibilitate daca facem o clasa matrice cu operatii de inmultire si adunare.. nu stiu cat de mult ajuta si la executie
 std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post)
 {
-	std::vector<double> delta;
-	std::vector<double> grd_out;
-	std::vector<double> grd_state;
-	std::vector<double> grd_ag;
-	std::vector<double> grd_ig;
-	std::vector<double> grd_fg;
-	std::vector<double> grd_og;
-	std::vector<double> grd_out_ante;
+	std::vector<double> delta(num_unit_ascuns, 0.0);
+	std::vector<double> grd_out(num_unit_ascuns, 0.0);
+	std::vector<double> grd_state(num_unit_ascuns, 0.0);
+	std::vector<double> grd_ag(num_unit_ascuns, 0.0);
+	std::vector<double> grd_ig(num_unit_ascuns, 0.0);
+	std::vector<double> grd_fg(num_unit_ascuns, 0.0);
+	std::vector<double> grd_og(num_unit_ascuns, 0.0);
+	std::vector<double> grd_out_ante(num_unit_ascuns, 0.0);
 #ifdef STACKED_LSTM
 	//lasam pentru extindere si la cazul de LSTM stacked.
 	std::vector<double> grd_x;
@@ -75,7 +76,7 @@ std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector
 		delta[i] = cell->out[i] - expected[i];
 		//grd_out este suma dintre delta si delta_out calculat din pasul viitor.
 		grd_out[i] = delta[i] + delta_out_post[i];
-		//TODO: reverifica calculele la grd.
+		
 		grd_state[i] = grd_out[i] * cell->og[i] * (1 - tanh->Output(cell->state[i]) * tanh->Output(cell->state[i])) + cell_post->state[i] * cell_post->fg[i];
 		grd_ag[i] = grd_state[i] * cell->ig[i] * (1 - cell->ag[i] * cell->ag[i]);
 		grd_ig[i] = grd_state[i] * cell->ag[i] * cell->ig[i] * (1 - cell->ig[i]);
@@ -84,7 +85,7 @@ std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector
 		grd_out_ante[i] = 0;
 		for (int j = 0; j < num_unit_ascuns; j++)
 		{
-			grd_out_ante[i] += grd_ag[i] * Ua[i][j] + grd_ig[i] * Wi[i][j] + grd_fg[i] * Wf[i][j] + grd_og[i] * Wo[i][j];
+			grd_out_ante[i] += grd_ag[i] * Ua[i][j] + grd_ig[i] * Ui[i][j] + grd_fg[i] * Uf[i][j] + grd_og[i] * Uo[i][j];
 		}
 	}
 
@@ -121,20 +122,20 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 {
 	std::vector<Cell> gates;
 	std::vector<Gradient> grd_gates;
-	std::vector<std::vector<double>> grd_Wa;
-	std::vector<std::vector<double>> grd_Wf;
-	std::vector<std::vector<double>> grd_Wi;
-	std::vector<std::vector<double>> grd_Wo;
+	std::vector<std::vector<double>> grd_Wa(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
+	std::vector<std::vector<double>> grd_Wf(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
+	std::vector<std::vector<double>> grd_Wi(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
+	std::vector<std::vector<double>> grd_Wo(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
 
-	std::vector<std::vector<double>> grd_Ua;
-	std::vector<std::vector<double>> grd_Uf;
-	std::vector<std::vector<double>> grd_Ui;
-	std::vector<std::vector<double>> grd_Uo;
+	std::vector<std::vector<double>> grd_Ua(num_unit_ascuns, std::vector<double>(num_unit_ascuns, 0.0));
+	std::vector<std::vector<double>> grd_Uf(num_unit_ascuns, std::vector<double>(num_unit_ascuns, 0.0));
+	std::vector<std::vector<double>> grd_Ui(num_unit_ascuns, std::vector<double>(num_unit_ascuns, 0.0));
+	std::vector<std::vector<double>> grd_Uo(num_unit_ascuns, std::vector<double>(num_unit_ascuns, 0.0));
 
-	std::vector<double> grd_ba;
-	std::vector<double> grd_bf;
-	std::vector<double> grd_bi;
-	std::vector<double> grd_bo;
+	std::vector<double> grd_ba(num_unit_ascuns, 0.0);
+	std::vector<double> grd_bf(num_unit_ascuns, 0.0);
+	std::vector<double> grd_bi(num_unit_ascuns, 0.0);
+	std::vector<double> grd_bo(num_unit_ascuns, 0.0);
 
 	std::vector<double> delta_out;
 
@@ -149,6 +150,8 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 	for (int t = 0; t < T; t++)
 	{
 		(void)ForwardPass(test_vect[t].get_Test_Vector());
+		gates[t].resize(num_unit_ascuns);
+		grd_gates[t].resize(num_unit_ascuns);
 		for (int i = 0; i < num_unit_ascuns; i++)
 		{
 			gates[t].ag[i] = cell_gates->ag[i];
@@ -199,7 +202,7 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 	{
 		for (int i = 0; i < num_unit_ascuns; i++)
 		{
-			for (int j = 0; i < num_intrari; j++)
+			for (int j = 0; j < num_intrari; j++)
 			{
 				grd_Wa[i][j] += grd_gates[t].grd_ag[i] * test_vect[t].get_Test_Elem(j);
 				grd_Wf[i][j] += grd_gates[t].grd_fg[i] * test_vect[t].get_Test_Elem(j);
@@ -217,7 +220,7 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 	{
 		for (int i = 0; i < num_unit_ascuns; i++)
 		{
-			for (int j = 0; i < num_unit_ascuns; j++)
+			for (int j = 0; j < num_unit_ascuns; j++)
 			{
 				grd_Ua[i][j] += grd_gates[t+1].grd_ag[i] * gates[t].out[j];
 				grd_Uf[i][j] += grd_gates[t+1].grd_fg[i] * gates[t].out[j];
@@ -229,7 +232,7 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 	//ajustam cu viteza de invatare - lambda
 	for (int i = 0; i < num_unit_ascuns; i++)
 	{
-		for (int j = 0; i < num_intrari; j++)
+		for (int j = 0; j < num_intrari; j++)
 		{
 			Wa[i][j] -= lambda * grd_Wa[i][j];
 			Wf[i][j] -= lambda * grd_Wf[i][j];
@@ -261,10 +264,10 @@ void LSTM_cell::PrepareTraining(std::vector<double> in_set, std::vector<Test_Vec
 	//verificam daca marimea setului e destul de mare.
 	if (num_intrari*2+num_unit_ascuns > in_set.size() * 30 / 100)
 	{
-		throw std::invalid_argument("Marimea setului de date este prea mica! Incearca sa dai un set de date de cel putin "+ std::to_string(num_intrari * 2 + num_unit_ascuns));
+		throw std::invalid_argument("Marimea setului de date este prea mica! Incearca sa dai un set de date de cel putin "+ std::to_string((num_intrari * 2 + num_unit_ascuns)*10/3+1));
 	}
 	
-	// calculam indexu unde ar fi 70%
+	// calculam numarul de elemente care ar fi 70%
 	int num_elem_70_procent = (int)in_set.size() * 70 / 100;
 	// sliding window size e numarul_intrari
 	// vrem sa vedem care e indexul mai apropiat de acest 70% dupa ce il impartitm.
@@ -275,7 +278,7 @@ void LSTM_cell::PrepareTraining(std::vector<double> in_set, std::vector<Test_Vec
 	
 	//cum aflu care e indexul de pornire la test set, ca multiplu de num_intrari.
 	int idx_test_vector_start = idx_ultim + num_unit_ascuns;
-	
+
 	// populam vectorii de iesire. (scadem cu 1 ca sa transformam numaru in index pornit de la 0)
 	for (int i = 0; i + num_intrari + num_unit_ascuns-1 <= idx_ultim; i += stride)
 	{
@@ -285,13 +288,13 @@ void LSTM_cell::PrepareTraining(std::vector<double> in_set, std::vector<Test_Vec
 		training_set->push_back(tmp_set);
 	}
 
-	for (int i = idx_test_vector_start; i + num_intrari - 1 <= in_set.size(); i += stride)
+	for (int i = idx_test_vector_start; i + num_intrari + num_unit_ascuns < in_set.size(); i += stride)
 	{
 		tmp_set.assign_Test_Elem(in_set.begin() + i, in_set.begin() + i + num_intrari);
 		tmp_set.assign_Rezultat_Elem(in_set.begin() + i + num_intrari, in_set.begin() + i + num_intrari + num_unit_ascuns);
 		test_set->push_back(tmp_set);
 	}
- 
+
 }
 
 /**
@@ -304,20 +307,31 @@ void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 	std::vector<Test_Vector> train_set;
 	std::vector<Test_Vector> test_set;
 	double error = 0;
-	double eroare_tinta = CalcEroareTinta(&test_set);
+	double eroare_tinta = 0;
 	int num_antrenari = 0;
-	EnvironmentData* env_data = EnvironmentData::getInstance(0,0);
+	EnvironmentData* env_data = EnvironmentData::getInstance(0,0,0);
 
-	PrepareTraining(in_set, &train_set, &test_set, stride);
-	
-	do {
-		//while(i < nr_max_epoc && error scade - sau nu creste de 3 ori? consec) 
-		TrainLSTM(train_set, lambda);
+	try {
+		PrepareTraining(in_set, &train_set, &test_set, stride);
+		eroare_tinta = CalcEroareTinta(&test_set);
+		cout << "eroarea tinta e " << eroare_tinta << endl;
+		do {
+			//while(i < nr_max_epoc && error scade - sau nu creste de 3 ori? consec) 
+			TrainLSTM(train_set, lambda);
 
-		//acum testam daca aceasta epoca de antrenament a fost indeajuns.
-		error = TestLSTM(&test_set);
-		num_antrenari++;
-	} while ( num_antrenari < env_data->getNumarMaximAntrenari() && error > eroare_tinta);
+			//acum testam daca aceasta epoca de antrenament a fost indeajuns.
+			error = TestLSTM(&test_set);
+			num_antrenari++;
+			cout << error << endl;
+		} while (num_antrenari < env_data->getNumarMaximAntrenari() && error > eroare_tinta);
+
+		cout << "Am iesit din antrenament cu eroarea " << error<<" dupa numar de antrenament: "<<num_antrenari<<endl;
+
+	}
+	catch (const invalid_argument e)
+	{
+		throw;
+	}
 }
 
 /**
@@ -356,7 +370,7 @@ double LSTM_cell::CalcEroareTinta(std::vector<Test_Vector>* test_set)
 	double error = 0.0;
 	double error_pas = 0.0;
 	double err_i = 0.0;
-	EnvironmentData* envData = EnvironmentData::getInstance(0, 0);
+	EnvironmentData* envData = EnvironmentData::getInstance(0, 0,0);
 
 	for (Test_Vector v : *test_set)
 	{

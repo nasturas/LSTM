@@ -6,14 +6,51 @@
 #include "XavierNormalised.h"
 #include "Test_Vector.h"
 #include "EnvironmentData.h"
+#include "LSTM_cell.h"
 using namespace std;
 
-
+EnvironmentData* envData = EnvironmentData::getInstance(20, 95, 0.1);
 int main()
 {
-	EnvironmentData* envData = EnvironmentData::getInstance(3, 95);
 	
+	LSTM_cell* lstm_test = new LSTM_cell(1, 2);
+	vector<double> vector_de_date = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+	vector<Test_Vector> training_set, test_set;
+	try {
+		lstm_test->PrepareTraining(vector_de_date, &training_set, &test_set, 2);
+		for (Test_Vector t : training_set)
+		{
+			for (double d : t.get_Test_Vector())
+				cout << d << " ";
+			cout << " - ";
+			for (double d : t.get_Rezultat_Vector())
+				cout << d << " ";
+			cout << endl;
+		}
+		cout << "miu" << endl;
+		for (Test_Vector t : test_set)
+		{
+			for (double d : t.get_Test_Vector())
+				cout << d << " ";
+			cout << " - ";
+			for (double d : t.get_Rezultat_Vector())
+				cout << d << " ";
+			cout << endl;
+		}
+	}
+	catch(const invalid_argument& e)
+	{ 
+		cout << "Invalid arg: " << e.what() << endl;
+	}
+	
+	//lstm_test->ForwardPass(training_set[0].get_Test_Vector());
+	//lstm_test->TrainLSTM(training_set, envData->getLamda());
+	//cout << "Eroare e: "<< lstm_test->TestLSTM(&test_set);
+
+	lstm_test->Train(vector_de_date, 2, envData->getLamda());
 }
+
+//TODO de gasit o meetoda de a masura relevant eroarea. 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

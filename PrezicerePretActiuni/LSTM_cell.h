@@ -12,6 +12,7 @@ private:
 	{
 		
 	public:
+
 		Cell() {}
 		Cell(int nrAsc) { 
 			fg.resize(nrAsc);
@@ -33,7 +34,25 @@ private:
 		}
 
 		~Cell() {}
+		void resize(int nrAsc) 
+		{
+			fg.resize(nrAsc);
+			ig.resize(nrAsc);
+			og.resize(nrAsc);
+			out.resize(nrAsc);
+			ag.resize(nrAsc);
+			state.resize(nrAsc);
 
+			for (int i = 0; i < nrAsc; i++)
+			{
+				fg[i] = 0;
+				ig[i] = 0;
+				og[i] = 0;
+				out[i] = 0;
+				ag[i] = 0;
+				state[i] = 0;
+			}
+		}
 	
 		//o coloana de num_unit_ascuns randuri, sau num_unit_ascuns x 1
 		std::vector<double> fg;
@@ -56,7 +75,14 @@ private:
 			grd_og.resize(nrAsc);
 			grd_ag.resize(nrAsc);
 		};
-
+		void resize(int nrAsc)
+		{
+			grd_state.resize(nrAsc);
+			grd_fg.resize(nrAsc);
+			grd_ig.resize(nrAsc);
+			grd_og.resize(nrAsc);
+			grd_ag.resize(nrAsc);
+		};
 		std::vector<double> grd_ag;
 		std::vector<double> grd_fg;
 		std::vector<double> grd_ig;
@@ -83,6 +109,12 @@ private:
 	Interpolare* sigmoid;
 	Interpolare* tanh;
 	XavierNormalised* num_generator;
+
+	
+	double CalcEroareTinta(std::vector<Test_Vector>* test_set);
+	
+	
+	
 public:
 	LSTM_cell() 
 	{
@@ -121,17 +153,17 @@ public:
 		
 		sigmoid = Interpolare::getSigmoid(); tanh = Interpolare::getTanh();
 	}
-	//TODO: de adaugat o initializare cu weights din vreun fisier salvat local ceva.
+	//TODO: de adaugat o initializare cu weights din vreun fisier salvat local format hd5.
 
 
 	std::vector<double> ForwardPass(std::vector<double> input);
 	std::vector<double> BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post);
-	void TrainLSTM(std::vector<Test_Vector> test_vect, double lambda);
+	void Train(std::vector<double> in_set, int stride, double lambda);
 	// Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70%-30%
 	void PrepareTraining(std::vector<double> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride);
-	void Train(std::vector<double> in_set, int stride, double lambda);
+
+	void TrainLSTM(std::vector<Test_Vector> test_vect, double lambda);
 	double TestLSTM(std::vector<Test_Vector>* test_set);
-	double CalcEroareTinta(std::vector<Test_Vector>* test_set)
-};
+}; 
 
 
