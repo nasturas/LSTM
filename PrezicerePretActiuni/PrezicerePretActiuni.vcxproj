@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EnvironmentData.cpp" />
     <ClCompile Include="Interpolare.cpp" />
     <ClCompile Include="LSTM_cell.cpp" />
     <ClCompile Include="PrezicerePretActiuni.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="XavierNormalised.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnvironmentData.h" />
     <ClInclude Include="Interpolare.h" />
     <ClInclude Include="LSTM_cell.h" />
     <ClInclude Include="StockPredictor.h" />
