@@ -9,7 +9,7 @@
 #include "LSTM_cell.h"
 using namespace std;
 
-EnvironmentData* envData = EnvironmentData::getInstance(20, 95, 0.1);
+EnvironmentData* envData = EnvironmentData::getInstance(20, 95, 0.2);
 int main()
 {
 	

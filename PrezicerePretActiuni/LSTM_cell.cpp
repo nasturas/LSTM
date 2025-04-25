@@ -44,7 +44,11 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 
 
 		cell_gates->state[i] = cell_gates->fg[i] * cell_gates->state[i] + cell_gates->ig[i] * cell_gates->ag[i];
-		cell_gates->out[i] = cell_gates->og[i] * tanh->Output(cell_gates->state[i]);
+		if (cell_gates->state[i] > 0)
+			//cell_gates->out[i] = cell_gates->og[i] * tanh->Output(cell_gates->state[i]);
+			cell_gates->out[i] = cell_gates->og[i] * cell_gates->state[i];
+		else
+			cell_gates->out[i] = 0;
 
 	}
 	return cell_gates->out;
@@ -349,11 +353,14 @@ double LSTM_cell::TestLSTM(std::vector<Test_Vector>* test_set)
 	{
 		vector<double> out = ForwardPass(v.get_Test_Vector());
 		//facem media patratului erorii pe iesiri
+		cout << "Testam: ";
 		for (int i=0; i < v.get_Dim_Rezultat(); i++)
 		{
 			err_i = v.get_Rezultat_Elem(i) - out[i];
 			error_pas += err_i * err_i;
+			cout << out[i] << "|"<< v.get_Rezultat_Elem(i)<<" ";
 		}
+		cout << endl;
 		error_pas /= v.get_Dim_Rezultat();
 		error_pas = sqrt(error_pas);
 			//adaugam eroarea pasului la eroarea generala
@@ -377,7 +384,7 @@ double LSTM_cell::CalcEroareTinta(std::vector<Test_Vector>* test_set)
 		//calculam eroarea pentru o estimare care ar fi procent_precizie_antrenament% din valoarea reala
 		for (int i = 0; i < v.get_Dim_Rezultat(); i++)
 		{
-			err_i = v.get_Rezultat_Elem(i) * envData->getProcentPrecizieAntrenament() / 100;
+			err_i = v.get_Rezultat_Elem(i) * (100-envData->getProcentPrecizieAntrenament()) / 100;
 			error_pas += err_i * err_i;
 		}
 		error_pas /= v.get_Dim_Rezultat();
