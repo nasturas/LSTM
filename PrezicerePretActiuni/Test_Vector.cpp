@@ -1,11 +1,11 @@
 #include "Test_Vector.h"
 
-int Test_Vector::get_Dim_Test()
+size_t Test_Vector::get_Dim_Test()
 {
 	return this->test.size();
 }
 
-int Test_Vector::get_Dim_Rezultat()
+size_t Test_Vector::get_Dim_Rezultat()
 {
 	return this->rezultat.size();
 }

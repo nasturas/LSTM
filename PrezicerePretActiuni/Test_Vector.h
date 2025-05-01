@@ -15,8 +15,8 @@ public:
 	Test_Vector() {}
 	~Test_Vector() {}
 
-	int get_Dim_Test();
-	int get_Dim_Rezultat();
+	size_t get_Dim_Test();
+	size_t get_Dim_Rezultat();
 
 	void assign_Test_Elem(std::vector<double>::iterator prim, std::vector<double>::iterator ultim);
 	void assign_Rezultat_Elem(std::vector<double>::iterator prim, std::vector<double>::iterator ultim);
