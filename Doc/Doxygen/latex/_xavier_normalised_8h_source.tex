@@ -1,0 +1,38 @@
+\doxysection{Xavier\+Normalised.\+h}
+\hypertarget{_xavier_normalised_8h_source}{}\label{_xavier_normalised_8h_source}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/XavierNormalised.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/XavierNormalised.h}}
+\mbox{\hyperlink{_xavier_normalised_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_xavier_normalised_a6c3122a0d3effec8e3baf0af575f4f5f}{XavierNormalised}}}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{class_xavier_normalised_a6c3122a0d3effec8e3baf0af575f4f5f}{XavierNormalised}}(\textcolor{keywordtype}{int}\ num\_input,\ \textcolor{keywordtype}{int}\ num\_output)}
+\DoxyCodeLine{00009\ \ \ \ \ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ std::random\_device\ rd;}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (num\_input\ +\ num\_output\ !=\ 0)}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ varianta\ =\ sqrt(6.0\ /\ (num\_input\ +\ num\_output));}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ varianta\ =\ 1;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ generator\ =\ std::mt19937(rd());\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ distributie\ =\ std::normal\_distribution<>(0,\ varianta);}
+\DoxyCodeLine{00021\ \ \ \ \ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_xavier_normalised_a52c3c99636e4d2f4d78c80f7fc243f19}{generateNumber}}();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//TODO:\ ar\ tb\ sa\ intoarca\ un\ pointer\ la\ un\ obiect\ sau\ sa\ fie\ prin\ move\ semantics?}}
+\DoxyCodeLine{00025\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_xavier_normalised_a402d5b5a55ce70236d192a0e2236131a}{generateVector}}(\textcolor{keywordtype}{int}\ size);}
+\DoxyCodeLine{00026\ \ \ \ \ std::vector<std::vector<double>>\ \mbox{\hyperlink{class_xavier_normalised_a0378b27931dc6d146c701b8fcb7bd229}{generateMatrix}}(\textcolor{keywordtype}{int}\ size\_r,\ \textcolor{keywordtype}{int}\ size\_c);}
+\DoxyCodeLine{00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{double}\ varianta;\ }
+\DoxyCodeLine{00029\ \ \ \ \ std::mt19937\ generator;\ }
+\DoxyCodeLine{00030\ \ \ \ \ std::normal\_distribution<>\ distributie;}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+
+\end{DoxyCode}

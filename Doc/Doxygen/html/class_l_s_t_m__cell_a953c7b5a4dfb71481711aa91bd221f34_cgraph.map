@@ -1,0 +1,20 @@
+<map id="LSTM_cell::Train" name="LSTM_cell::Train">
+<area shape="rect" id="Node000001" title="Functie care antreneaza reteaua antrenamentul se opreste cand numarul de antrenament atingi un numar ..." alt="" coords="5,105,126,132"/>
+<area shape="rect" id="Node000002" href="$class_environment_data.html#a9171e52e0e87966bd1abfb996ec5d8a0" title=" " alt="" coords="174,29,372,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,102,173,66,195,58,197,63,175,70,94,107"/>
+<area shape="rect" id="Node000003" href="$class_l_s_t_m__cell.html#a12ee93a8214a31ba3e92aa9073981de5" title="Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70%&#45;..." alt="" coords="182,80,364,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="126,109,166,104,167,109,126,114"/>
+<area shape="rect" id="Node000006" href="$class_l_s_t_m__cell.html#ab1b4406c31a9f5f3c11b2f275ec98d0a" title="Functie care testeaza daca dupa o epoca de antrenament celula LSTM merge si pentru setul de test retu..." alt="" coords="197,131,348,157"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="126,123,182,130,181,136,126,129"/>
+<area shape="rect" id="Node000008" href="$class_l_s_t_m__cell.html#a9172dc2e8302f38da37e19055512436d" title=" " alt="" coords="195,181,350,208"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="94,130,175,167,197,174,195,179,173,172,91,135"/>
+<area shape="rect" id="Node000004" href="$class_test___vector.html#a9be41dba23c63164bc29d33858379d1b" title=" " alt="" coords="442,5,578,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="329,77,371,65,426,49,427,55,373,71,330,82"/>
+<area shape="rect" id="Node000005" href="$class_test___vector.html#afd88da1212ccf65378a8ad385855a4a4" title=" " alt="" coords="442,72,578,115"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="364,91,426,91,426,96,364,96"/>
+<area shape="rect" id="Node000007" href="$class_l_s_t_m__cell.html#a7b3b5d9adc8fbd06c04dcf982eacff7f" title=" " alt="" coords="426,139,594,165"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="349,144,410,146,410,151,349,149"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="350,178,417,166,417,171,351,183"/>
+<area shape="rect" id="Node000009" href="$class_l_s_t_m__cell.html#a7465154d235ec2717831aaf5b11f2e8b" title=" " alt="" coords="420,189,599,216"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="351,195,405,196,405,202,351,200"/>
+</map>

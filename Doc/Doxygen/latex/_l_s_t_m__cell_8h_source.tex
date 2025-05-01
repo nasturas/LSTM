@@ -1,0 +1,175 @@
+\doxysection{LSTM\+\_\+cell.\+h}
+\hypertarget{_l_s_t_m__cell_8h_source}{}\label{_l_s_t_m__cell_8h_source}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/LSTM\_cell.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/LSTM\_cell.h}}
+\mbox{\hyperlink{_l_s_t_m__cell_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_interpolare_8h}{Interpolare.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_xavier_normalised_8h}{XavierNormalised.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_test___vector_8h}{Test\_Vector.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_s_t_m__cell_add729d85c296dadaf1413e777d2c60d7}{LSTM\_cell}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{comment}{//numarul\ de\ unitati\ ascunse\ este\ si\ numarul\ de\ iesiri.}}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_intrari,\ num\_unit\_ascuns;}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }Cell}
+\DoxyCodeLine{00012\ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ Cell()\ \{\}}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ Cell(\textcolor{keywordtype}{int}\ nrAsc)\ \{\ }
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ fg.resize(nrAsc);}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ ig.resize(nrAsc);}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ og.resize(nrAsc);}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ out.resize(nrAsc);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ ag.resize(nrAsc);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ state.resize(nrAsc);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ nrAsc;\ i++)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fg[i]\ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ig[i]\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ og[i]\ =\ 0;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[i]\ =\ 0;}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ag[i]\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state[i]\ =\ 0;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \string~Cell()\ \{\}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ resize(\textcolor{keywordtype}{int}\ nrAsc)\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ fg.resize(nrAsc);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ ig.resize(nrAsc);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ og.resize(nrAsc);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ out.resize(nrAsc);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ ag.resize(nrAsc);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ state.resize(nrAsc);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ nrAsc;\ i++)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fg[i]\ =\ 0;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ig[i]\ =\ 0;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ og[i]\ =\ 0;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[i]\ =\ 0;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ag[i]\ =\ 0;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state[i]\ =\ 0;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{//o\ coloana\ de\ num\_unit\_ascuns\ randuri,\ sau\ num\_unit\_ascuns\ x\ 1}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ std::vector<double>\ fg;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ std::vector<double>\ ig;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ std::vector<double>\ og;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ std::vector<double>\ out;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ std::vector<double>\ ag;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ std::vector<double>\ state;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \};}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{class\ }Gradient}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ Gradient()\{\}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ Gradient(\textcolor{keywordtype}{int}\ nrAsc)}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_state.resize(nrAsc);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_fg.resize(nrAsc);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_ig.resize(nrAsc);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_og.resize(nrAsc);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_ag.resize(nrAsc);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ resize(\textcolor{keywordtype}{int}\ nrAsc)}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_state.resize(nrAsc);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_fg.resize(nrAsc);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_ig.resize(nrAsc);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_og.resize(nrAsc);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ grd\_ag.resize(nrAsc);}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ std::vector<double>\ grd\_ag;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ std::vector<double>\ grd\_fg;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ std::vector<double>\ grd\_ig;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ std::vector<double>\ grd\_og;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ std::vector<double>\ grd\_state;}
+\DoxyCodeLine{00091\ \ \ \ \ \};}
+\DoxyCodeLine{00092\ \ \ \ \ Cell*\ cell\_gates;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ matrici\ cu\ num\_unit\_ascuns\ randuri\ si\ num\_intrari\ coloane.\ sau\ num\_unit\_ascuns\ x\ num\_intrari}}
+\DoxyCodeLine{00094\ \ \ \ \ std::vector<std::vector<double>>\ Wf;\ }
+\DoxyCodeLine{00095\ \ \ \ \ std::vector<std::vector<double>>\ Wi;\ }
+\DoxyCodeLine{00096\ \ \ \ \ std::vector<std::vector<double>>\ Wo;\ }
+\DoxyCodeLine{00097\ \ \ \ \ std::vector<std::vector<double>>\ Wa;\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ matrici\ de\ dimensiune\ num\_unit\_ascuns\ x\ num\_unit\_ascuns\ }}
+\DoxyCodeLine{00099\ \ \ \ \ std::vector<std::vector<double>>\ Uf;\ }
+\DoxyCodeLine{00100\ \ \ \ \ std::vector<std::vector<double>>\ Ui;\ }
+\DoxyCodeLine{00101\ \ \ \ \ std::vector<std::vector<double>>\ Uo;\ }
+\DoxyCodeLine{00102\ \ \ \ \ std::vector<std::vector<double>>\ Ua;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ o\ coloana\ de\ num\_unit\_ascuns\ randuri}}
+\DoxyCodeLine{00104\ \ \ \ \ std::vector<double>\ bf;}
+\DoxyCodeLine{00105\ \ \ \ \ std::vector<double>\ bi;}
+\DoxyCodeLine{00106\ \ \ \ \ std::vector<double>\ bo;}
+\DoxyCodeLine{00107\ \ \ \ \ std::vector<double>\ ba;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{class_interpolare}{Interpolare}}*\ sigmoid;}
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{class_interpolare}{Interpolare}}*\ tanh;}
+\DoxyCodeLine{00111\ \ \ \ \ \mbox{\hyperlink{class_xavier_normalised}{XavierNormalised}}*\ num\_generator;}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{double}\ CalcEroareTinta(std::vector<Test\_Vector>*\ test\_set);}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00118\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{class_l_s_t_m__cell_add729d85c296dadaf1413e777d2c60d7}{LSTM\_cell}}()\ }
+\DoxyCodeLine{00120\ \ \ \ \ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ num\_intrari\ =\ 0;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ num\_unit\_ascuns\ =\ 0;}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ num\_generator\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_xavier_normalised}{XavierNormalised}}(0,0);}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ sigmoid\ =\ \mbox{\hyperlink{class_interpolare_a097895f6dc033bbb2ecce49016f29eb9}{Interpolare::getSigmoid}}();\ tanh\ =\ \mbox{\hyperlink{class_interpolare_a85eaa8158b459aa749af52e4707c0ea1}{Interpolare::getTanh}}();}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ cell\_gates\ =\ \textcolor{keyword}{new}\ Cell();}
+\DoxyCodeLine{00127\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \mbox{\hyperlink{class_l_s_t_m__cell_a5880f01a0721eb0768d8a18a797c4c7c}{LSTM\_cell}}(\textcolor{keywordtype}{int}\ nrIn,\ \textcolor{keywordtype}{int}\ nrAsc)\ :\ num\_intrari(nrIn),\ num\_unit\_ascuns(nrAsc)}
+\DoxyCodeLine{00129\ \ \ \ \ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ cell\_gates\ =\ \textcolor{keyword}{new}\ Cell(nrAsc);}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ num\_generator\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_xavier_normalised}{XavierNormalised}}(nrIn,\ nrAsc);}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{//initializam\ ponderile\ la\ porti\ cu\ generatorul\ de\ numere\ ales.\ Initial\ folosim\ doar\ Xavier\ normalizat}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{comment}{//https://machinelearningmastery.com/weight-\/initialization-\/for-\/deep-\/learning-\/neural-\/networks/}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ https://arxiv.org/abs/1912.10454\ -\/\ "{}On\ the\ Initialization\ of\ Long\ Short-\/Term\ Memory\ Networks"{}\ de\ M.\ Ghazi\ et\ al.}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{comment}{//TODO:\ de\ creat\ diferite\ functii\ de\ initializare\ pentru\ LSTM,\ xavier,\ normalised\ xavier,\ orthogonal\ initialization.\ we\ will\ use\ normalised\ xavier.}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ Wf\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ Wi\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ Wo\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ Wa\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ Uf\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ Ui\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ Uo\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ Ua\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ bf\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ bi\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ bo\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ ba\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ sigmoid\ =\ \mbox{\hyperlink{class_interpolare_a097895f6dc033bbb2ecce49016f29eb9}{Interpolare::getSigmoid}}();\ tanh\ =\ \mbox{\hyperlink{class_interpolare_a85eaa8158b459aa749af52e4707c0ea1}{Interpolare::getTanh}}();}
+\DoxyCodeLine{00155\ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//TODO:\ de\ adaugat\ o\ initializare\ cu\ weights\ din\ vreun\ fisier\ salvat\ local\ format\ hd5.}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_l_s_t_m__cell_a7b3b5d9adc8fbd06c04dcf982eacff7f}{ForwardPass}}(std::vector<double>\ input);}
+\DoxyCodeLine{00160\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_l_s_t_m__cell_a7465154d235ec2717831aaf5b11f2e8b}{BackwardPass}}(Gradient*\ out\_grd\_gates,\ std::vector<double>\ expected,\ \textcolor{keyword}{const}\ Cell*\ \textcolor{keyword}{const}\ cell,\ \textcolor{keyword}{const}\ Cell*\ \textcolor{keyword}{const}\ cell\_ante,\ \textcolor{keyword}{const}\ Cell*\ \textcolor{keyword}{const}\ cell\_post,\ std::vector<double>\ delta\_out\_post);}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m__cell_a953c7b5a4dfb71481711aa91bd221f34}{Train}}(std::vector<double>\ in\_set,\ \textcolor{keywordtype}{int}\ stride,\ \textcolor{keywordtype}{double}\ lambda);}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ Functie\ care\ primeste\ un\ vector\ de\ valori,\ si\ il\ imparte\ in\ training\ set\ si\ test\ set\ dupa\ regula\ 70\%-\/30\%}}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m__cell_a12ee93a8214a31ba3e92aa9073981de5}{PrepareTraining}}(std::vector<double>\ in\_set,\ std::vector<Test\_Vector>*\ training\_set,\ std::vector<Test\_Vector>*\ test\_set,\ \textcolor{keywordtype}{int}\ stride);}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m__cell_a9172dc2e8302f38da37e19055512436d}{TrainLSTM}}(std::vector<Test\_Vector>\ test\_vect,\ \textcolor{keywordtype}{double}\ lambda);}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_l_s_t_m__cell_ab1b4406c31a9f5f3c11b2f275ec98d0a}{TestLSTM}}(std::vector<Test\_Vector>*\ test\_set);}
+\DoxyCodeLine{00167\ \};\ }
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ }
+
+\end{DoxyCode}

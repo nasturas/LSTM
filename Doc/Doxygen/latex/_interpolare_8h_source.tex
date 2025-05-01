@@ -1,0 +1,31 @@
+\doxysection{Interpolare.\+h}
+\hypertarget{_interpolare_8h_source}{}\label{_interpolare_8h_source}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/Interpolare.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/Interpolare.h}}
+\mbox{\hyperlink{_interpolare_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }Interpolare}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keywordtype}{int}\ dimVector\ =\ 200;}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{comment}{//vectorY\ e\ un\ vector\ de\ 200\ de\ elemente\ cu\ valorile\ functiei\ pentru\ interpolare.}}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{comment}{//presupunem\ ca\ pasul\ x\ al\ valorilor\ de\ intrare\ e\ 0.1\ de\ la\ -\/10\ la\ 10}}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{double}*\ vectorY;}
+\DoxyCodeLine{00011\ \ \ \ \ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{static}\ Interpolare*\ sigmoid;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{static}\ Interpolare*\ tanh;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ Interpolare()\ \{\ vectorY\ =\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00016\ \ \ \ \ Interpolare(\textcolor{keywordtype}{double}*\ vectorOut)\ \{\ vectorY\ =\ vectorOut;\ \}}
+\DoxyCodeLine{00017\ \ \ \ \ Interpolare(\textcolor{keyword}{const}\ Interpolare\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00018\ \ \ \ \ Interpolare\&\ operator=(\textcolor{keyword}{const}\ Interpolare\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ Interpolare*\ \mbox{\hyperlink{class_interpolare_a097895f6dc033bbb2ecce49016f29eb9}{getSigmoid}}();\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ Interpolare*\ \mbox{\hyperlink{class_interpolare_a85eaa8158b459aa749af52e4707c0ea1}{getTanh}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_interpolare_a76a4580a3aeb8aae3258e34c42e96467}{Output}}(\textcolor{keywordtype}{double}\ x);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_interpolare_ac3e8315848e6638fc9d1b316176a6ef6}{sigmoid\_derivata}}(\textcolor{keywordtype}{double}\ x)\ \{\ \textcolor{keywordflow}{return}\ x\ *\ (1\ -\/\ x);\ \}}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+
+\end{DoxyCode}

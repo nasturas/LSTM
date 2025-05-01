@@ -1,0 +1,155 @@
+\doxysection{LSTM\+\_\+cell Class Reference}
+\hypertarget{class_l_s_t_m__cell}{}\label{class_l_s_t_m__cell}\index{LSTM\_cell@{LSTM\_cell}}
+
+
+{\ttfamily \#include $<$LSTM\+\_\+cell.\+h$>$}
+
+
+
+Inheritance diagram for LSTM\+\_\+cell\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=161pt]{class_l_s_t_m__cell__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_l_s_t_m__cell_add729d85c296dadaf1413e777d2c60d7}{LSTM\+\_\+cell}} ()
+\item 
+\mbox{\hyperlink{class_l_s_t_m__cell_a5880f01a0721eb0768d8a18a797c4c7c}{LSTM\+\_\+cell}} (int nr\+In, int nr\+Asc)
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m__cell_a7b3b5d9adc8fbd06c04dcf982eacff7f}{Forward\+Pass}} (std\+::vector$<$ double $>$ input)
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m__cell_a7465154d235ec2717831aaf5b11f2e8b}{Backward\+Pass}} (Gradient \texorpdfstring{$\ast$}{*}out\+\_\+grd\+\_\+gates, std\+::vector$<$ double $>$ expected, const Cell \texorpdfstring{$\ast$}{*}const cell, const Cell \texorpdfstring{$\ast$}{*}const cell\+\_\+ante, const Cell \texorpdfstring{$\ast$}{*}const cell\+\_\+post, std\+::vector$<$ double $>$ delta\+\_\+out\+\_\+post)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m__cell_a953c7b5a4dfb71481711aa91bd221f34}{Train}} (std\+::vector$<$ double $>$ in\+\_\+set, int stride, double lambda)
+\begin{DoxyCompactList}\small\item\em Functie care antreneaza reteaua antrenamentul se opreste cand numarul de antrenament atingi un numar maxim -\/ masura de siguranta ca nu rulam la infinit sau cand aproximarea e mai buna decat 95\% din valoarea dorita. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_s_t_m__cell_a12ee93a8214a31ba3e92aa9073981de5}{Prepare\+Training}} (std\+::vector$<$ double $>$ in\+\_\+set, std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}training\+\_\+set, std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}test\+\_\+set, int stride)
+\begin{DoxyCompactList}\small\item\em Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70\%-\/30\%. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_s_t_m__cell_a9172dc2e8302f38da37e19055512436d}{Train\+LSTM}} (std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ test\+\_\+vect, double lambda)
+\item 
+double \mbox{\hyperlink{class_l_s_t_m__cell_ab1b4406c31a9f5f3c11b2f275ec98d0a}{Test\+LSTM}} (std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}test\+\_\+set)
+\begin{DoxyCompactList}\small\item\em Functie care testeaza daca dupa o epoca de antrenament celula LSTM merge si pentru setul de test returneaza eroare ca double eroarea totala e media sumelor patratelor erorilor fiecarui set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_l_s_t_m__cell_add729d85c296dadaf1413e777d2c60d7}\index{LSTM\_cell@{LSTM\_cell}!LSTM\_cell@{LSTM\_cell}}
+\index{LSTM\_cell@{LSTM\_cell}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{LSTM\_cell()}{LSTM\_cell()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_add729d85c296dadaf1413e777d2c60d7} 
+LSTM\+\_\+cell\+::\+LSTM\+\_\+cell (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{class_l_s_t_m__cell_add729d85c296dadaf1413e777d2c60d7_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_l_s_t_m__cell_a5880f01a0721eb0768d8a18a797c4c7c}\index{LSTM\_cell@{LSTM\_cell}!LSTM\_cell@{LSTM\_cell}}
+\index{LSTM\_cell@{LSTM\_cell}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{LSTM\_cell()}{LSTM\_cell()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_a5880f01a0721eb0768d8a18a797c4c7c} 
+LSTM\+\_\+cell\+::\+LSTM\+\_\+cell (\begin{DoxyParamCaption}\item[{int}]{nr\+In}{, }\item[{int}]{nr\+Asc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{class_l_s_t_m__cell_a5880f01a0721eb0768d8a18a797c4c7c_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_l_s_t_m__cell_a7465154d235ec2717831aaf5b11f2e8b}\index{LSTM\_cell@{LSTM\_cell}!BackwardPass@{BackwardPass}}
+\index{BackwardPass@{BackwardPass}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{BackwardPass()}{BackwardPass()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_a7465154d235ec2717831aaf5b11f2e8b} 
+std\+::vector$<$ double $>$ LSTM\+\_\+cell\+::\+Backward\+Pass (\begin{DoxyParamCaption}\item[{Gradient \texorpdfstring{$\ast$}{*}}]{out\+\_\+grd\+\_\+gates}{, }\item[{std\+::vector$<$ double $>$}]{expected}{, }\item[{const Cell \texorpdfstring{$\ast$}{*}const}]{cell}{, }\item[{const Cell \texorpdfstring{$\ast$}{*}const}]{cell\+\_\+ante}{, }\item[{const Cell \texorpdfstring{$\ast$}{*}const}]{cell\+\_\+post}{, }\item[{std\+::vector$<$ double $>$}]{delta\+\_\+out\+\_\+post}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_l_s_t_m__cell_a7b3b5d9adc8fbd06c04dcf982eacff7f}\index{LSTM\_cell@{LSTM\_cell}!ForwardPass@{ForwardPass}}
+\index{ForwardPass@{ForwardPass}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{ForwardPass()}{ForwardPass()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_a7b3b5d9adc8fbd06c04dcf982eacff7f} 
+std\+::vector$<$ double $>$ LSTM\+\_\+cell\+::\+Forward\+Pass (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{input}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_l_s_t_m__cell_a12ee93a8214a31ba3e92aa9073981de5}\index{LSTM\_cell@{LSTM\_cell}!PrepareTraining@{PrepareTraining}}
+\index{PrepareTraining@{PrepareTraining}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{PrepareTraining()}{PrepareTraining()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_a12ee93a8214a31ba3e92aa9073981de5} 
+void LSTM\+\_\+cell\+::\+Prepare\+Training (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{in\+\_\+set}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}}]{training\+\_\+set}{, }\item[{std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}}]{test\+\_\+set}{, }\item[{int}]{stride}{}\end{DoxyParamCaption})}
+
+
+
+Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70\%-\/30\%. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_l_s_t_m__cell_a12ee93a8214a31ba3e92aa9073981de5_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_l_s_t_m__cell_ab1b4406c31a9f5f3c11b2f275ec98d0a}\index{LSTM\_cell@{LSTM\_cell}!TestLSTM@{TestLSTM}}
+\index{TestLSTM@{TestLSTM}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{TestLSTM()}{TestLSTM()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_ab1b4406c31a9f5f3c11b2f275ec98d0a} 
+double LSTM\+\_\+cell\+::\+Test\+LSTM (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}}]{test\+\_\+set}{}\end{DoxyParamCaption})}
+
+
+
+Functie care testeaza daca dupa o epoca de antrenament celula LSTM merge si pentru setul de test returneaza eroare ca double eroarea totala e media sumelor patratelor erorilor fiecarui set. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_l_s_t_m__cell_ab1b4406c31a9f5f3c11b2f275ec98d0a_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_l_s_t_m__cell_a953c7b5a4dfb71481711aa91bd221f34}\index{LSTM\_cell@{LSTM\_cell}!Train@{Train}}
+\index{Train@{Train}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{Train()}{Train()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_a953c7b5a4dfb71481711aa91bd221f34} 
+void LSTM\+\_\+cell\+::\+Train (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{in\+\_\+set}{, }\item[{int}]{stride}{, }\item[{double}]{lambda}{}\end{DoxyParamCaption})}
+
+
+
+Functie care antreneaza reteaua antrenamentul se opreste cand numarul de antrenament atingi un numar maxim -\/ masura de siguranta ca nu rulam la infinit sau cand aproximarea e mai buna decat 95\% din valoarea dorita. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_l_s_t_m__cell_a953c7b5a4dfb71481711aa91bd221f34_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_l_s_t_m__cell_a9172dc2e8302f38da37e19055512436d}\index{LSTM\_cell@{LSTM\_cell}!TrainLSTM@{TrainLSTM}}
+\index{TrainLSTM@{TrainLSTM}!LSTM\_cell@{LSTM\_cell}}
+\doxysubsubsection{\texorpdfstring{TrainLSTM()}{TrainLSTM()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m__cell_a9172dc2e8302f38da37e19055512436d} 
+void LSTM\+\_\+cell\+::\+Train\+LSTM (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$}]{test\+\_\+vect}{, }\item[{double}]{lambda}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_l_s_t_m__cell_a9172dc2e8302f38da37e19055512436d_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_l_s_t_m__cell_8h}{LSTM\+\_\+cell.\+h}}\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_l_s_t_m__cell_8cpp}{LSTM\+\_\+cell.\+cpp}}\end{DoxyCompactItemize}

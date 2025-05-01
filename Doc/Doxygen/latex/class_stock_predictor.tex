@@ -1,0 +1,51 @@
+\doxysection{Stock\+Predictor Class Reference}
+\hypertarget{class_stock_predictor}{}\label{class_stock_predictor}\index{StockPredictor@{StockPredictor}}
+
+
+{\ttfamily \#include $<$Stock\+Predictor.\+h$>$}
+
+
+
+Inheritance diagram for Stock\+Predictor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=161pt]{class_stock_predictor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Stock\+Predictor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=161pt]{class_stock_predictor__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_l_s_t_m__cell}{LSTM\+\_\+cell}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_l_s_t_m__cell_add729d85c296dadaf1413e777d2c60d7}{LSTM\+\_\+cell}} ()
+\item 
+\mbox{\hyperlink{class_l_s_t_m__cell_a5880f01a0721eb0768d8a18a797c4c7c}{LSTM\+\_\+cell}} (int nr\+In, int nr\+Asc)
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m__cell_a7b3b5d9adc8fbd06c04dcf982eacff7f}{Forward\+Pass}} (std\+::vector$<$ double $>$ input)
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m__cell_a7465154d235ec2717831aaf5b11f2e8b}{Backward\+Pass}} (Gradient \texorpdfstring{$\ast$}{*}out\+\_\+grd\+\_\+gates, std\+::vector$<$ double $>$ expected, const Cell \texorpdfstring{$\ast$}{*}const cell, const Cell \texorpdfstring{$\ast$}{*}const cell\+\_\+ante, const Cell \texorpdfstring{$\ast$}{*}const cell\+\_\+post, std\+::vector$<$ double $>$ delta\+\_\+out\+\_\+post)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m__cell_a953c7b5a4dfb71481711aa91bd221f34}{Train}} (std\+::vector$<$ double $>$ in\+\_\+set, int stride, double lambda)
+\begin{DoxyCompactList}\small\item\em Functie care antreneaza reteaua antrenamentul se opreste cand numarul de antrenament atingi un numar maxim -\/ masura de siguranta ca nu rulam la infinit sau cand aproximarea e mai buna decat 95\% din valoarea dorita. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_s_t_m__cell_a12ee93a8214a31ba3e92aa9073981de5}{Prepare\+Training}} (std\+::vector$<$ double $>$ in\+\_\+set, std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}training\+\_\+set, std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}test\+\_\+set, int stride)
+\begin{DoxyCompactList}\small\item\em Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70\%-\/30\%. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_s_t_m__cell_a9172dc2e8302f38da37e19055512436d}{Train\+LSTM}} (std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ test\+\_\+vect, double lambda)
+\item 
+double \mbox{\hyperlink{class_l_s_t_m__cell_ab1b4406c31a9f5f3c11b2f275ec98d0a}{Test\+LSTM}} (std\+::vector$<$ \mbox{\hyperlink{class_test___vector}{Test\+\_\+\+Vector}} $>$ \texorpdfstring{$\ast$}{*}test\+\_\+set)
+\begin{DoxyCompactList}\small\item\em Functie care testeaza daca dupa o epoca de antrenament celula LSTM merge si pentru setul de test returneaza eroare ca double eroarea totala e media sumelor patratelor erorilor fiecarui set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_stock_predictor_8h}{Stock\+Predictor.\+h}}\end{DoxyCompactItemize}
