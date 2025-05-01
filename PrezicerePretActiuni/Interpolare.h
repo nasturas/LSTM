@@ -8,7 +8,8 @@ private:
 	//vectorY e un vector de 200 de elemente cu valorile functiei pentru interpolare.
 	//presupunem ca pasul x al valorilor de intrare e 0.1 de la -10 la 10
 	double* vectorY;
-	
+	static std::vector<double> vectorSigmoid;
+	static std::vector<double> vectorTanh;
 	static Interpolare* sigmoid;
 	static Interpolare* tanh;
 
