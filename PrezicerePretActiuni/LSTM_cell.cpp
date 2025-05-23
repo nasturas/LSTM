@@ -45,8 +45,8 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 
 		cell_gates->state[i] = cell_gates->fg[i] * cell_gates->state[i] + cell_gates->ig[i] * cell_gates->ag[i];
 		if (cell_gates->state[i] > 0)
-			//cell_gates->out[i] = cell_gates->og[i] * tanh->Output(cell_gates->state[i]);
-			cell_gates->out[i] = cell_gates->og[i] * cell_gates->state[i];
+			cell_gates->out[i] = cell_gates->og[i] * tanh->Output(cell_gates->state[i]);
+			//cell_gates->out[i] = cell_gates->og[i] * cell_gates->state[i];
 		else
 			cell_gates->out[i] = 0;
 
@@ -82,6 +82,7 @@ std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector
 		grd_out[i] = delta[i] + delta_out_post[i];
 		
 		grd_state[i] = grd_out[i] * cell->og[i] * (1 - tanh->Output(cell->state[i]) * tanh->Output(cell->state[i])) + cell_post->state[i] * cell_post->fg[i];
+
 		grd_ag[i] = grd_state[i] * cell->ig[i] * (1 - cell->ag[i] * cell->ag[i]);
 		grd_ig[i] = grd_state[i] * cell->ag[i] * cell->ig[i] * (1 - cell->ig[i]);
 		grd_fg[i] = grd_state[i] * cell_ante->state[i] * cell->fg[i] * (1 - cell->fg[i]);
@@ -313,7 +314,7 @@ void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 	double error = 0;
 	double eroare_tinta = 0;
 	int num_antrenari = 0;
-	EnvironmentData* env_data = EnvironmentData::getInstance(0,0,0);
+	EnvironmentData* env_data = EnvironmentData::getInstance(0,0,0, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
 
 	try {
 		PrepareTraining(in_set, &train_set, &test_set, stride);
@@ -330,7 +331,7 @@ void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 		} while (num_antrenari < env_data->getNumarMaximAntrenari() && error > eroare_tinta);
 
 		cout << "Am iesit din antrenament cu eroarea " << error<<" dupa numar de antrenament: "<<num_antrenari<<endl;
-
+		
 	}
 	catch (const invalid_argument e)
 	{
@@ -348,21 +349,11 @@ double LSTM_cell::TestLSTM(std::vector<Test_Vector>* test_set)
 	double error = 0.0;
 	double error_pas = 0.0;
 	double err_i = 0.0;
-	
+	const ILossFunction* lossFunction = EnvironmentData::getInstance(0,0,0,DataNormalisationStyle::Logaritm,LossFunctionStyle::MSE)->GetLossFunction();
 	for(Test_Vector v : *test_set)
 	{
 		vector<double> out = ForwardPass(v.get_Test_Vector());
-		//facem media patratului erorii pe iesiri
-		cout << "Testam: ";
-		for (int i=0; i < v.get_Dim_Rezultat(); i++)
-		{
-			err_i = v.get_Rezultat_Elem(i) - out[i];
-			error_pas += err_i * err_i;
-			cout << out[i] << "|"<< v.get_Rezultat_Elem(i)<<" ";
-		}
-		cout << endl;
-		error_pas /= v.get_Dim_Rezultat();
-		error_pas = sqrt(error_pas);
+		error_pas = lossFunction->GetLoss(v.get_Rezultat_Vector(), out);
 			//adaugam eroarea pasului la eroarea generala
 		error += error_pas * error_pas;
 	}
@@ -377,7 +368,7 @@ double LSTM_cell::CalcEroareTinta(std::vector<Test_Vector>* test_set)
 	double error = 0.0;
 	double error_pas = 0.0;
 	double err_i = 0.0;
-	EnvironmentData* envData = EnvironmentData::getInstance(0, 0,0);
+	EnvironmentData* envData = EnvironmentData::getInstance(0, 0,0, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
 
 	for (Test_Vector v : *test_set)
 	{

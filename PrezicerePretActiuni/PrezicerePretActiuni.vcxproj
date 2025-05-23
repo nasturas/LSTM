@@ -128,20 +128,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnvironmentData.cpp" />
+    <ClCompile Include="IDataNormalisation.cpp" />
+    <ClCompile Include="ILossFunction.cpp" />
     <ClCompile Include="Interpolare.cpp" />
+    <ClCompile Include="LogaritmNormalisation.cpp" />
     <ClCompile Include="LSTM_cell.cpp" />
+    <ClCompile Include="MeanSquareError.cpp" />
     <ClCompile Include="PrezicerePretActiuni.cpp" />
     <ClCompile Include="StockPredictor.cpp" />
     <ClCompile Include="Test_Vector.cpp" />
     <ClCompile Include="XavierNormalised.cpp" />
+    <ClCompile Include="ZScoreNormalisation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnvironmentData.h" />
+    <ClInclude Include="IDataNormalisation.h" />
+    <ClInclude Include="ILossFunction.h" />
     <ClInclude Include="Interpolare.h" />
+    <ClInclude Include="LogaritmNormalisation.h" />
     <ClInclude Include="LSTM_cell.h" />
+    <ClInclude Include="MeanSquareError.h" />
     <ClInclude Include="StockPredictor.h" />
     <ClInclude Include="Test_Vector.h" />
     <ClInclude Include="XavierNormalised.h" />
+    <ClInclude Include="ZScoreNormalisation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

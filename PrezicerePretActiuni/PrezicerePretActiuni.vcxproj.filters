@@ -36,6 +36,21 @@
     <ClCompile Include="EnvironmentData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IDataNormalisation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogaritmNormalisation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZScoreNormalisation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ILossFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MeanSquareError.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LSTM_cell.h">
@@ -54,6 +69,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EnvironmentData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDataNormalisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogaritmNormalisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZScoreNormalisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ILossFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeanSquareError.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
