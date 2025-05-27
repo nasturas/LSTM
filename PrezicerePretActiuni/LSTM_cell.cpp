@@ -57,7 +57,6 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 //functia de calcul al erorilor prin porti si a erorii aparute la iesirea fiecarui pas.
 // folosim https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
 // t_post e in loc de t+1, t_ante e in loc de t-1
-// TODO: codu poate fi imbunatatit ca lizibilitate daca facem o clasa matrice cu operatii de inmultire si adunare.. nu stiu cat de mult ajuta si la executie
 std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post)
 {
 	std::vector<double> delta(num_unit_ascuns, 0.0);
@@ -321,14 +320,14 @@ void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 		eroare_tinta = CalcEroareTinta(&test_set);
 		cout << "eroarea tinta e " << eroare_tinta << endl;
 		do {
-			//while(i < nr_max_epoc && error scade - sau nu creste de 3 ori? consec) 
+			 
 			TrainLSTM(train_set, lambda);
 
 			//acum testam daca aceasta epoca de antrenament a fost indeajuns.
 			error = TestLSTM(&test_set);
 			num_antrenari++;
-			cout << error << endl;
-		} while (num_antrenari < env_data->getNumarMaximAntrenari() && error > eroare_tinta);
+			cout << "epoca:"<<num_antrenari<<"loss: "<< error << endl;
+		} while (num_antrenari < env_data->getNumarMaximAntrenari()  && error > eroare_tinta);
 
 		cout << "Am iesit din antrenament cu eroarea " << error<<" dupa numar de antrenament: "<<num_antrenari<<endl;
 		
@@ -347,44 +346,35 @@ void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 double LSTM_cell::TestLSTM(std::vector<Test_Vector>* test_set)
 {
 	double error = 0.0;
-	double error_pas = 0.0;
-	double err_i = 0.0;
+
+	vector<vector<double>> predicted_out;
+	vector<vector<double>> true_out;
 	const ILossFunction* lossFunction = EnvironmentData::getInstance(0,0,0,DataNormalisationStyle::Logaritm,LossFunctionStyle::MSE)->GetLossFunction();
 	for(Test_Vector v : *test_set)
 	{
 		vector<double> out = ForwardPass(v.get_Test_Vector());
-		error_pas = lossFunction->GetLoss(v.get_Rezultat_Vector(), out);
-			//adaugam eroarea pasului la eroarea generala
-		error += error_pas * error_pas;
+		predicted_out.push_back(out);
+		true_out.push_back(v.get_Rezultat_Vector());
 	}
-	error /= test_set->size();
-	error = sqrt(error);
-	
+	error = lossFunction->GetLoss(true_out, predicted_out);
+
 	return error;
 }
 
 double LSTM_cell::CalcEroareTinta(std::vector<Test_Vector>* test_set)
 {
 	double error = 0.0;
-	double error_pas = 0.0;
-	double err_i = 0.0;
 	EnvironmentData* envData = EnvironmentData::getInstance(0, 0,0, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
 
 	for (Test_Vector v : *test_set)
 	{
-		//calculam eroarea pentru o estimare care ar fi procent_precizie_antrenament% din valoarea reala
 		for (int i = 0; i < v.get_Dim_Rezultat(); i++)
 		{
-			err_i = v.get_Rezultat_Elem(i) * (100-envData->getProcentPrecizieAntrenament()) / 100;
-			error_pas += err_i * err_i;
+			error += pow(v.get_Rezultat_Elem(i), 2);
 		}
-		error_pas /= v.get_Dim_Rezultat();
-		error_pas = sqrt(error_pas);
-		//adaugam eroarea pasului la eroarea generala
-		error += error_pas * error_pas;
+		
 	}
-	error /= test_set->size();
-	error = sqrt(error);
+	error = error * (100 - envData->getProcentPrecizieAntrenament()) / 100 / test_set->size();
 
 	return error;
 }

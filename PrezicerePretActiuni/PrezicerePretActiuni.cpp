@@ -50,7 +50,6 @@ int main()
 	//cout << "Eroare e: "<< lstm_test->TestLSTM(&test_set);
 
 	lstm_test->Train(vector_normalisat, 2, envData->getLamda());
-	cout<<"haha: "<< envData->getNormalisation()->Denormalise(vector_de_date,lstm_test->ForwardPass(envData->getNormalisation()->Normalise({11.0,12.0}))[0]);
 }
 
 //TODO de gasit o metoda de a masura relevant eroarea. 
