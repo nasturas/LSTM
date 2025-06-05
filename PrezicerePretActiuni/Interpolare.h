@@ -21,6 +21,7 @@ public:
 	static Interpolare* getSigmoid(); 
 	static Interpolare* getTanh();
 	double Output(double x);
-	double sigmoid_derivata(double x) { return x * (1 - x); }
+	double sigmoid_derivata(double x) { double r = Output(x); return r * (1 - r); }
+	double tanh_derivata(double x) { double r = Output(x);  return (1-r*r); }
 };
 

@@ -6,50 +6,39 @@
 #include "XavierNormalised.h"
 #include "Test_Vector.h"
 #include "EnvironmentData.h"
-#include "LSTM_cell.h"
+#include "LSTMLayer.h"
 using namespace std;
 
-EnvironmentData* envData = EnvironmentData::getInstance(200, 95, 0.2, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
+EnvironmentData* envData = EnvironmentData::getInstance(200, 95, 0.1, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
 int main()
 {
 	
-	LSTM_cell* lstm_test = new LSTM_cell(2, 1);
+	LSTMLayer* lstm_test = new LSTMLayer(1, 1, 2);
 	vector<double> vector_de_date = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
 	vector<double> vector_normalisat(vector_de_date.size(), 0.0);
 	vector_normalisat = envData->getNormalisation()->Normalise(vector_de_date);
+	vector<vector<double>> data_in(vector_de_date.size(), std::vector<double>(1,0.0));
+	for(int i=0; i<vector_de_date.size();i++)
+		data_in[i][0] = vector_normalisat[i];
 	vector<Test_Vector> training_set, test_set;
 	try {
-		lstm_test->PrepareTraining(vector_normalisat, &training_set, &test_set, 2);
-		for (Test_Vector t : training_set)
-		{
-			for (double d : t.get_Test_Vector())
-				cout << d << " ";
-			cout << " - ";
-			for (double d : t.get_Rezultat_Vector())
-				cout << d << " ";
-			cout << endl;
-		}
-		cout << "miu" << endl;
-		for (Test_Vector t : test_set)
-		{
-			for (double d : t.get_Test_Vector())
-				cout << d << " ";
-			cout << " - ";
-			for (double d : t.get_Rezultat_Vector())
-				cout << d << " ";
-			cout << endl;
-		}
+		lstm_test->PrepareTraining(data_in, &training_set, &test_set, 2);
 	}
 	catch(const invalid_argument& e)
 	{ 
 		cout << "Invalid arg: " << e.what() << endl;
 	}
 	
-	//lstm_test->ForwardPass(training_set[0].get_Test_Vector());
-	//lstm_test->TrainLSTM(training_set, envData->getLamda());
-	//cout << "Eroare e: "<< lstm_test->TestLSTM(&test_set);
-
-	lstm_test->Train(vector_normalisat, 2, envData->getLamda());
+	try 
+	{
+		lstm_test->Train(data_in, 2, envData->getLamda());
+		vector<double> myvar=lstm_test->ForwardPass({ 12,13 });
+		cout<<envData->getNormalisation()->Denormalise({ 12,13 },myvar[0]);
+	}
+	catch (const invalid_argument e)
+	{
+		cout << "Invalid arg: " << e.what() << endl;
+	}
 }
 
 //TODO de gasit o metoda de a masura relevant eroarea. 

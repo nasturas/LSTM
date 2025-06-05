@@ -25,3 +25,15 @@ double MeanSquareError::GetLoss(vector<vector<double>> y_true, vector<vector<dou
 	}
 	return   mean / y_true.size();
 }
+
+vector<double> MeanSquareError::GetLossDerivate(vector<double> y_true, vector<double> y_pred) const
+{
+	vector<double> deriv(y_true.size());
+
+	for (int i = 0; i < y_true.size(); i++)
+	{
+		deriv[i] = (y_pred[i] - y_true[i]) / y_true.size();
+	}
+	return deriv;
+
+}

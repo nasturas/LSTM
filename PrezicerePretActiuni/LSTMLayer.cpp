@@ -1,29 +1,35 @@
-#include "LSTM_cell.h"
+#include "LSTMLayer.h"
 #include "Test_Vector.h"
 #include "EnvironmentData.h"
 #include <string>
 #include <iostream>
+#include <iomanip>
+#include "LstmGradients.h"
+
 using namespace std;
 //executa intrarea si intoarce un output
-std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
+std::vector<double> LSTMLayer::ForwardPass(std::vector<double> x)
 {
 	double temp_forget;
 	double temp_input;
 	double temp_output;
 	double temp_activare;
+
+
 	for (int i = 0; i < num_unit_ascuns; i++)
 	{
 		temp_forget = 0;
 		temp_input = 0;
 		temp_output = 0;
 		temp_activare = 0;
-		for (int k = 0; k < num_intrari; k++)
+		for (int k = 0; k < num_feature; k++)
 		{
 			temp_forget += Wf[i][k] * x[k];
 			temp_input += Wi[i][k] * x[k];
 			temp_output += Wo[i][k] * x[k];
 			temp_activare += Wa[i][k] * x[k];
 		}
+
 		for (int n = 0; n < num_unit_ascuns; n++)
 		{
 			temp_forget += Uf[i][n] * cell_gates->out[n];
@@ -31,10 +37,16 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 			temp_output += Uo[i][n] * cell_gates->out[n];
 			temp_activare += Ua[i][n] * cell_gates->out[n];
 		}
+
 		temp_forget += bf[i];
 		temp_input += bi[i];
 		temp_output += bo[i];
 		temp_activare += ba[i];
+
+		cell_gates->fg_p[i] = temp_forget;
+		cell_gates->ig_p[i] = temp_input;
+		cell_gates->og_p[i] = temp_output;
+		cell_gates->ag_p[i] = temp_activare;
 
 		cell_gates->fg[i] = sigmoid->Output(temp_forget);
 		cell_gates->ig[i] = sigmoid->Output(temp_input);
@@ -42,77 +54,16 @@ std::vector<double> LSTM_cell::ForwardPass(std::vector<double> x)
 		cell_gates->ag[i] = tanh->Output(temp_activare);
 
 
-
+			
 		cell_gates->state[i] = cell_gates->fg[i] * cell_gates->state[i] + cell_gates->ig[i] * cell_gates->ag[i];
 		if (cell_gates->state[i] > 0)
 			cell_gates->out[i] = cell_gates->og[i] * tanh->Output(cell_gates->state[i]);
-			//cell_gates->out[i] = cell_gates->og[i] * cell_gates->state[i];
 		else
 			cell_gates->out[i] = 0;
 
 	}
 	return cell_gates->out;
 }
-
-//functia de calcul al erorilor prin porti si a erorii aparute la iesirea fiecarui pas.
-// folosim https://medium.com/@aidangomez/let-s-do-this-f9b699de31d9
-// t_post e in loc de t+1, t_ante e in loc de t-1
-std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector<double> expected, const Cell* const cell, const Cell* const cell_ante, const Cell* const cell_post, std::vector<double> delta_out_post)
-{
-	std::vector<double> delta(num_unit_ascuns, 0.0);
-	std::vector<double> grd_out(num_unit_ascuns, 0.0);
-	std::vector<double> grd_state(num_unit_ascuns, 0.0);
-	std::vector<double> grd_ag(num_unit_ascuns, 0.0);
-	std::vector<double> grd_ig(num_unit_ascuns, 0.0);
-	std::vector<double> grd_fg(num_unit_ascuns, 0.0);
-	std::vector<double> grd_og(num_unit_ascuns, 0.0);
-	std::vector<double> grd_out_ante(num_unit_ascuns, 0.0);
-#ifdef STACKED_LSTM
-	//lasam pentru extindere si la cazul de LSTM stacked.
-	std::vector<double> grd_x;
-#endif
-
-
-	for (int i = 0; i < num_unit_ascuns; i++)
-	{
-		//delta este diferenta dintre iesirea din LSTM si valoarea corecta din vectorul de invatare.
-		delta[i] = cell->out[i] - expected[i];
-		//grd_out este suma dintre delta si delta_out calculat din pasul viitor.
-		grd_out[i] = delta[i] + delta_out_post[i];
-		
-		grd_state[i] = grd_out[i] * cell->og[i] * (1 - tanh->Output(cell->state[i]) * tanh->Output(cell->state[i])) + cell_post->state[i] * cell_post->fg[i];
-
-		grd_ag[i] = grd_state[i] * cell->ig[i] * (1 - cell->ag[i] * cell->ag[i]);
-		grd_ig[i] = grd_state[i] * cell->ag[i] * cell->ig[i] * (1 - cell->ig[i]);
-		grd_fg[i] = grd_state[i] * cell_ante->state[i] * cell->fg[i] * (1 - cell->fg[i]);
-		grd_og[i] = grd_out[i] * tanh->Output(cell->state[i]) * cell->og[i] * (1 - cell->og[i]);
-		grd_out_ante[i] = 0;
-		for (int j = 0; j < num_unit_ascuns; j++)
-		{
-			grd_out_ante[i] += grd_ag[i] * Ua[i][j] + grd_ig[i] * Ui[i][j] + grd_fg[i] * Uf[i][j] + grd_og[i] * Uo[i][j];
-		}
-	}
-
-#ifdef STACKED_LSTM 
-	for (int i = 0; i < num_intrari; i++)
-	{
-		grd_x[i] = 0;
-		for (int j = 0; j < num_unit_ascuns; j++)
-		{
-			grd_x[i] += grd_ag[j] * Wa[j][i] + grd_ig[j] * Wi[j][i] + grd_fg[j] * Wf[j][i] + grd_og[j] * Wo[j][i];
-		}
-
-	}
-#endif
-
-	out_grd_gates->grd_ag = grd_ag;
-	out_grd_gates->grd_fg = grd_fg;
-	out_grd_gates->grd_ig = grd_ig;
-	out_grd_gates->grd_og = grd_og;
-	out_grd_gates->grd_state = grd_state;
-	return grd_out_ante;
-}
-
 
 /*
 * Luam din input care e un vector cu toate valorile actiunii de la inchiderea bursei pentru fiecare zi.
@@ -122,14 +73,13 @@ std::vector<double> LSTM_cell::BackwardPass(Gradient* out_grd_gates, std::vector
 * 
 * Aici e doar o trecere pentru o epoca.
 */
-void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
+void LSTMLayer::TrainLSTM(Test_Vector test_vect, double lambda)
 {
-	std::vector<Cell> gates;
-	std::vector<Gradient> grd_gates;
-	std::vector<std::vector<double>> grd_Wa(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
-	std::vector<std::vector<double>> grd_Wf(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
-	std::vector<std::vector<double>> grd_Wi(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
-	std::vector<std::vector<double>> grd_Wo(num_unit_ascuns, std::vector<double>(num_intrari, 0.0));
+
+	std::vector<std::vector<double>> grd_Wa(num_unit_ascuns, std::vector<double>(num_feature, 0.0));
+	std::vector<std::vector<double>> grd_Wf(num_unit_ascuns, std::vector<double>(num_feature, 0.0));
+	std::vector<std::vector<double>> grd_Wi(num_unit_ascuns, std::vector<double>(num_feature, 0.0));
+	std::vector<std::vector<double>> grd_Wo(num_unit_ascuns, std::vector<double>(num_feature, 0.0));
 
 	std::vector<std::vector<double>> grd_Ua(num_unit_ascuns, std::vector<double>(num_unit_ascuns, 0.0));
 	std::vector<std::vector<double>> grd_Uf(num_unit_ascuns, std::vector<double>(num_unit_ascuns, 0.0));
@@ -141,82 +91,50 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 	std::vector<double> grd_bi(num_unit_ascuns, 0.0);
 	std::vector<double> grd_bo(num_unit_ascuns, 0.0);
 
-	std::vector<double> delta_out;
+	const ILossFunction* lossFunction = EnvironmentData::getInstance(0,0,1,DataNormalisationStyle::Logaritm,LossFunctionStyle::MSE)->GetLossFunction();
 
-	Cell* gate_post = new Cell(num_unit_ascuns);
-	Cell* gate_ante;
-	
-	int T = (int)test_vect.size();
+	vector<vector<double>> delta_loss(num_intrari);
+
+	int T = (int)test_vect.get_Dim_Test();
 	
 	//intai facem forward un T numar de pasi
-	gates.resize(T);
-	grd_gates.resize(T);
+	gates = new vector<LSTMCell>;
+	gates->resize(T);
 	for (int t = 0; t < T; t++)
 	{
-		(void)ForwardPass(test_vect[t].get_Test_Vector());
-		gates[t].resize(num_unit_ascuns);
-		grd_gates[t].resize(num_unit_ascuns);
+		(void)ForwardPass(test_vect.get_Test_Vector()[t]);
+		(*gates)[t].resize(num_unit_ascuns);
 		for (int i = 0; i < num_unit_ascuns; i++)
 		{
-			gates[t].ag[i] = cell_gates->ag[i];
-			gates[t].fg[i] = cell_gates->fg[i];
-			gates[t].ig[i] = cell_gates->ig[i];
-			gates[t].og[i] = cell_gates->og[i];
-			gates[t].state[i] = cell_gates->state[i];
-			gates[t].out[i] = cell_gates->out[i];
+			(*gates)[t].ag[i] = cell_gates->ag[i];
+			(*gates)[t].fg[i] = cell_gates->fg[i];
+			(*gates)[t].ig[i] = cell_gates->ig[i];
+			(*gates)[t].og[i] = cell_gates->og[i];
+			(*gates)[t].state[i] = cell_gates->state[i];
+			(*gates)[t].out[i] = cell_gates->out[i];
 		}
-	}
-	//apoi calculam grd inapoi.
-	delta_out.resize(num_unit_ascuns);
-	for (int i = 0; i < num_unit_ascuns; i++)
-	{
-		delta_out[i] = 0;
-	}
-	
-	for (int t = T-1; t >=0; t--)
-	{
-		//TODO: rescriem BackwardPass ca sa scrie in argument nu in return value pentru delta_out.
-		if (t == 0) 
-		{
-			gate_ante = new Cell(num_unit_ascuns);
-		}
-		else
-		{
-			gate_ante = &gates[t - 1];
-		}
-		delta_out = BackwardPass(&grd_gates[t], test_vect[t].get_Rezultat_Vector(), &gates[t], gate_ante, gate_post, delta_out);
-		
-		if (t == 0)
-		{
-			delete gate_ante;
-		}
-		else
-		{
-			if (t == T - 1)
-			{
-				delete gate_post;
-			}
-		}
-		gate_post = &gates[t];
+		delta_loss[t] = lossFunction->GetLossDerivate(test_vect.get_Rezultat_Vector(), cell_gates->out);
 		
 	}
+
+	vector<LstmGradients> grd_gates = BackwardPass(delta_loss);
 	//calculam gradient pentru weights
-	//formula e grd_wa = Sum ( grd_a * x ). grd_a e un vector de dimensiune num_unit_ascuns, x e un vector de dimensiune num_intrari 
+	//formula e grd_wa = Sum ( grd_a * x ). grd_a e un vector de dimensiune num_unit_ascuns, x e un vector de dimensiune num_feature 
 	for (int t = 0; t < T; t++)
 	{
 		for (int i = 0; i < num_unit_ascuns; i++)
 		{
-			for (int j = 0; j < num_intrari; j++)
+			for (int j = 0; j < num_feature; j++)
 			{
-				grd_Wa[i][j] += grd_gates[t].grd_ag[i] * test_vect[t].get_Test_Elem(j);
-				grd_Wf[i][j] += grd_gates[t].grd_fg[i] * test_vect[t].get_Test_Elem(j);
-				grd_Wi[i][j] += grd_gates[t].grd_ig[i] * test_vect[t].get_Test_Elem(j);
-				grd_Wo[i][j] += grd_gates[t].grd_og[i] * test_vect[t].get_Test_Elem(j);
+				grd_Wa[i][j] += grd_gates[t].grd_ag_p[i] * test_vect.get_Test_Elem(t)[j];
+				grd_Wf[i][j] += grd_gates[t].grd_fg_p[i] * test_vect.get_Test_Elem(t)[j];
+				grd_Wi[i][j] += grd_gates[t].grd_ig_p[i] * test_vect.get_Test_Elem(t)[j];
+				grd_Wo[i][j] += grd_gates[t].grd_og_p[i] * test_vect.get_Test_Elem(t)[j];
 			}
-			grd_ba[i] += grd_gates[t].grd_ag[i];
-			grd_bf[i] += grd_gates[t].grd_fg[i];
-			grd_bi[i] += grd_gates[t].grd_ig[i];
-			grd_bo[i] += grd_gates[t].grd_og[i];
+			grd_ba[i] += grd_gates[t].grd_ag_p[i];
+			grd_bf[i] += grd_gates[t].grd_fg_p[i];
+			grd_bi[i] += grd_gates[t].grd_ig_p[i];
+			grd_bo[i] += grd_gates[t].grd_og_p[i];
 		}
 	}
 
@@ -226,17 +144,17 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 		{
 			for (int j = 0; j < num_unit_ascuns; j++)
 			{
-				grd_Ua[i][j] += grd_gates[t+1].grd_ag[i] * gates[t].out[j];
-				grd_Uf[i][j] += grd_gates[t+1].grd_fg[i] * gates[t].out[j];
-				grd_Ui[i][j] += grd_gates[t+1].grd_ig[i] * gates[t].out[j];
-				grd_Uo[i][j] += grd_gates[t+1].grd_og[i] * gates[t].out[j];
+				grd_Ua[i][j] += grd_gates[t+1].grd_ag_p[i] * (*gates)[t].out[j];
+				grd_Uf[i][j] += grd_gates[t+1].grd_fg_p[i] * (*gates)[t].out[j];
+				grd_Ui[i][j] += grd_gates[t+1].grd_ig_p[i] * (*gates)[t].out[j];
+				grd_Uo[i][j] += grd_gates[t+1].grd_og_p[i] * (*gates)[t].out[j];
 			}
 		}
 	}
 	//ajustam cu viteza de invatare - lambda
 	for (int i = 0; i < num_unit_ascuns; i++)
 	{
-		for (int j = 0; j < num_intrari; j++)
+		for (int j = 0; j < num_feature; j++)
 		{
 			Wa[i][j] -= lambda * grd_Wa[i][j];
 			Wf[i][j] -= lambda * grd_Wf[i][j];
@@ -262,13 +180,13 @@ void LSTM_cell::TrainLSTM(std::vector<Test_Vector> test_vect, double lambda)
 /**
 * @brief Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70%-30%
 */
-void LSTM_cell::PrepareTraining(std::vector<double> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride)
+void LSTMLayer::PrepareTraining(std::vector<std::vector<double>> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride)
 {
 	Test_Vector tmp_set;
 	//verificam daca marimea setului e destul de mare.
 	if (num_intrari*2+num_unit_ascuns > in_set.size() * 30 / 100)
 	{
-		throw std::invalid_argument("Marimea setului de date este prea mica! Incearca sa dai un set de date de cel putin "+ std::to_string((num_intrari * 2 + num_unit_ascuns)*10/3+1));
+		throw std::invalid_argument("Marimea setului de date este prea mica! Incearca sa dai un set de date de cel putin "+ std::to_string((num_feature * 2 + num_unit_ascuns)*10/3+1));
 	}
 	
 	// calculam numarul de elemente care ar fi 70%
@@ -306,7 +224,7 @@ void LSTM_cell::PrepareTraining(std::vector<double> in_set, std::vector<Test_Vec
 * antrenamentul se opreste cand numarul de antrenament atingi un numar maxim - masura de siguranta ca nu rulam la infinit
 * sau cand aproximarea e mai buna decat 95% din valoarea dorita.
 */
-void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
+void LSTMLayer::Train(vector<vector<double>> in_set, int stride, double lambda)
 {
 	std::vector<Test_Vector> train_set;
 	std::vector<Test_Vector> test_set;
@@ -315,14 +233,16 @@ void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 	int num_antrenari = 0;
 	EnvironmentData* env_data = EnvironmentData::getInstance(0,0,0, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
 
-	try {
+	try 
+	{
 		PrepareTraining(in_set, &train_set, &test_set, stride);
 		eroare_tinta = CalcEroareTinta(&test_set);
-		cout << "eroarea tinta e " << eroare_tinta << endl;
+		cout << "eroarea tinta e " << std::fixed << std::setprecision(5) << eroare_tinta << endl;
 		do {
-			 
-			TrainLSTM(train_set, lambda);
-
+			for (Test_Vector tv : train_set)
+			{
+				TrainLSTM(tv, lambda);
+			}
 			//acum testam daca aceasta epoca de antrenament a fost indeajuns.
 			error = TestLSTM(&test_set);
 			num_antrenari++;
@@ -343,16 +263,18 @@ void LSTM_cell::Train(std::vector<double> in_set, int stride, double lambda)
 * returneaza eroare ca double
 * eroarea totala e media sumelor patratelor erorilor fiecarui set. 
 */
-double LSTM_cell::TestLSTM(std::vector<Test_Vector>* test_set)
+double LSTMLayer::TestLSTM(std::vector<Test_Vector>* test_set)
 {
 	double error = 0.0;
 
 	vector<vector<double>> predicted_out;
 	vector<vector<double>> true_out;
 	const ILossFunction* lossFunction = EnvironmentData::getInstance(0,0,0,DataNormalisationStyle::Logaritm,LossFunctionStyle::MSE)->GetLossFunction();
+	vector<double> out;
 	for(Test_Vector v : *test_set)
 	{
-		vector<double> out = ForwardPass(v.get_Test_Vector());
+		for(int t=0; t<num_intrari;t++)
+			out = ForwardPass(v.get_Test_Vector()[t]);
 		predicted_out.push_back(out);
 		true_out.push_back(v.get_Rezultat_Vector());
 	}
@@ -361,20 +283,68 @@ double LSTM_cell::TestLSTM(std::vector<Test_Vector>* test_set)
 	return error;
 }
 
-double LSTM_cell::CalcEroareTinta(std::vector<Test_Vector>* test_set)
+double LSTMLayer::CalcEroareTinta(std::vector<Test_Vector>* test_set)
 {
 	double error = 0.0;
 	EnvironmentData* envData = EnvironmentData::getInstance(0, 0,0, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
-
-	for (Test_Vector v : *test_set)
+	double procent_error = (100 - envData->getProcentPrecizieAntrenament()) / 100.0;
+	for (Test_Vector tc : (*test_set))
 	{
-		for (int i = 0; i < v.get_Dim_Rezultat(); i++)
+		for (double r : tc.get_Rezultat_Vector())
 		{
-			error += pow(v.get_Rezultat_Elem(i), 2);
+			error += r * procent_error*r * procent_error;
 		}
-		
 	}
-	error = error * (100 - envData->getProcentPrecizieAntrenament()) / 100 / test_set->size();
+	error = error / ((*test_set).size() * (*test_set)[0].get_Dim_Rezultat());
 
 	return error;
+}
+
+vector<LstmGradients> LSTMLayer::BackwardPass(vector<vector<double>> &deltaLoss)
+{
+
+	vector<LstmGradients> gradients(num_intrari);
+	vector<double> grd_out(num_unit_ascuns, 0.0);
+
+#ifdef STACKED_LSTM
+	//lasam pentru extindere si la cazul de LSTM stacked.
+	std::vector<double> grd_x;
+#endif
+	
+	for (int t = num_intrari-1; t >=0; t--)
+	{
+		gradients[t].resize(num_unit_ascuns);
+		for (int i = 0; i < num_unit_ascuns; i++)
+		{
+			grd_out[i] += deltaLoss[t][i];
+		}
+		if (t < num_intrari-1)
+		{
+			//transpusa matricei U.
+			for (int j = 0; j < num_unit_ascuns; j++)
+			{
+				for (int i = 0; i < num_unit_ascuns; i++)
+				{
+					grd_out[i] += Ua[j][i] * sigmoid ->Derivate((*gates)[t + 1].ag_p[j]) * gradients[t + 1].grd_ag_p[j];
+					grd_out[i] += Ui[j][i] * sigmoid->Derivate((*gates)[t + 1].ig_p[j]) * gradients[t+1].grd_ig_p[j];
+					grd_out[i] += Uf[j][i] * sigmoid->Derivate((*gates)[t + 1].fg_p[j]) * gradients[t+1].grd_fg_p[j];
+					grd_out[i] += Uo[j][i] * sigmoid->Derivate((*gates)[t + 1].og_p[j]) * gradients[t+1].grd_og_p[j];
+				}
+			}
+		}
+		
+		for (int i = 0; i < num_unit_ascuns; i++)
+		{
+			gradients[t].grd_og_p[i] = grd_out[i] * tanh->Output((*gates)[t].state[i]) * sigmoid->Derivate((*gates)[t].og_p[i]);
+			gradients[t].grd_state[i] = grd_out[i] * (*gates)[t].og[i] * tanh->Derivate((*gates)[t].state[i]);
+			if (t > 0)
+				gradients[t].grd_fg_p[i] = gradients[t].grd_state[i] * (*gates)[t - 1].state[i] * sigmoid->Derivate((*gates)[t].fg_p[i]);
+			else
+				gradients[t].grd_fg_p[i] = 0;
+			gradients[t].grd_ig_p[i] = gradients[t].grd_state[i] * (*gates)[t].ag[i] * sigmoid->Derivate((*gates)[t].ig_p[i]);
+			gradients[t].grd_ag_p[i] = gradients[t].grd_state[i] * (*gates)[t].ig[i] * tanh->Derivate((*gates)[t].ag_p[i]);
+		}
+	}
+	
+	return gradients;
 }

@@ -128,27 +128,37 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnvironmentData.cpp" />
+    <ClCompile Include="GateGradient.cpp" />
+    <ClCompile Include="IActivationFunction.cpp" />
     <ClCompile Include="IDataNormalisation.cpp" />
     <ClCompile Include="ILossFunction.cpp" />
     <ClCompile Include="Interpolare.cpp" />
     <ClCompile Include="LogaritmNormalisation.cpp" />
-    <ClCompile Include="LSTM_cell.cpp" />
+    <ClCompile Include="LSTMCell.cpp" />
+    <ClCompile Include="LstmGradients.cpp" />
+    <ClCompile Include="LSTMLayer.cpp" />
     <ClCompile Include="MeanSquareError.cpp" />
     <ClCompile Include="PrezicerePretActiuni.cpp" />
-    <ClCompile Include="StockPredictor.cpp" />
+    <ClCompile Include="Sigmoid.cpp" />
+    <ClCompile Include="Tanh.cpp" />
     <ClCompile Include="Test_Vector.cpp" />
     <ClCompile Include="XavierNormalised.cpp" />
     <ClCompile Include="ZScoreNormalisation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnvironmentData.h" />
+    <ClInclude Include="GateGradient.h" />
+    <ClInclude Include="IActivationFunction.h" />
     <ClInclude Include="IDataNormalisation.h" />
     <ClInclude Include="ILossFunction.h" />
     <ClInclude Include="Interpolare.h" />
     <ClInclude Include="LogaritmNormalisation.h" />
-    <ClInclude Include="LSTM_cell.h" />
+    <ClInclude Include="LSTMCell.h" />
+    <ClInclude Include="LstmGradients.h" />
+    <ClInclude Include="LSTMLayer.h" />
     <ClInclude Include="MeanSquareError.h" />
-    <ClInclude Include="StockPredictor.h" />
+    <ClInclude Include="Sigmoid.h" />
+    <ClInclude Include="Tanh.h" />
     <ClInclude Include="Test_Vector.h" />
     <ClInclude Include="XavierNormalised.h" />
     <ClInclude Include="ZScoreNormalisation.h" />

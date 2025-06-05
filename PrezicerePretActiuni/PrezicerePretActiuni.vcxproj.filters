@@ -18,13 +18,10 @@
     <ClCompile Include="PrezicerePretActiuni.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LSTM_cell.cpp">
+    <ClCompile Include="LSTMLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Interpolare.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StockPredictor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="XavierNormalised.cpp">
@@ -51,15 +48,30 @@
     <ClCompile Include="MeanSquareError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LSTMCell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GateGradient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LstmGradients.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IActivationFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sigmoid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tanh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LSTM_cell.h">
+    <ClInclude Include="LSTMLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Interpolare.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StockPredictor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XavierNormalised.h">
@@ -84,6 +96,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MeanSquareError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LSTMCell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GateGradient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LstmGradients.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IActivationFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sigmoid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tanh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

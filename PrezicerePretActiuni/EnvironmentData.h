@@ -3,6 +3,8 @@
 #include "LogaritmNormalisation.h"
 #include "ZScoreNormalisation.h"
 #include "MeanSquareError.h"
+#define IDX_PREDICTED_FEATURE 0
+
 /// <summary>
 /// Tipuri de normalisari
 /// dupa http://www.mirlabs.org/ijcisim/regular_papers_2014/IJCISIM_24.pdf
