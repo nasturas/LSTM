@@ -132,7 +132,6 @@
     <ClCompile Include="IActivationFunction.cpp" />
     <ClCompile Include="IDataNormalisation.cpp" />
     <ClCompile Include="ILossFunction.cpp" />
-    <ClCompile Include="Interpolare.cpp" />
     <ClCompile Include="LogaritmNormalisation.cpp" />
     <ClCompile Include="LSTMCell.cpp" />
     <ClCompile Include="LstmGradients.cpp" />
@@ -151,7 +150,6 @@
     <ClInclude Include="IActivationFunction.h" />
     <ClInclude Include="IDataNormalisation.h" />
     <ClInclude Include="ILossFunction.h" />
-    <ClInclude Include="Interpolare.h" />
     <ClInclude Include="LogaritmNormalisation.h" />
     <ClInclude Include="LSTMCell.h" />
     <ClInclude Include="LstmGradients.h" />

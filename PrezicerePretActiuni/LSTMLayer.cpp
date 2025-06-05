@@ -1,10 +1,8 @@
 #include "LSTMLayer.h"
-#include "Test_Vector.h"
 #include "EnvironmentData.h"
 #include <string>
 #include <iostream>
 #include <iomanip>
-#include "LstmGradients.h"
 
 using namespace std;
 //executa intrarea si intoarce un output

@@ -21,9 +21,6 @@
     <ClCompile Include="LSTMLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interpolare.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="XavierNormalised.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,9 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LSTMLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Interpolare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="XavierNormalised.h">
