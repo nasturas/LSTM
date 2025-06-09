@@ -1,8 +1,9 @@
 #include "LSTMLayer.h"
 #include "EnvironmentData.h"
 #include <string>
+#include <nlohmann/json.hpp>
 #include <iostream>
-#include <iomanip>
+
 
 using namespace std;
 //executa intrarea si intoarce un output
@@ -235,7 +236,7 @@ void LSTMLayer::Train(vector<vector<double>> in_set, int stride, double lambda)
 	{
 		PrepareTraining(in_set, &train_set, &test_set, stride);
 		eroare_tinta = CalcEroareTinta(&test_set);
-		cout << "eroarea tinta e " << std::fixed << std::setprecision(5) << eroare_tinta << endl;
+		//cout << "eroarea tinta e " << std::fixed << std::setprecision(5) << eroare_tinta << endl;
 		do {
 			for (Test_Vector tv : train_set)
 			{
@@ -244,16 +245,67 @@ void LSTMLayer::Train(vector<vector<double>> in_set, int stride, double lambda)
 			//acum testam daca aceasta epoca de antrenament a fost indeajuns.
 			error = TestLSTM(&test_set);
 			num_antrenari++;
-			cout << "epoca:"<<num_antrenari<<"loss: "<< error << endl;
+			//cout << "epoca:"<<num_antrenari<<"loss: "<< error << endl;
 		} while (num_antrenari < env_data->getNumarMaximAntrenari()  && error > eroare_tinta);
 
-		cout << "Am iesit din antrenament cu eroarea " << error<<" dupa numar de antrenament: "<<num_antrenari<<endl;
+		//cout << "Am iesit din antrenament cu eroarea " << error<<" dupa numar de antrenament: "<<num_antrenari<<endl;
 		
 	}
 	catch (const invalid_argument e)
 	{
 		throw;
 	}
+}
+
+std::string LSTMLayer::toJson() const
+{
+	nlohmann::json jsonData;
+	
+	jsonData["num_feature"] = num_feature;
+	jsonData["num_unit_ascuns"] = num_unit_ascuns;
+	jsonData["num_intrari"] = num_intrari;
+
+	jsonData["Wf"] = Wf;
+	jsonData["Wi"] = Wi;
+	jsonData["Wo"] = Wo;
+	jsonData["Wa"] = Wa;
+
+	jsonData["Uf"] = Uf;
+	jsonData["Ui"] = Ui;
+	jsonData["Uo"] = Uo;
+	jsonData["Ua"] = Ua;
+
+	jsonData["bf"] = bf;
+	jsonData["bi"] = bi;
+	jsonData["bo"] = bo;
+	jsonData["ba"] = ba;
+
+	return jsonData.dump(4);
+}
+
+LSTMLayer* LSTMLayer::fromJson(const std::string& json)
+{
+	nlohmann::json jsonData = nlohmann::json::parse(json);
+
+	LSTMLayer* layer = new LSTMLayer(jsonData["num_feature"],
+		jsonData["num_unit_ascuns"],
+		jsonData["num_intrari"]);
+	layer->setWf(jsonData["Wf"]);
+	layer->setWi(jsonData["Wi"]);
+	layer->setWo(jsonData["Wo"]);
+	layer->setWa(jsonData["Wa"]);
+
+	layer->setUf(jsonData["Uf"]);
+	layer->setUi(jsonData["Ui"]);
+	layer->setUo(jsonData["Uo"]);
+	layer->setUa(jsonData["Ua"]);
+
+	layer->setBf(jsonData["bf"]);
+	layer->setBi(jsonData["bi"]);
+	layer->setBo(jsonData["bo"]);
+	layer->setBa(jsonData["ba"]);
+
+	return layer;
 }
 
 /**

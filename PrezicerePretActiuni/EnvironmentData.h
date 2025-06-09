@@ -1,8 +1,10 @@
 #pragma once
 #include "IDataNormalisation.h"
+#include "IJsonSerializable.h"
 #include "LogaritmNormalisation.h"
 #include "ZScoreNormalisation.h"
 #include "MeanSquareError.h"
+#include <string>
 #define IDX_PREDICTED_FEATURE 0
 
 /// <summary>
@@ -22,7 +24,7 @@ enum LossFunctionStyle
 	RMSE
 };
 
-class EnvironmentData
+class EnvironmentData: IJsonSerializable
 {
 private:
 	int numar_maxim_antrenari;
@@ -104,5 +106,8 @@ public:
 	{
 		return lossFunction;
 	}
+
+	std::string toJson() const override;
+	static EnvironmentData* fromJson(const std::string& json);
 };
 

@@ -2,54 +2,143 @@
 //
 
 #include <iostream>
-//#include "LSTM_cell.h"
+#include <fstream>
 #include "XavierNormalised.h"
 #include "Test_Vector.h"
 #include "EnvironmentData.h"
 #include "LSTMLayer.h"
+#include "FileHandler.h"
+#include "nlohmann/json.hpp"
+
 using namespace std;
 
-EnvironmentData* envData = EnvironmentData::getInstance(200, 95, 0.1, DataNormalisationStyle::Logaritm, LossFunctionStyle::MSE);
-int main()
+vector<vector<double>> readInputJson(const std::string& json)
 {
+	nlohmann::json jsonData = nlohmann::json::parse(json);
+	std::vector<std::vector<double>> vec;
 	
-	LSTMLayer* lstm_test = new LSTMLayer(1, 1, 2);
-	vector<double> vector_de_date = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
-	vector<double> vector_normalisat(vector_de_date.size(), 0.0);
-	vector_normalisat = envData->getNormalisation()->Normalise(vector_de_date);
-	vector<vector<double>> data_in(vector_de_date.size(), std::vector<double>(1,0.0));
-	for(int i=0; i<vector_de_date.size();i++)
-		data_in[i][0] = vector_normalisat[i];
-	vector<Test_Vector> training_set, test_set;
-	try {
-		lstm_test->PrepareTraining(data_in, &training_set, &test_set, 2);
+	for (auto it = jsonData["features"].begin(); it != jsonData["features"].end(); ++it) {
+		vec.push_back(it.value().get<std::vector<double>>());
 	}
-	catch(const invalid_argument& e)
-	{ 
-		cout << "Invalid arg: " << e.what() << endl;
-	}
-	
-	try 
-	{
-		lstm_test->Train(data_in, 2, envData->getLamda());
-		vector<double> myvar=lstm_test->ForwardPass({ 12,13 });
-		cout<<envData->getNormalisation()->Denormalise({ 12,13 },myvar[0]);
-	}
-	catch (const invalid_argument e)
-	{
-		cout << "Invalid arg: " << e.what() << endl;
-	}
+	return vec;
 }
 
-//TODO de gasit o metoda de a masura relevant eroarea. 
+int main(int argc, char* argv[])
+{
+	FileHandler fileHandler;
+	
+	std::string configFile, inputFile, forwardFile;
+	int num_intrari=0;
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+	for (int i = 1; i < argc; ++i) 
+	{
+		std::string arg = argv[i];
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+		if (arg.rfind("-c=", 0) == 0) 
+		{
+			configFile = arg.substr(3);  
+		}
+		else if (arg.rfind("-t=", 0) == 0) 
+		{
+			inputFile = arg.substr(3);  
+		}
+		else if (arg.rfind("-i=", 0) == 0)
+		{
+			try
+			{
+				num_intrari = stoi(arg.substr(3));
+			}
+			catch (const std::invalid_argument& e) {
+				std::cerr << "Eroare: Nu este un numar valid! " << e.what() << std::endl;
+			}
+			catch (const std::out_of_range& e) {
+				std::cerr << "Eroare: Numarul este prea mare! " << e.what() << std::endl;
+			}
+		}
+		else if (arg.rfind("-forward=", 0) == 0)
+		{
+			forwardFile = arg.substr(9);
+		}
+	}
+
+	if (configFile.empty()) 
+	{
+		std::cerr << "Eroare: Trebuie sa furnizezi un fisier de configurare.\n";
+		return 1;
+	}
+	if (num_intrari == 0)
+	{
+	std:cerr << "Eroare: argumentul pentru -i nu e valid";
+		return 1;
+	}
+	if (forwardFile.empty() && inputFile.empty())
+	{
+		std::cerr << "Eroare: Trebuie sa furnizezi un fisier de estimare sau un fisier de intrare.\n";
+		return 1;
+	}
+
+	
+	EnvironmentData* envData = EnvironmentData::fromJson(fileHandler.readFromFile(configFile));
+
+	if (!inputFile.empty())
+	{
+		vector<vector<double>> vec = readInputJson(fileHandler.readFromFile(inputFile));
+
+		//avem output sau hidden size 1 pentru ca estimam doar pentru o actiune.
+		LSTMLayer* lstm_test = new LSTMLayer(vec.size(), 1, num_intrari);
+
+		vector<vector<double>> matrixNormalizat(vec.size());
+		for (int i = 0; i < vec.size(); i++)
+			matrixNormalizat[i] = envData->getNormalisation()->Normalise(vec[i]);
+
+		vector<vector<double>> data_in(vec[0].size(), std::vector<double>(vec.size(), 0.0));
+		for (int j = 0; j < vec.size(); j++)
+			for (int i = 0; i < vec[0].size(); i++)
+				data_in[i][j] = matrixNormalizat[j][i];
+		vector<Test_Vector> training_set, test_set;
+
+		int stride = num_intrari / 2;
+		if (stride < 2) stride = 2;
+		try
+		{
+			lstm_test->Train(data_in, stride, envData->getLamda());
+			vector<double> myvar = lstm_test->ForwardPass({ 12,13 });
+			cout << envData->getNormalisation()->Denormalise({ 12,13 }, myvar[0]);
+			FileHandler fileHandler;
+			fileHandler.writeToFile("LSTMWeights.json", lstm_test->toJson());
+
+		}
+		catch (const invalid_argument e)
+		{
+			cout << "Invalid arg: " << e.what() << endl;
+		}
+		catch (const std::exception& e) {
+			std::cerr << "Eroare: " << e.what() << std::endl;
+		}
+	}
+	else if (!forwardFile.empty())
+	{
+		vector<vector<double>> vec = readInputJson(fileHandler.readFromFile(forwardFile));
+		if (vec[IDX_PREDICTED_FEATURE].size() != num_intrari)
+		{
+		std::cerr << "Valorile oferite nu au " << num_intrari << " elemente. Reconfigurati sau oferiti numarul corect de valori!" << endl;
+			return 1;
+		}
+		LSTMLayer* layer = LSTMLayer::fromJson(fileHandler.readFromFile("LSTMWeights.json"));
+		vector<vector<double>> matrixNormalizat(vec.size());
+		for (int i = 0; i < vec.size(); i++)
+			matrixNormalizat[i] = envData->getNormalisation()->Normalise(vec[i]);
+		vector<vector<double>> data_in(vec[0].size(), std::vector<double>(vec.size(), 0.0));
+		for (int j = 0; j < vec.size(); j++)
+			for (int i = 0; i < vec[0].size(); i++)
+				data_in[i][j] = matrixNormalizat[j][i];
+		double out = 0;
+		//merge si cu mai multe hidden states dar avem pt actiuni doar 1
+		for(int i=0; i<vec[0].size(); i++)
+			out = layer->ForwardPass(data_in[i])[0];
+		nlohmann::json jsonData;
+		jsonData["rezultat"] = envData->getNormalisation()->Denormalise(vec[IDX_PREDICTED_FEATURE],out);
+		fileHandler.writeToFile("output.json",jsonData.dump(4));
+	}
+	return 0;
+}

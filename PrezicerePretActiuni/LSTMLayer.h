@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "IJsonSerializable.h"
 #include "XavierNormalised.h"
 #include "Test_Vector.h"
 #include "LSTMCell.h"
@@ -8,7 +9,7 @@
 #include "Sigmoid.h"
 #include "Tanh.h"
 
-class LSTMLayer
+class LSTMLayer: IJsonSerializable
 {
 private:
 	//numarul de unitati ascunse este si numarul de iesiri.
@@ -39,8 +40,12 @@ private:
 	
 	double CalcEroareTinta(std::vector<Test_Vector>* test_set);
 	
-	
-	
+	void TrainLSTM(Test_Vector test_vect, double lambda);
+	double TestLSTM(std::vector<Test_Vector>* test_set);
+	vector<LstmGradients> BackwardPass(vector<vector<double>>& deltaLoss);
+	// Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70%-30%
+	void PrepareTraining(std::vector<std::vector<double>> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride);
+
 public:
 	LSTMLayer() 
 	{
@@ -82,16 +87,46 @@ public:
 		sigmoid = new Sigmoid(); tanh = new Tanh();
 	}
 	
+	void setNumFeature(int val) { num_feature = val; }
+	int getNumFeature() const { return num_feature; }
+
+	void setNumUnitAscuns(int val) { num_unit_ascuns = val; }
+	int getNumUnitAscuns() const { return num_unit_ascuns; }
+
+	void setNumIntrari(int val) { num_intrari = val; }
+	int getNumIntrari() const { return num_intrari; }
+
+	// Setter & Getter pentru matrici
+	void setWf(const std::vector<std::vector<double>>& matrix) { Wf = matrix; }
+
+	void setWi(const std::vector<std::vector<double>>& matrix) { Wi = matrix; }
+
+	void setWo(const std::vector<std::vector<double>>& matrix) { Wo = matrix; }
+
+	void setWa(const std::vector<std::vector<double>>& matrix) { Wa = matrix; }
+
+	void setUf(const std::vector<std::vector<double>>& matrix) { Uf = matrix; }
+
+	void setUi(const std::vector<std::vector<double>>& matrix) { Ui = matrix; }
+
+	void setUo(const std::vector<std::vector<double>>& matrix) { Uo = matrix; }
+
+	void setUa(const std::vector<std::vector<double>>& matrix) { Ua = matrix; }
+
+	void setBf(const std::vector<double>& vec) { bf = vec; }
+
+	void setBi(const std::vector<double>& vec) { bi = vec; }
+
+
+	void setBo(const std::vector<double>& vec) { bo = vec; }
+
+	void setBa(const std::vector<double>& vec) { ba = vec; }
 
 
 	std::vector<double> ForwardPass(std::vector<double> input);
 	void Train(vector<vector<double>> in_set, int stride, double lambda);
-	// Functie care primeste un vector de valori, si il imparte in training set si test set dupa regula 70%-30%
-	void PrepareTraining(std::vector<std::vector<double>> in_set, std::vector<Test_Vector>* training_set, std::vector<Test_Vector>* test_set, int stride);
-
-	void TrainLSTM(Test_Vector test_vect, double lambda);
-	double TestLSTM(std::vector<Test_Vector>* test_set);
-	vector<LstmGradients> BackwardPass(vector<vector<double>>& deltaLoss);
+	std::string toJson() const override;
+	static LSTMLayer* fromJson(const std::string& json);
 }; 
 
 
