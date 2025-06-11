@@ -36,19 +36,19 @@ namespace WinFormsGui
             int valint;
             if(double.TryParse(lambdaTB.Text, out valoare))
             {
-                envData.Lambda = valoare;
+                envData.lambda = valoare;
             }
 
-            envData.NormalisationStyle=normalisationStyleCB.SelectedIndex;
-            envData.LossFunctionStyle=lossFunctionStyleCB.SelectedIndex;
+            envData.normalisationStyle=normalisationStyleCB.SelectedIndex;
+            envData.lossFunctionStyle=lossFunctionStyleCB.SelectedIndex;
 
             if(int.TryParse(nrMaxAntrTB.Text, out valint))
             {
-                envData.NumarMaximAntrenari = valint;
+                envData.numar_maxim_antrenari = valint;
             }
             if (int.TryParse(precizieAntrTB.Text, out valint))
             {
-                envData.ProcentPrecizieAntrenament = valint;
+                envData.procent_precizie_antrenament = valint;
             }
             File.WriteAllText("..\\..\\..\\envData.json", envData.Serialize());
         }

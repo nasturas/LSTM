@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WinFormsGui;
+
 
 namespace WinFormsGui
 {
@@ -38,7 +39,7 @@ namespace WinFormsGui
                 if (DateTime.TryParse(day.Name, out DateTime date) && date >= fromDate)
                 {
                     if (day.Value.TryGetProperty("4. close", out var closeProp) &&
-                        double.TryParse(closeProp.GetString(), out double close))
+                        double.TryParse(closeProp.GetString(), NumberStyles.Any, CultureInfo.InvariantCulture, out double close))
                     {
                         closes.Add(close);
                     }

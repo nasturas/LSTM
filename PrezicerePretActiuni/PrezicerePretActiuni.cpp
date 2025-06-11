@@ -102,15 +102,13 @@ int main(int argc, char* argv[])
 		try
 		{
 			lstm_test->Train(data_in, stride, envData->getLamda());
-			vector<double> myvar = lstm_test->ForwardPass({ 12,13 });
-			cout << envData->getNormalisation()->Denormalise({ 12,13 }, myvar[0]);
 			FileHandler fileHandler;
 			fileHandler.writeToFile("LSTMWeights.json", lstm_test->toJson());
 
 		}
 		catch (const invalid_argument e)
 		{
-			cout << "Invalid arg: " << e.what() << endl;
+			std::cerr << "Invalid arg: " << e.what() << endl;
 		}
 		catch (const std::exception& e) {
 			std::cerr << "Eroare: " << e.what() << std::endl;

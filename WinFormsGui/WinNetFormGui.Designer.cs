@@ -54,6 +54,8 @@ namespace WinFormsGui
             mainPanel = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
+            label2 = new Label();
+            numarZileTB = new TextBox();
             EstimeazaPretBt = new Button();
             AntreneazaReteaBt = new Button();
             LoadStockPriceBt = new Button();
@@ -137,6 +139,8 @@ namespace WinFormsGui
             // 
             // panel1
             // 
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(numarZileTB);
             panel1.Controls.Add(EstimeazaPretBt);
             panel1.Controls.Add(AntreneazaReteaBt);
             panel1.Controls.Add(LoadStockPriceBt);
@@ -147,6 +151,22 @@ namespace WinFormsGui
             panel1.Name = "panel1";
             panel1.Size = new Size(779, 786);
             panel1.TabIndex = 1;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(23, 18);
+            label2.Name = "label2";
+            label2.Size = new Size(253, 25);
+            label2.TabIndex = 6;
+            label2.Text = "Numar de zile pentru prezicere";
+            // 
+            // numarZileTB
+            // 
+            numarZileTB.Location = new Point(305, 18);
+            numarZileTB.Name = "numarZileTB";
+            numarZileTB.Size = new Size(150, 31);
+            numarZileTB.TabIndex = 5;
             // 
             // EstimeazaPretBt
             // 
@@ -166,6 +186,7 @@ namespace WinFormsGui
             AntreneazaReteaBt.TabIndex = 3;
             AntreneazaReteaBt.Text = "Antreneaza retea";
             AntreneazaReteaBt.UseVisualStyleBackColor = true;
+            AntreneazaReteaBt.Click += AntreneazaReteaBt_Click;
             // 
             // LoadStockPriceBt
             // 
@@ -188,7 +209,7 @@ namespace WinFormsGui
             // 
             // tickerTB
             // 
-            tickerTB.Location = new Point(226, 61);
+            tickerTB.Location = new Point(305, 61);
             tickerTB.Name = "tickerTB";
             tickerTB.Size = new Size(150, 31);
             tickerTB.TabIndex = 0;
@@ -238,5 +259,7 @@ namespace WinFormsGui
         private Button LoadStockPriceBt;
         private Button EstimeazaPretBt;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private Label label2;
+        private TextBox numarZileTB;
     }
 }
