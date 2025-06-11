@@ -47,18 +47,19 @@ namespace WinFormsGui
         {
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
             setariToolStripMenuItem = new ToolStripMenuItem();
             preferinteToolStripMenuItem = new ToolStripMenuItem();
             ajutorToolStripMenuItem1 = new ToolStripMenuItem();
             mainPanel = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
-            PlotPanel = new Panel();
             panel1 = new Panel();
             EstimeazaPretBt = new Button();
             AntreneazaReteaBt = new Button();
             LoadStockPriceBt = new Button();
             label1 = new Label();
             tickerTB = new TextBox();
+            PlotPanel = new Panel();
             menuStrip1.SuspendLayout();
             mainPanel.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -77,9 +78,17 @@ namespace WinFormsGui
             // 
             // fileToolStripMenuItem
             // 
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(68, 29);
             fileToolStripMenuItem.Text = "Fisier";
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(270, 34);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // setariToolStripMenuItem
             // 
@@ -91,15 +100,16 @@ namespace WinFormsGui
             // preferinteToolStripMenuItem
             // 
             preferinteToolStripMenuItem.Name = "preferinteToolStripMenuItem";
-            preferinteToolStripMenuItem.Size = new Size(189, 34);
+            preferinteToolStripMenuItem.Size = new Size(270, 34);
             preferinteToolStripMenuItem.Text = "Preferinte";
             preferinteToolStripMenuItem.Click += preferinteToolStripMenuItem_Click;
             // 
             // ajutorToolStripMenuItem1
             // 
             ajutorToolStripMenuItem1.Name = "ajutorToolStripMenuItem1";
-            ajutorToolStripMenuItem1.Size = new Size(189, 34);
+            ajutorToolStripMenuItem1.Size = new Size(270, 34);
             ajutorToolStripMenuItem1.Text = "Ajutor";
+            ajutorToolStripMenuItem1.Click += ajutorToolStripMenuItem1_Click;
             // 
             // mainPanel
             // 
@@ -124,14 +134,6 @@ namespace WinFormsGui
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.Size = new Size(1571, 792);
             tableLayoutPanel1.TabIndex = 0;
-            // 
-            // PlotPanel
-            // 
-            PlotPanel.Dock = DockStyle.Fill;
-            PlotPanel.Location = new Point(788, 3);
-            PlotPanel.Name = "PlotPanel";
-            PlotPanel.Size = new Size(780, 786);
-            PlotPanel.TabIndex = 0;
             // 
             // panel1
             // 
@@ -190,6 +192,14 @@ namespace WinFormsGui
             tickerTB.Size = new Size(150, 31);
             tickerTB.TabIndex = 0;
             // 
+            // PlotPanel
+            // 
+            PlotPanel.Dock = DockStyle.Fill;
+            PlotPanel.Location = new Point(788, 3);
+            PlotPanel.Name = "PlotPanel";
+            PlotPanel.Size = new Size(780, 786);
+            PlotPanel.TabIndex = 0;
+            // 
             // WinNetFormGui
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -226,5 +236,6 @@ namespace WinFormsGui
         private Button AntreneazaReteaBt;
         private Button LoadStockPriceBt;
         private Button EstimeazaPretBt;
+        private ToolStripMenuItem exitToolStripMenuItem;
     }
 }

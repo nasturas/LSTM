@@ -20,7 +20,7 @@ namespace WinFormsGui
 
             plot.Plot.Add.Scatter(x, valori);
             plot.Refresh();
-            
+
         }
 
         public void ShowMainPage()
@@ -31,7 +31,7 @@ namespace WinFormsGui
 
         private void ShowPreferencesPage()
         {
-            mainPanel.Visible=false;
+            mainPanel.Visible = false;
             preferencesPage.Visible = true;
             preferencesPage.BringToFront();
         }
@@ -46,12 +46,22 @@ namespace WinFormsGui
             try
             {
                 var closes = await fetcher.GetClosePrices("AAPL", new DateTime(2024, 1, 1));
-                
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Eroare: " + ex.Message);
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void ajutorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Prezicere Pret Actiuni folosind LSTM. Lucrare licenta 2025, Universitatea Bacau", "Informatii", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
