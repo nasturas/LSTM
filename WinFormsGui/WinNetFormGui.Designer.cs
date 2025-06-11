@@ -86,7 +86,7 @@ namespace WinFormsGui
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(270, 34);
+            exitToolStripMenuItem.Size = new Size(141, 34);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -100,14 +100,14 @@ namespace WinFormsGui
             // preferinteToolStripMenuItem
             // 
             preferinteToolStripMenuItem.Name = "preferinteToolStripMenuItem";
-            preferinteToolStripMenuItem.Size = new Size(270, 34);
+            preferinteToolStripMenuItem.Size = new Size(189, 34);
             preferinteToolStripMenuItem.Text = "Preferinte";
             preferinteToolStripMenuItem.Click += preferinteToolStripMenuItem_Click;
             // 
             // ajutorToolStripMenuItem1
             // 
             ajutorToolStripMenuItem1.Name = "ajutorToolStripMenuItem1";
-            ajutorToolStripMenuItem1.Size = new Size(270, 34);
+            ajutorToolStripMenuItem1.Size = new Size(189, 34);
             ajutorToolStripMenuItem1.Text = "Ajutor";
             ajutorToolStripMenuItem1.Click += ajutorToolStripMenuItem1_Click;
             // 
@@ -156,6 +156,7 @@ namespace WinFormsGui
             EstimeazaPretBt.TabIndex = 4;
             EstimeazaPretBt.Text = "Estimeaza urmatoarele valori";
             EstimeazaPretBt.UseVisualStyleBackColor = true;
+            EstimeazaPretBt.Click += EstimeazaPretBt_Click;
             // 
             // AntreneazaReteaBt
             // 
