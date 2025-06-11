@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
 	}
 	if (num_intrari == 0)
 	{
-	std:cerr << "Eroare: argumentul pentru -i nu e valid";
+		std::cerr << "Eroare: argumentul pentru -i nu e valid";
 		return 1;
 	}
 	if (forwardFile.empty() && inputFile.empty())
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
 		vector<vector<double>> vec = readInputJson(fileHandler.readFromFile(inputFile));
 
 		//avem output sau hidden size 1 pentru ca estimam doar pentru o actiune.
-		LSTMLayer* lstm_test = new LSTMLayer(vec.size(), 1, num_intrari);
+		LSTMLayer* lstm_test = new LSTMLayer((int)vec.size(), 1, num_intrari);
 
 		vector<vector<double>> matrixNormalizat(vec.size());
 		for (int i = 0; i < vec.size(); i++)

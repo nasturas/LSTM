@@ -25,6 +25,7 @@ namespace WinFormsGui
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            this.Visible = false;
             mainePage.ShowMainPage();
         }
 
