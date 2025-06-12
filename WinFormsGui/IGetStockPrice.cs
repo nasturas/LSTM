@@ -8,6 +8,6 @@ namespace WinFormsGui
 {
     internal interface IGetStockPrice
     {
-        Task<List<double>> GetClosePrices(string ticker, DateTime fromDate);
+        Task<List<(DateTime Date, double Close)>> GetClosePrices(string ticker, DateTime fromDate);
     }
 }

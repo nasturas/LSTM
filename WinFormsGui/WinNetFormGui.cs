@@ -1,6 +1,7 @@
 using ScottPlot.WinForms;
 using System.Diagnostics;
 using System.Text.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace WinFormsGui
 {
@@ -13,7 +14,7 @@ namespace WinFormsGui
     {
         private IGetStockPrice fetcher;
         private PreferencesPage preferencesPage;
-        private List<double> priceList = new List<double>();
+        private List<(DateTime Date, double Close)> priceList = new List<(DateTime Date, double Close)>();
         private int numarZilePrezicere = 5;
         string exePath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"PrezicerePretActiuni.exe"));
         string exeDir;
@@ -63,13 +64,8 @@ namespace WinFormsGui
                 DateTime startDate = new DateTime(2024, 1, 1);
                 priceList = await fetcher.GetClosePrices(tickerTB.Text, startDate);
 
-                DateTime[] dateArray = new DateTime[priceList.Count];
-                for (int i = 0; i < priceList.Count; i++)
-                {
-                    dateArray[i] = startDate.AddDays(i); // presupunem o zi pentru fiecare valoare
-                }
-                double[] xValues = dateArray.Select(d => d.ToOADate()).ToArray();
-                double[] yValues = priceList.ToArray();
+                double[] xValues = priceList.Select(c => c.Date.ToOADate()).ToList().ToArray();
+                double[] yValues = priceList.Select(c => c.Close).ToList().ToArray();
                 plot.Plot.Clear();
                 plot.Plot.Add.Scatter(xValues, yValues);
                 plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.DateTimeAutomatic();
@@ -116,8 +112,9 @@ namespace WinFormsGui
             }
 
             int indexStart = priceList.Count-numarZilePrezicere;
-            List<double> inputList = priceList.GetRange(indexStart, numarZilePrezicere);
-            
+            List<double> inputList = priceList.GetRange(indexStart, numarZilePrezicere).Select(c => c.Close).ToList();
+
+
             var output = new
             {
                 features = new
@@ -146,7 +143,7 @@ namespace WinFormsGui
         {
             string args;
 
-            switch(state)
+            switch (state)
             {
                 case LSTMState.Train:
                     args = $"-c=\"envData.json\" -i={numarZilePrezicere} -t=\"training.json\"";
@@ -213,12 +210,12 @@ namespace WinFormsGui
             }
 
             //cream un json numit training.json care sa aiba datele de antrenament
-            
+
             var output = new
             {
                 features = new
                 {
-                    feature1 = priceList
+                    feature1 = priceList.Select(c => c.Close).ToList();
                 }
             };
 

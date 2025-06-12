@@ -19,9 +19,9 @@ namespace WinFormsGui
             this.apiKey = apiKey;
         }
 
-        public async Task<List<double>> GetClosePrices(string ticker, DateTime fromDate)
+        public async Task<List<(DateTime Date, double Close)>> GetClosePrices(string ticker, DateTime fromDate)
         {
-            var closes = new List<double>();
+            var closes = new List<(DateTime Date, double Close)>();
             string url = $"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={apiKey}&outputsize=full";
 
             var response = await client.GetAsync(url);
@@ -41,12 +41,16 @@ namespace WinFormsGui
                     if (day.Value.TryGetProperty("4. close", out var closeProp) &&
                         double.TryParse(closeProp.GetString(), NumberStyles.Any, CultureInfo.InvariantCulture, out double close))
                     {
-                        closes.Add(close);
+                        closes.Add((date, close));
                     }
                 }
             }
 
+            // Opțional: sortează crescător după dată
+            closes.Sort((a, b) => a.Date.CompareTo(b.Date));
+
             return closes;
         }
+
     }
 }
