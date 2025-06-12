@@ -15,7 +15,7 @@ namespace WinFormsGui
         private PreferencesPage preferencesPage;
         private List<double> priceList = new List<double>();
         private int numarZilePrezicere = 5;
-        string exePath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\..\..\PrezicerePretActiuni.exe"));
+        string exePath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"PrezicerePretActiuni.exe"));
         string exeDir;
 
         public WinNetFormGui()
@@ -28,9 +28,7 @@ namespace WinFormsGui
 
             plot = new FormsPlot { Dock = DockStyle.Fill };
             PlotPanel.Controls.Add(plot);
-            double[] x = { 1, 2, 3, 4, 5 };  // Valori pe axa X
-
-            plot.Plot.Add.Scatter(x, valori);
+            
             plot.Refresh();
 
         }
@@ -57,6 +55,11 @@ namespace WinFormsGui
         {
             try
             {
+                if (tickerTB.Text.Length == 0)
+                {
+                    MessageBox.Show("Nu ati ales o actiune", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 DateTime startDate = new DateTime(2024, 1, 1);
                 priceList = await fetcher.GetClosePrices(tickerTB.Text, startDate);
 
@@ -102,11 +105,41 @@ namespace WinFormsGui
                 numarZilePrezicere = 5;
                 MessageBox.Show("Numarul de zile nu e intreg. Implicit vom folosi 5 zile precedente.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            if (plot.Plot.GetPlottables().Count() == 0)
+            {
+                LoadStockPriceBt_Click(sender, e);
+            }
+            if (numarZilePrezicere>priceList.Count)
+            {
+                MessageBox.Show("Numarul de zile nu poate fi mai mare decat numarul de zile de cand actiunea e pe bursa.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            //TODO creaza un input.json cu numarZilePrezicere valori.
+            int indexStart = priceList.Count-numarZilePrezicere;
+            List<double> inputList = priceList.GetRange(indexStart, numarZilePrezicere);
+            
+            var output = new
+            {
+                features = new
+                {
+                    feature1 = inputList
+                }
+            };
+
+            // Serializare în string JSON
+            string jsonString = JsonSerializer.Serialize(output, new JsonSerializerOptions { WriteIndented = true });
+            //TODO. muta numele la fisiere in variabile de mediu ceva sa nu mai fie hardcoded.
+            File.WriteAllText("inputs.json", jsonString);
 
             CallExe(LSTMState.Forward);
-           
+            //citeste din output.json si scrie cu rosu noul punct.
+
+            DateTime dateTime = DateTime.Now;
+            var redPoint = plot.Plot.Add.Scatter(xs: new double[] { dateTime.ToOADate() },
+    ys: new double[] { 185,9});
+            redPoint.Color = ScottPlot.Color.FromColor(System.Drawing.Color.Red);
+            plot.Plot.Axes.AutoScale();
+            plot.Refresh();
         }
 
         private void CallExe(LSTMState state)
@@ -172,11 +205,7 @@ namespace WinFormsGui
         }
         private void AntreneazaReteaBt_Click(object sender, EventArgs e)
         {
-            if (tickerTB.Text.Length == 0)
-            {
-                MessageBox.Show("Nu ati ales o actiune", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+
 
             if(plot.Plot.GetPlottables().Count()==0)
             {

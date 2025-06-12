@@ -9,20 +9,20 @@ namespace WinFormsGui
 {
     internal class EnvironmentData
     {
-        public double Lambda { get; set; } = 0.1;
-        public int LossFunctionStyle { get; set; } = 0;
-        public int NormalisationStyle { get; set; } = 0;
-        public int NumarMaximAntrenari { get; set; } = 200;
-        public int ProcentPrecizieAntrenament { get; set; } = 95;
+        public double lambda { get; set; } = 0.1;
+        public int lossFunctionStyle { get; set; } = 0;
+        public int normalisationStyle { get; set; } = 0;
+        public int numar_maxim_antrenari { get; set; } = 200;
+        public int procent_precizie_antrenament { get; set; } = 95;
 
         public EnvironmentData() { }
-        public EnvironmentData(double lambda, int lossFunctionStyle, int normalisationStyle, int numarMaximAntrenari, int procentPrecizieAntrenament)
+        public EnvironmentData(double nlambda, int nlossFunctionStyle, int nnormalisationStyle, int numarMaximAntrenari, int procentPrecizieAntrenament)
         {
-            Lambda = lambda;
-            LossFunctionStyle = lossFunctionStyle;
-            NormalisationStyle = normalisationStyle;
-            NumarMaximAntrenari = numarMaximAntrenari;
-            ProcentPrecizieAntrenament = procentPrecizieAntrenament;
+            lambda = nlambda;
+            lossFunctionStyle = nlossFunctionStyle;
+            normalisationStyle = nnormalisationStyle;
+            numar_maxim_antrenari = numarMaximAntrenari;
+            procent_precizie_antrenament = procentPrecizieAntrenament;
         }
 
         /// <summary>

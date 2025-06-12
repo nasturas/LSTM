@@ -23,4 +23,8 @@
     </None>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y /D &quot;$(SolutionDir)x64\$(Configuration)\PrezicerePretActiuni.exe&quot; &quot;$(TargetDir)&quot;" />
+  </Target>
+
 </Project>

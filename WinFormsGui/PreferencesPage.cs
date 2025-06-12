@@ -50,7 +50,7 @@ namespace WinFormsGui
             {
                 envData.procent_precizie_antrenament = valint;
             }
-            File.WriteAllText("..\\..\\..\\envData.json", envData.Serialize());
+            File.WriteAllText("envData.json", envData.Serialize());
         }
     }
 }
