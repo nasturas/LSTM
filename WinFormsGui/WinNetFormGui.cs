@@ -130,11 +130,23 @@ namespace WinFormsGui
 
             CallExe(LSTMState.Forward);
             //citeste din output.json si scrie cu rosu noul punct.
-
+            string json = File.ReadAllText("output.json");
+            using JsonDocument doc = JsonDocument.Parse(json);
+            if (!doc.RootElement.TryGetProperty("rezultat", out var rezultat))
+            {
+                MessageBox.Show("Nu pot citi rezulatul estimarii!");
+                return;
+            }
+            double doubleResult=0.0;
+            try
+            {
+                doubleResult = rezultat.GetDouble();
+            }
+            catch (Exception ex) { }
             DateTime dateTime = priceList[priceList.Count-1].Date.AddDays(1);
             var redPoint = plot.Plot.Add.Scatter(
-                xs: new double[] { dateTime.ToOADate() },
-                ys: new double[] { 185,9}
+                xs: new double[] { priceList[priceList.Count - 1].Date.ToOADate(), dateTime.ToOADate() },
+                ys: new double[] { priceList[priceList.Count - 1].Close, doubleResult }
                 );
             redPoint.Color = ScottPlot.Color.FromColor(System.Drawing.Color.Red);
             plot.Plot.Axes.AutoScale();
