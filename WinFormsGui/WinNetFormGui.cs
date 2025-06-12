@@ -131,9 +131,11 @@ namespace WinFormsGui
             CallExe(LSTMState.Forward);
             //citeste din output.json si scrie cu rosu noul punct.
 
-            DateTime dateTime = DateTime.Now;
-            var redPoint = plot.Plot.Add.Scatter(xs: new double[] { dateTime.ToOADate() },
-    ys: new double[] { 185,9});
+            DateTime dateTime = priceList[priceList.Count-1].Date.AddDays(1);
+            var redPoint = plot.Plot.Add.Scatter(
+                xs: new double[] { dateTime.ToOADate() },
+                ys: new double[] { 185,9}
+                );
             redPoint.Color = ScottPlot.Color.FromColor(System.Drawing.Color.Red);
             plot.Plot.Axes.AutoScale();
             plot.Refresh();
@@ -215,7 +217,7 @@ namespace WinFormsGui
             {
                 features = new
                 {
-                    feature1 = priceList.Select(c => c.Close).ToList();
+                    feature1 = priceList.Select(c => c.Close).ToList()
                 }
             };
 
