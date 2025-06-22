@@ -236,7 +236,7 @@ void LSTMLayer::Train(vector<vector<double>> in_set, int stride, double lambda)
 	{
 		PrepareTraining(in_set, &train_set, &test_set, stride);
 		eroare_tinta = CalcEroareTinta(&test_set);
-		//cout << "eroarea tinta e " << std::fixed << std::setprecision(5) << eroare_tinta << endl;
+		
 		do {
 			for (Test_Vector tv : train_set)
 			{
@@ -245,10 +245,9 @@ void LSTMLayer::Train(vector<vector<double>> in_set, int stride, double lambda)
 			//acum testam daca aceasta epoca de antrenament a fost indeajuns.
 			error = TestLSTM(&test_set);
 			num_antrenari++;
-			//cout << "epoca:"<<num_antrenari<<"loss: "<< error << endl;
+			
 		} while (num_antrenari < env_data->getNumarMaximAntrenari()  && error > eroare_tinta);
 
-		//cout << "Am iesit din antrenament cu eroarea " << error<<" dupa numar de antrenament: "<<num_antrenari<<endl;
 		
 	}
 	catch (const invalid_argument e)

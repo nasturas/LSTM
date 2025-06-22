@@ -68,10 +68,10 @@ public:
 		// https://arxiv.org/abs/1912.10454 - "On the Initialization of Long Short-Term Memory Networks" de M. Ghazi et al.
 		//TODO: de creat diferite functii de initializare pentru LSTM, xavier, normalised xavier, orthogonal initialization. we will use normalised xavier.
 
-		Wf = num_generator->generateMatrix(nrAsc, nrIn);
-		Wi = num_generator->generateMatrix(nrAsc, nrIn);
-		Wo = num_generator->generateMatrix(nrAsc, nrIn);
-		Wa = num_generator->generateMatrix(nrAsc, nrIn);
+		Wf = num_generator->generateMatrix(nrAsc, nrFe);
+		Wi = num_generator->generateMatrix(nrAsc, nrFe);
+		Wo = num_generator->generateMatrix(nrAsc, nrFe);
+		Wa = num_generator->generateMatrix(nrAsc, nrFe);
 
 
 		Uf = num_generator->generateMatrix(nrAsc, nrAsc);
