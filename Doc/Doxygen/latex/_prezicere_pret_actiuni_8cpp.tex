@@ -1,10 +1,13 @@
 \doxysection{C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni.cpp File Reference}
 \hypertarget{_prezicere_pret_actiuni_8cpp}{}\label{_prezicere_pret_actiuni_8cpp}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/PrezicerePretActiuni.cpp@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/PrezicerePretActiuni.cpp}}
 {\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
 {\ttfamily \#include "{}Xavier\+Normalised.\+h"{}}\newline
 {\ttfamily \#include "{}Test\+\_\+\+Vector.\+h"{}}\newline
 {\ttfamily \#include "{}Environment\+Data.\+h"{}}\newline
-{\ttfamily \#include "{}LSTM\+\_\+cell.\+h"{}}\newline
+{\ttfamily \#include "{}LSTMLayer.\+h"{}}\newline
+{\ttfamily \#include "{}File\+Handler.\+h"{}}\newline
+{\ttfamily \#include "{}nlohmann/json.\+hpp"{}}\newline
 Include dependency graph for Prezicere\+Pret\+Actiuni.\+cpp\+:
 \nopagebreak
 \begin{figure}[H]
@@ -16,36 +19,30 @@ Include dependency graph for Prezicere\+Pret\+Actiuni.\+cpp\+:
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{_prezicere_pret_actiuni_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
-\begin{DoxyCompactItemize}
+vector$<$ vector$<$ double $>$ $>$ \mbox{\hyperlink{_prezicere_pret_actiuni_8cpp_abdcf5e6d13cb153906c0c54c1d59bdb9}{read\+Input\+Json}} (const std\+::string \&json)
 \item 
-\mbox{\hyperlink{class_environment_data}{Environment\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{_prezicere_pret_actiuni_8cpp_a16142a5efcbee1bbd55e4b762ccc67b8}{env\+Data}} = \mbox{\hyperlink{class_environment_data_a9171e52e0e87966bd1abfb996ec5d8a0}{Environment\+Data\+::get\+Instance}}(20, 95, 0.\+2)
+int \mbox{\hyperlink{_prezicere_pret_actiuni_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\mbox{[}$\,$\mbox{]})
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{_prezicere_pret_actiuni_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{PrezicerePretActiuni.cpp@{PrezicerePretActiuni.cpp}!main@{main}}
+\Hypertarget{_prezicere_pret_actiuni_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\index{PrezicerePretActiuni.cpp@{PrezicerePretActiuni.cpp}!main@{main}}
 \index{main@{main}!PrezicerePretActiuni.cpp@{PrezicerePretActiuni.cpp}}
 \doxysubsubsection{\texorpdfstring{main()}{main()}}
-{\footnotesize\ttfamily \label{_prezicere_pret_actiuni_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4} 
-int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{_prezicere_pret_actiuni_8cpp_a0ddf1224851353fc92bfbff6f499fa97} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
 
 Here is the call graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{_prezicere_pret_actiuni_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph}
+\includegraphics[width=350pt]{_prezicere_pret_actiuni_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
 \end{center}
 \end{figure}
-
-
-\doxysubsection{Variable Documentation}
-\Hypertarget{_prezicere_pret_actiuni_8cpp_a16142a5efcbee1bbd55e4b762ccc67b8}\index{PrezicerePretActiuni.cpp@{PrezicerePretActiuni.cpp}!envData@{envData}}
-\index{envData@{envData}!PrezicerePretActiuni.cpp@{PrezicerePretActiuni.cpp}}
-\doxysubsubsection{\texorpdfstring{envData}{envData}}
-{\footnotesize\ttfamily \label{_prezicere_pret_actiuni_8cpp_a16142a5efcbee1bbd55e4b762ccc67b8} 
-\mbox{\hyperlink{class_environment_data}{Environment\+Data}}\texorpdfstring{$\ast$}{*} env\+Data = \mbox{\hyperlink{class_environment_data_a9171e52e0e87966bd1abfb996ec5d8a0}{Environment\+Data\+::get\+Instance}}(20, 95, 0.\+2)}
+\Hypertarget{_prezicere_pret_actiuni_8cpp_abdcf5e6d13cb153906c0c54c1d59bdb9}\index{PrezicerePretActiuni.cpp@{PrezicerePretActiuni.cpp}!readInputJson@{readInputJson}}
+\index{readInputJson@{readInputJson}!PrezicerePretActiuni.cpp@{PrezicerePretActiuni.cpp}}
+\doxysubsubsection{\texorpdfstring{readInputJson()}{readInputJson()}}
+{\footnotesize\ttfamily \label{_prezicere_pret_actiuni_8cpp_abdcf5e6d13cb153906c0c54c1d59bdb9} 
+vector$<$ vector$<$ double $>$ $>$ read\+Input\+Json (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{json}{}\end{DoxyParamCaption})}
 

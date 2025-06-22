@@ -1,0 +1,260 @@
+\doxysection{LSTMLayer Class Reference}
+\hypertarget{class_l_s_t_m_layer}{}\label{class_l_s_t_m_layer}\index{LSTMLayer@{LSTMLayer}}
+
+
+{\ttfamily \#include $<$LSTMLayer.\+h$>$}
+
+
+
+Inheritance diagram for LSTMLayer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=170pt]{class_l_s_t_m_layer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for LSTMLayer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=170pt]{class_l_s_t_m_layer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_l_s_t_m_layer_aea2b7134d09aa8a64c93f938c7307eb3}{LSTMLayer}} ()
+\item 
+\mbox{\hyperlink{class_l_s_t_m_layer_ace010a6d97faa9570bd1d0bf2038ed11}{LSTMLayer}} (int nr\+Fe, int nr\+Asc, int nr\+In)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a25170370d83ceab87e7c9aafa4504df8}{set\+Num\+Feature}} (int val)
+\item 
+int \mbox{\hyperlink{class_l_s_t_m_layer_ac0b896b8f3e8b6aa878501be58f3e867}{get\+Num\+Feature}} () const
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a299caf9440fc24e06c9f49042edb8be7}{set\+Num\+Unit\+Ascuns}} (int val)
+\item 
+int \mbox{\hyperlink{class_l_s_t_m_layer_a1bd23c17965747caf00240831d8f74cd}{get\+Num\+Unit\+Ascuns}} () const
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_aa263fad012248350c5cd0aecda986c1f}{set\+Num\+Intrari}} (int val)
+\item 
+int \mbox{\hyperlink{class_l_s_t_m_layer_a61748af58f6b885479101706f6115d9d}{get\+Num\+Intrari}} () const
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_ad45fe65eaa02df1842010371030de7ca}{set\+Wf}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a7531a8486da619e2def9769113735a97}{set\+Wi}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_af304349594051adf90fb6479f5704aed}{set\+Wo}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_aa6ea7ee254ef0ef77bcc6563d7e6cd87}{set\+Wa}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a78107560a3ef181fccd53eaed7f5f842}{set\+Uf}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_ae7e09c08ba7792cbcfebc414e5a921f3}{set\+Ui}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a35935d5eb987ec30149b4f978fb1e882}{set\+Uo}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a6ad4ebdcfc28f210e711c1e28f9b1a53}{set\+Ua}} (const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&matrix)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_ac12e8dede227c4cd915ed7f2d7ec6c85}{set\+Bf}} (const std\+::vector$<$ double $>$ \&vec)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a2c268207694fc797070b76c605e5f4ea}{set\+Bi}} (const std\+::vector$<$ double $>$ \&vec)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a6f101f613913eda4084e2a05f1d51b8e}{set\+Bo}} (const std\+::vector$<$ double $>$ \&vec)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a015e66ecbc3cc2d5cbdd9a59f267177d}{set\+Ba}} (const std\+::vector$<$ double $>$ \&vec)
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_layer_a942a479e46e292a9ae5d55c0a40de5e6}{Forward\+Pass}} (std\+::vector$<$ double $>$ input)
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_layer_a7cda7d757ba226a65d522b8cb6ae3d67}{Train}} (vector$<$ vector$<$ double $>$ $>$ in\+\_\+set, int stride, double lambda)
+\begin{DoxyCompactList}\small\item\em Functie care antreneaza reteaua antrenamentul se opreste cand numarul de antrenament atingi un numar maxim -\/ masura de siguranta ca nu rulam la infinit sau cand aproximarea e mai buna decat 95\% din valoarea dorita. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_l_s_t_m_layer_a6250ee69154a5479db143a7c271d1f60}{to\+Json}} () const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_l_s_t_m_layer}{LSTMLayer}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_l_s_t_m_layer_a764c8edf3bfb64c94f44d1a19ea9f3d8}{from\+Json}} (const std\+::string \&json)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_l_s_t_m_layer_aea2b7134d09aa8a64c93f938c7307eb3}\index{LSTMLayer@{LSTMLayer}!LSTMLayer@{LSTMLayer}}
+\index{LSTMLayer@{LSTMLayer}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{LSTMLayer()}{LSTMLayer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_aea2b7134d09aa8a64c93f938c7307eb3} 
+LSTMLayer\+::\+LSTMLayer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_ace010a6d97faa9570bd1d0bf2038ed11}\index{LSTMLayer@{LSTMLayer}!LSTMLayer@{LSTMLayer}}
+\index{LSTMLayer@{LSTMLayer}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{LSTMLayer()}{LSTMLayer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_ace010a6d97faa9570bd1d0bf2038ed11} 
+LSTMLayer\+::\+LSTMLayer (\begin{DoxyParamCaption}\item[{int}]{nr\+Fe}{, }\item[{int}]{nr\+Asc}{, }\item[{int}]{nr\+In}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_l_s_t_m_layer_a942a479e46e292a9ae5d55c0a40de5e6}\index{LSTMLayer@{LSTMLayer}!ForwardPass@{ForwardPass}}
+\index{ForwardPass@{ForwardPass}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{ForwardPass()}{ForwardPass()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a942a479e46e292a9ae5d55c0a40de5e6} 
+std\+::vector$<$ double $>$ LSTMLayer\+::\+Forward\+Pass (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{input}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_l_s_t_m_layer_a764c8edf3bfb64c94f44d1a19ea9f3d8}\index{LSTMLayer@{LSTMLayer}!fromJson@{fromJson}}
+\index{fromJson@{fromJson}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{fromJson()}{fromJson()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a764c8edf3bfb64c94f44d1a19ea9f3d8} 
+\mbox{\hyperlink{class_l_s_t_m_layer}{LSTMLayer}} \texorpdfstring{$\ast$}{*} LSTMLayer\+::from\+Json (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{json}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_l_s_t_m_layer_a764c8edf3bfb64c94f44d1a19ea9f3d8_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_l_s_t_m_layer_ac0b896b8f3e8b6aa878501be58f3e867}\index{LSTMLayer@{LSTMLayer}!getNumFeature@{getNumFeature}}
+\index{getNumFeature@{getNumFeature}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{getNumFeature()}{getNumFeature()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_ac0b896b8f3e8b6aa878501be58f3e867} 
+int LSTMLayer\+::get\+Num\+Feature (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a61748af58f6b885479101706f6115d9d}\index{LSTMLayer@{LSTMLayer}!getNumIntrari@{getNumIntrari}}
+\index{getNumIntrari@{getNumIntrari}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{getNumIntrari()}{getNumIntrari()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a61748af58f6b885479101706f6115d9d} 
+int LSTMLayer\+::get\+Num\+Intrari (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a1bd23c17965747caf00240831d8f74cd}\index{LSTMLayer@{LSTMLayer}!getNumUnitAscuns@{getNumUnitAscuns}}
+\index{getNumUnitAscuns@{getNumUnitAscuns}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{getNumUnitAscuns()}{getNumUnitAscuns()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a1bd23c17965747caf00240831d8f74cd} 
+int LSTMLayer\+::get\+Num\+Unit\+Ascuns (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a015e66ecbc3cc2d5cbdd9a59f267177d}\index{LSTMLayer@{LSTMLayer}!setBa@{setBa}}
+\index{setBa@{setBa}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setBa()}{setBa()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a015e66ecbc3cc2d5cbdd9a59f267177d} 
+void LSTMLayer\+::set\+Ba (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_ac12e8dede227c4cd915ed7f2d7ec6c85}\index{LSTMLayer@{LSTMLayer}!setBf@{setBf}}
+\index{setBf@{setBf}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setBf()}{setBf()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_ac12e8dede227c4cd915ed7f2d7ec6c85} 
+void LSTMLayer\+::set\+Bf (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a2c268207694fc797070b76c605e5f4ea}\index{LSTMLayer@{LSTMLayer}!setBi@{setBi}}
+\index{setBi@{setBi}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setBi()}{setBi()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a2c268207694fc797070b76c605e5f4ea} 
+void LSTMLayer\+::set\+Bi (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a6f101f613913eda4084e2a05f1d51b8e}\index{LSTMLayer@{LSTMLayer}!setBo@{setBo}}
+\index{setBo@{setBo}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setBo()}{setBo()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a6f101f613913eda4084e2a05f1d51b8e} 
+void LSTMLayer\+::set\+Bo (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{vec}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a25170370d83ceab87e7c9aafa4504df8}\index{LSTMLayer@{LSTMLayer}!setNumFeature@{setNumFeature}}
+\index{setNumFeature@{setNumFeature}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setNumFeature()}{setNumFeature()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a25170370d83ceab87e7c9aafa4504df8} 
+void LSTMLayer\+::set\+Num\+Feature (\begin{DoxyParamCaption}\item[{int}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_aa263fad012248350c5cd0aecda986c1f}\index{LSTMLayer@{LSTMLayer}!setNumIntrari@{setNumIntrari}}
+\index{setNumIntrari@{setNumIntrari}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setNumIntrari()}{setNumIntrari()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_aa263fad012248350c5cd0aecda986c1f} 
+void LSTMLayer\+::set\+Num\+Intrari (\begin{DoxyParamCaption}\item[{int}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a299caf9440fc24e06c9f49042edb8be7}\index{LSTMLayer@{LSTMLayer}!setNumUnitAscuns@{setNumUnitAscuns}}
+\index{setNumUnitAscuns@{setNumUnitAscuns}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setNumUnitAscuns()}{setNumUnitAscuns()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a299caf9440fc24e06c9f49042edb8be7} 
+void LSTMLayer\+::set\+Num\+Unit\+Ascuns (\begin{DoxyParamCaption}\item[{int}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a6ad4ebdcfc28f210e711c1e28f9b1a53}\index{LSTMLayer@{LSTMLayer}!setUa@{setUa}}
+\index{setUa@{setUa}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setUa()}{setUa()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a6ad4ebdcfc28f210e711c1e28f9b1a53} 
+void LSTMLayer\+::set\+Ua (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a78107560a3ef181fccd53eaed7f5f842}\index{LSTMLayer@{LSTMLayer}!setUf@{setUf}}
+\index{setUf@{setUf}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setUf()}{setUf()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a78107560a3ef181fccd53eaed7f5f842} 
+void LSTMLayer\+::set\+Uf (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_ae7e09c08ba7792cbcfebc414e5a921f3}\index{LSTMLayer@{LSTMLayer}!setUi@{setUi}}
+\index{setUi@{setUi}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setUi()}{setUi()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_ae7e09c08ba7792cbcfebc414e5a921f3} 
+void LSTMLayer\+::set\+Ui (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a35935d5eb987ec30149b4f978fb1e882}\index{LSTMLayer@{LSTMLayer}!setUo@{setUo}}
+\index{setUo@{setUo}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setUo()}{setUo()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a35935d5eb987ec30149b4f978fb1e882} 
+void LSTMLayer\+::set\+Uo (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_aa6ea7ee254ef0ef77bcc6563d7e6cd87}\index{LSTMLayer@{LSTMLayer}!setWa@{setWa}}
+\index{setWa@{setWa}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setWa()}{setWa()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_aa6ea7ee254ef0ef77bcc6563d7e6cd87} 
+void LSTMLayer\+::set\+Wa (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_ad45fe65eaa02df1842010371030de7ca}\index{LSTMLayer@{LSTMLayer}!setWf@{setWf}}
+\index{setWf@{setWf}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setWf()}{setWf()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_ad45fe65eaa02df1842010371030de7ca} 
+void LSTMLayer\+::set\+Wf (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a7531a8486da619e2def9769113735a97}\index{LSTMLayer@{LSTMLayer}!setWi@{setWi}}
+\index{setWi@{setWi}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setWi()}{setWi()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a7531a8486da619e2def9769113735a97} 
+void LSTMLayer\+::set\+Wi (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_af304349594051adf90fb6479f5704aed}\index{LSTMLayer@{LSTMLayer}!setWo@{setWo}}
+\index{setWo@{setWo}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{setWo()}{setWo()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_af304349594051adf90fb6479f5704aed} 
+void LSTMLayer\+::set\+Wo (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \&}]{matrix}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_layer_a6250ee69154a5479db143a7c271d1f60}\index{LSTMLayer@{LSTMLayer}!toJson@{toJson}}
+\index{toJson@{toJson}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{toJson()}{toJson()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a6250ee69154a5479db143a7c271d1f60} 
+std\+::string LSTMLayer\+::to\+Json (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_i_json_serializable}{IJson\+Serializable}}.
+
+\Hypertarget{class_l_s_t_m_layer_a7cda7d757ba226a65d522b8cb6ae3d67}\index{LSTMLayer@{LSTMLayer}!Train@{Train}}
+\index{Train@{Train}!LSTMLayer@{LSTMLayer}}
+\doxysubsubsection{\texorpdfstring{Train()}{Train()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_layer_a7cda7d757ba226a65d522b8cb6ae3d67} 
+void LSTMLayer\+::\+Train (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$}]{in\+\_\+set}{, }\item[{int}]{stride}{, }\item[{double}]{lambda}{}\end{DoxyParamCaption})}
+
+
+
+Functie care antreneaza reteaua antrenamentul se opreste cand numarul de antrenament atingi un numar maxim -\/ masura de siguranta ca nu rulam la infinit sau cand aproximarea e mai buna decat 95\% din valoarea dorita. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_l_s_t_m_layer_a7cda7d757ba226a65d522b8cb6ae3d67_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_l_s_t_m_layer_8h}{LSTMLayer.\+h}}\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_l_s_t_m_layer_8cpp}{LSTMLayer.\+cpp}}\end{DoxyCompactItemize}

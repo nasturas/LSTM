@@ -1,0 +1,138 @@
+\doxysection{LSTMCell Class Reference}
+\hypertarget{class_l_s_t_m_cell}{}\label{class_l_s_t_m_cell}\index{LSTMCell@{LSTMCell}}
+
+
+{\ttfamily \#include $<$LSTMCell.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_l_s_t_m_cell_ab3eb8d3f0bfd340021907b2ea8bdcbde}{LSTMCell}} ()
+\item 
+\mbox{\hyperlink{class_l_s_t_m_cell_a727b3abb959377c701150b38ce44bc98}{LSTMCell}} (int nr\+Asc)
+\item 
+\mbox{\hyperlink{class_l_s_t_m_cell_a9e372d9ea6a6145a1a37f24f4224a6a3}{\texorpdfstring{$\sim$}{\string~}\+LSTMCell}} ()
+\item 
+void \mbox{\hyperlink{class_l_s_t_m_cell_a64ae1b97d1f1d2535e6200e95b6ded44}{resize}} (int nr\+Asc)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_a9be25ed0c49944cb4d2e29cabd79516a}{fg}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_a1c3d5a583ff17c83f23a16eaddd1943e}{ig}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_ac19703d16ac4326065c785b20de9f34a}{og}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_aa73d83e5c8e0aecd67d40a4858b9821f}{out}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_a46033fc51d98d11a0c013674d3df98bb}{ag}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_ab7334ac9e7c16cfddfbd78196b37085d}{state}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_af9929ddf38b9e40feb83eeb63d897a19}{fg\+\_\+p}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_a54f227a151766db4a71399098f102b7d}{ig\+\_\+p}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_a3d1c6a9b2253bfe26ee4d611ece08e5d}{og\+\_\+p}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{class_l_s_t_m_cell_aa8c9ef48ec865dd71c0bae8b5e1105f2}{ag\+\_\+p}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_l_s_t_m_cell_ab3eb8d3f0bfd340021907b2ea8bdcbde}\index{LSTMCell@{LSTMCell}!LSTMCell@{LSTMCell}}
+\index{LSTMCell@{LSTMCell}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{LSTMCell()}{LSTMCell()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_ab3eb8d3f0bfd340021907b2ea8bdcbde} 
+LSTMCell\+::\+LSTMCell (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_cell_a727b3abb959377c701150b38ce44bc98}\index{LSTMCell@{LSTMCell}!LSTMCell@{LSTMCell}}
+\index{LSTMCell@{LSTMCell}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{LSTMCell()}{LSTMCell()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a727b3abb959377c701150b38ce44bc98} 
+LSTMCell\+::\+LSTMCell (\begin{DoxyParamCaption}\item[{int}]{nr\+Asc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_l_s_t_m_cell_a9e372d9ea6a6145a1a37f24f4224a6a3}\index{LSTMCell@{LSTMCell}!````~LSTMCell@{\texorpdfstring{$\sim$}{\string~}LSTMCell}}
+\index{````~LSTMCell@{\texorpdfstring{$\sim$}{\string~}LSTMCell}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}LSTMCell()}{\string~LSTMCell()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a9e372d9ea6a6145a1a37f24f4224a6a3} 
+LSTMCell\+::\texorpdfstring{$\sim$}{\string~}\+LSTMCell (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_l_s_t_m_cell_a64ae1b97d1f1d2535e6200e95b6ded44}\index{LSTMCell@{LSTMCell}!resize@{resize}}
+\index{resize@{resize}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{resize()}{resize()}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a64ae1b97d1f1d2535e6200e95b6ded44} 
+void LSTMCell\+::resize (\begin{DoxyParamCaption}\item[{int}]{nr\+Asc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_l_s_t_m_cell_a46033fc51d98d11a0c013674d3df98bb}\index{LSTMCell@{LSTMCell}!ag@{ag}}
+\index{ag@{ag}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{ag}{ag}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a46033fc51d98d11a0c013674d3df98bb} 
+std\+::vector$<$double$>$ LSTMCell\+::ag}
+
+\Hypertarget{class_l_s_t_m_cell_aa8c9ef48ec865dd71c0bae8b5e1105f2}\index{LSTMCell@{LSTMCell}!ag\_p@{ag\_p}}
+\index{ag\_p@{ag\_p}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{ag\_p}{ag\_p}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_aa8c9ef48ec865dd71c0bae8b5e1105f2} 
+std\+::vector$<$double$>$ LSTMCell\+::ag\+\_\+p}
+
+\Hypertarget{class_l_s_t_m_cell_a9be25ed0c49944cb4d2e29cabd79516a}\index{LSTMCell@{LSTMCell}!fg@{fg}}
+\index{fg@{fg}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{fg}{fg}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a9be25ed0c49944cb4d2e29cabd79516a} 
+std\+::vector$<$double$>$ LSTMCell\+::fg}
+
+\Hypertarget{class_l_s_t_m_cell_af9929ddf38b9e40feb83eeb63d897a19}\index{LSTMCell@{LSTMCell}!fg\_p@{fg\_p}}
+\index{fg\_p@{fg\_p}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{fg\_p}{fg\_p}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_af9929ddf38b9e40feb83eeb63d897a19} 
+std\+::vector$<$double$>$ LSTMCell\+::fg\+\_\+p}
+
+\Hypertarget{class_l_s_t_m_cell_a1c3d5a583ff17c83f23a16eaddd1943e}\index{LSTMCell@{LSTMCell}!ig@{ig}}
+\index{ig@{ig}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{ig}{ig}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a1c3d5a583ff17c83f23a16eaddd1943e} 
+std\+::vector$<$double$>$ LSTMCell\+::ig}
+
+\Hypertarget{class_l_s_t_m_cell_a54f227a151766db4a71399098f102b7d}\index{LSTMCell@{LSTMCell}!ig\_p@{ig\_p}}
+\index{ig\_p@{ig\_p}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{ig\_p}{ig\_p}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a54f227a151766db4a71399098f102b7d} 
+std\+::vector$<$double$>$ LSTMCell\+::ig\+\_\+p}
+
+\Hypertarget{class_l_s_t_m_cell_ac19703d16ac4326065c785b20de9f34a}\index{LSTMCell@{LSTMCell}!og@{og}}
+\index{og@{og}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{og}{og}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_ac19703d16ac4326065c785b20de9f34a} 
+std\+::vector$<$double$>$ LSTMCell\+::og}
+
+\Hypertarget{class_l_s_t_m_cell_a3d1c6a9b2253bfe26ee4d611ece08e5d}\index{LSTMCell@{LSTMCell}!og\_p@{og\_p}}
+\index{og\_p@{og\_p}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{og\_p}{og\_p}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_a3d1c6a9b2253bfe26ee4d611ece08e5d} 
+std\+::vector$<$double$>$ LSTMCell\+::og\+\_\+p}
+
+\Hypertarget{class_l_s_t_m_cell_aa73d83e5c8e0aecd67d40a4858b9821f}\index{LSTMCell@{LSTMCell}!out@{out}}
+\index{out@{out}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{out}{out}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_aa73d83e5c8e0aecd67d40a4858b9821f} 
+std\+::vector$<$double$>$ LSTMCell\+::out}
+
+\Hypertarget{class_l_s_t_m_cell_ab7334ac9e7c16cfddfbd78196b37085d}\index{LSTMCell@{LSTMCell}!state@{state}}
+\index{state@{state}!LSTMCell@{LSTMCell}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \label{class_l_s_t_m_cell_ab7334ac9e7c16cfddfbd78196b37085d} 
+std\+::vector$<$double$>$ LSTMCell\+::state}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_l_s_t_m_cell_8h}{LSTMCell.\+h}}\end{DoxyCompactItemize}

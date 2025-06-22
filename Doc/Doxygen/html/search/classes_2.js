@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lstm_5fcell_0',['LSTM_cell',['../class_l_s_t_m__cell.html',1,'']]]
+  ['gategradient_0',['GateGradient',['../class_gate_gradient.html',1,'']]]
 ];

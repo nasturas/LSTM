@@ -1,0 +1,36 @@
+\doxysection{Lstm\+Gradients.\+h}
+\hypertarget{_lstm_gradients_8h_source}{}\label{_lstm_gradients_8h_source}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/LstmGradients.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/LstmGradients.h}}
+\mbox{\hyperlink{_lstm_gradients_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00003\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_lstm_gradients_ae787a11ca99a5af49f4a212414e990eb}{LstmGradients}}}
+\DoxyCodeLine{00004\ \{}
+\DoxyCodeLine{00005\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00006\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_lstm_gradients_aac51fe8faee641933a33c94b51f02856}{grd\_ag\_p}};}
+\DoxyCodeLine{00007\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_lstm_gradients_aec273fc0e89f0346af43d8e329ab7597}{grd\_fg\_p}};}
+\DoxyCodeLine{00008\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_lstm_gradients_a5f8bca3934564916f56a510916f6568f}{grd\_ig\_p}};}
+\DoxyCodeLine{00009\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_lstm_gradients_a3860c6ce0fcc955f52f864fe116265ad}{grd\_og\_p}};}
+\DoxyCodeLine{00010\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_lstm_gradients_a03710879e2c7f9213ebce9782b2b254a}{grd\_state}};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_ae787a11ca99a5af49f4a212414e990eb}{LstmGradients}}()\ \{\}}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_a73dcad0f55841ad8bd8e1550e86936de}{LstmGradients}}(\textcolor{keywordtype}{int}\ nrAsc)}
+\DoxyCodeLine{00014\ \ \ \ \ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_a03710879e2c7f9213ebce9782b2b254a}{grd\_state}}.resize(nrAsc);}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_aec273fc0e89f0346af43d8e329ab7597}{grd\_fg\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_a5f8bca3934564916f56a510916f6568f}{grd\_ig\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_a3860c6ce0fcc955f52f864fe116265ad}{grd\_og\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_aac51fe8faee641933a33c94b51f02856}{grd\_ag\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_lstm_gradients_a3d670781bfd0d6b57f32b19fb602c9ce}{resize}}(\textcolor{keywordtype}{int}\ nrAsc)}
+\DoxyCodeLine{00022\ \ \ \ \ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_a03710879e2c7f9213ebce9782b2b254a}{grd\_state}}.resize(nrAsc);}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_aec273fc0e89f0346af43d8e329ab7597}{grd\_fg\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_a5f8bca3934564916f56a510916f6568f}{grd\_ig\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_a3860c6ce0fcc955f52f864fe116265ad}{grd\_og\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_lstm_gradients_aac51fe8faee641933a33c94b51f02856}{grd\_ag\_p}}.resize(nrAsc);}
+\DoxyCodeLine{00028\ \ \ \ \ \};}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+
+\end{DoxyCode}

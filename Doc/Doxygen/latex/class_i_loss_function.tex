@@ -1,0 +1,63 @@
+\doxysection{ILoss\+Function Class Reference}
+\hypertarget{class_i_loss_function}{}\label{class_i_loss_function}\index{ILossFunction@{ILossFunction}}
+
+
+{\ttfamily \#include $<$ILoss\+Function.\+h$>$}
+
+
+
+Inheritance diagram for ILoss\+Function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_i_loss_function__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual double \mbox{\hyperlink{class_i_loss_function_a03fe61f409e371f62c7ce89c19e1bdd8}{Get\+Loss}} (vector$<$ double $>$ y\+\_\+true, vector$<$ double $>$ y\+\_\+pred) const =0
+\item 
+virtual double \mbox{\hyperlink{class_i_loss_function_a4422a03396b37e8c7e2325e3160caf51}{Get\+Loss}} (vector$<$ vector$<$ double $>$ $>$ y\+\_\+true, vector$<$ vector$<$ double $>$ $>$ y\+\_\+pred) const =0
+\item 
+virtual vector$<$ double $>$ \mbox{\hyperlink{class_i_loss_function_ae4664a0d388d1929b92df6960e0074ed}{Get\+Loss\+Derivate}} (vector$<$ double $>$ y\+\_\+true, vector$<$ double $>$ y\+\_\+pred) const =0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_i_loss_function_a03fe61f409e371f62c7ce89c19e1bdd8}\index{ILossFunction@{ILossFunction}!GetLoss@{GetLoss}}
+\index{GetLoss@{GetLoss}!ILossFunction@{ILossFunction}}
+\doxysubsubsection{\texorpdfstring{GetLoss()}{GetLoss()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_i_loss_function_a03fe61f409e371f62c7ce89c19e1bdd8} 
+virtual double ILoss\+Function\+::\+Get\+Loss (\begin{DoxyParamCaption}\item[{vector$<$ double $>$}]{y\+\_\+true}{, }\item[{vector$<$ double $>$}]{y\+\_\+pred}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_mean_square_error_aa054794fc66b3fe12e08da2db62c8aaa}{Mean\+Square\+Error}}.
+
+\Hypertarget{class_i_loss_function_a4422a03396b37e8c7e2325e3160caf51}\index{ILossFunction@{ILossFunction}!GetLoss@{GetLoss}}
+\index{GetLoss@{GetLoss}!ILossFunction@{ILossFunction}}
+\doxysubsubsection{\texorpdfstring{GetLoss()}{GetLoss()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_i_loss_function_a4422a03396b37e8c7e2325e3160caf51} 
+virtual double ILoss\+Function\+::\+Get\+Loss (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$}]{y\+\_\+true}{, }\item[{vector$<$ vector$<$ double $>$ $>$}]{y\+\_\+pred}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_mean_square_error_a9a0c6d477856582e074cdab340a2b13f}{Mean\+Square\+Error}}.
+
+\Hypertarget{class_i_loss_function_ae4664a0d388d1929b92df6960e0074ed}\index{ILossFunction@{ILossFunction}!GetLossDerivate@{GetLossDerivate}}
+\index{GetLossDerivate@{GetLossDerivate}!ILossFunction@{ILossFunction}}
+\doxysubsubsection{\texorpdfstring{GetLossDerivate()}{GetLossDerivate()}}
+{\footnotesize\ttfamily \label{class_i_loss_function_ae4664a0d388d1929b92df6960e0074ed} 
+virtual vector$<$ double $>$ ILoss\+Function\+::\+Get\+Loss\+Derivate (\begin{DoxyParamCaption}\item[{vector$<$ double $>$}]{y\+\_\+true}{, }\item[{vector$<$ double $>$}]{y\+\_\+pred}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_mean_square_error_adac7b68f0fbf0435764cf489b24020b7}{Mean\+Square\+Error}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_i_loss_function_8h}{ILoss\+Function.\+h}}\end{DoxyCompactItemize}

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['vectorsigmoid_0',['vectorSigmoid',['../_interpolare_8cpp.html#a9c0585724ddf23b24582b966d838e25b',1,'Interpolare.cpp']]],
-  ['vectortanh_1',['vectorTanh',['../_interpolare_8cpp.html#a3b1b5ef337e356660931db9a7881aa40',1,'Interpolare.cpp']]]
+  ['fg_0',['fg',['../class_l_s_t_m_cell.html#a9be25ed0c49944cb4d2e29cabd79516a',1,'LSTMCell']]],
+  ['fg_5fp_1',['fg_p',['../class_l_s_t_m_cell.html#af9929ddf38b9e40feb83eeb63d897a19',1,'LSTMCell']]]
 ];

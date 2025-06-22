@@ -1,0 +1,86 @@
+\doxysection{Mean\+Square\+Error Class Reference}
+\hypertarget{class_mean_square_error}{}\label{class_mean_square_error}\index{MeanSquareError@{MeanSquareError}}
+
+
+{\ttfamily \#include $<$Mean\+Square\+Error.\+h$>$}
+
+
+
+Inheritance diagram for Mean\+Square\+Error\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_mean_square_error__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Mean\+Square\+Error\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_mean_square_error__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{class_mean_square_error_aa054794fc66b3fe12e08da2db62c8aaa}{Get\+Loss}} (vector$<$ double $>$ y\+\_\+true, vector$<$ double $>$ y\+\_\+pred) const override
+\item 
+double \mbox{\hyperlink{class_mean_square_error_a9a0c6d477856582e074cdab340a2b13f}{Get\+Loss}} (vector$<$ vector$<$ double $>$ $>$ y\+\_\+true, vector$<$ vector$<$ double $>$ $>$ y\+\_\+pred) const override
+\item 
+vector$<$ double $>$ \mbox{\hyperlink{class_mean_square_error_adac7b68f0fbf0435764cf489b24020b7}{Get\+Loss\+Derivate}} (vector$<$ double $>$ y\+\_\+true, vector$<$ double $>$ y\+\_\+pred) const override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_mean_square_error_aa054794fc66b3fe12e08da2db62c8aaa}\index{MeanSquareError@{MeanSquareError}!GetLoss@{GetLoss}}
+\index{GetLoss@{GetLoss}!MeanSquareError@{MeanSquareError}}
+\doxysubsubsection{\texorpdfstring{GetLoss()}{GetLoss()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_mean_square_error_aa054794fc66b3fe12e08da2db62c8aaa} 
+double Mean\+Square\+Error\+::\+Get\+Loss (\begin{DoxyParamCaption}\item[{vector$<$ double $>$}]{y\+\_\+true}{, }\item[{vector$<$ double $>$}]{y\+\_\+pred}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Functie care intoarce MSE pentru un sir de estimari scalare
+
+
+\begin{DoxyParams}{Parameters}
+{\em y\+\_\+true} & \\
+\hline
+{\em y\+\_\+pred} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_i_loss_function_a03fe61f409e371f62c7ce89c19e1bdd8}{ILoss\+Function}}.
+
+\Hypertarget{class_mean_square_error_a9a0c6d477856582e074cdab340a2b13f}\index{MeanSquareError@{MeanSquareError}!GetLoss@{GetLoss}}
+\index{GetLoss@{GetLoss}!MeanSquareError@{MeanSquareError}}
+\doxysubsubsection{\texorpdfstring{GetLoss()}{GetLoss()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_mean_square_error_a9a0c6d477856582e074cdab340a2b13f} 
+double Mean\+Square\+Error\+::\+Get\+Loss (\begin{DoxyParamCaption}\item[{vector$<$ vector$<$ double $>$ $>$}]{y\+\_\+true}{, }\item[{vector$<$ vector$<$ double $>$ $>$}]{y\+\_\+pred}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_i_loss_function_a4422a03396b37e8c7e2325e3160caf51}{ILoss\+Function}}.
+
+\Hypertarget{class_mean_square_error_adac7b68f0fbf0435764cf489b24020b7}\index{MeanSquareError@{MeanSquareError}!GetLossDerivate@{GetLossDerivate}}
+\index{GetLossDerivate@{GetLossDerivate}!MeanSquareError@{MeanSquareError}}
+\doxysubsubsection{\texorpdfstring{GetLossDerivate()}{GetLossDerivate()}}
+{\footnotesize\ttfamily \label{class_mean_square_error_adac7b68f0fbf0435764cf489b24020b7} 
+vector$<$ double $>$ Mean\+Square\+Error\+::\+Get\+Loss\+Derivate (\begin{DoxyParamCaption}\item[{vector$<$ double $>$}]{y\+\_\+true}{, }\item[{vector$<$ double $>$}]{y\+\_\+pred}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_i_loss_function_ae4664a0d388d1929b92df6960e0074ed}{ILoss\+Function}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_mean_square_error_8h}{Mean\+Square\+Error.\+h}}\item 
+C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\mbox{\hyperlink{_mean_square_error_8cpp}{Mean\+Square\+Error.\+cpp}}\end{DoxyCompactItemize}

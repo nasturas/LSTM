@@ -1,5 +1,31 @@
 <map id="C:/_work/UVABc Informatik/AI_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/EnvironmentData.cpp" name="C:/_work/UVABc Informatik/AI_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/EnvironmentData.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,280,64"/>
-<area shape="rect" id="Node000002" href="$_environment_data_8h.html" title=" " alt="" coords="76,112,209,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,64,145,96,140,96,140,64"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="392,5,667,64"/>
+<area shape="rect" id="Node000002" href="$_environment_data_8h.html" title=" " alt="" coords="307,112,440,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="480,67,410,106,408,102,478,62"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="464,112,595,139"/>
+<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="532,64,532,96,527,96,527,64"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="619,112,691,139"/>
+<area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="572,62,626,101,623,105,569,67"/>
+<area shape="rect" id="Node000003" href="$_i_data_normalisation_8h.html" title=" " alt="" coords="128,261,272,288"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="307,131,227,135,140,145,64,162,35,174,17,188,9,202,9,213,16,223,29,233,67,248,113,259,112,264,65,253,26,237,12,227,4,215,4,200,13,185,33,170,62,157,139,140,226,130,306,125"/>
+<area shape="rect" id="Node000005" href="$_i_json_serializable_8h.html" title=" " alt="" coords="392,187,523,213"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="390,137,433,174,430,178,386,141"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="455,261,508,288"/>
+<area shape="poly" id="edge14_Node000002_Node000006" title=" " alt="" coords="427,137,492,158,520,171,537,185,543,203,538,221,527,238,512,253,508,249,522,235,533,219,537,203,533,188,517,175,490,163,425,142"/>
+<area shape="rect" id="Node000007" href="$_logaritm_normalisation_8h.html" title=" " alt="" coords="27,187,189,213"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="328,142,170,185,168,180,327,137"/>
+<area shape="rect" id="Node000008" href="$_z_score_normalisation_8h.html" title=" " alt="" coords="214,187,368,213"/>
+<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="361,141,318,178,315,174,357,137"/>
+<area shape="rect" id="Node000009" href="$_mean_square_error_8h.html" title=" " alt="" coords="598,187,731,213"/>
+<area shape="poly" id="edge10_Node000002_Node000009" title=" " alt="" coords="425,137,599,180,598,185,424,142"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="309,411,366,437"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="214,287,317,397,313,401,210,290"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="464,213,475,246,470,247,459,215"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="126,212,174,250,171,254,123,216"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="277,216,229,254,226,250,273,212"/>
+<area shape="rect" id="Node000010" href="$_i_loss_function_8h.html" title=" " alt="" coords="582,261,696,288"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="662,215,651,247,646,246,657,213"/>
+<area shape="rect" id="Node000011" href="$_test___vector_8h.html" title=" " alt="" coords="378,336,479,363"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="603,291,480,333,479,328,601,286"/>
+<area shape="poly" id="edge13_Node000011_Node000004" title=" " alt="" coords="414,365,366,403,363,399,411,361"/>
 </map>

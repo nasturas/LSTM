@@ -1,0 +1,138 @@
+\doxysection{LSTMLayer.\+h}
+\hypertarget{_l_s_t_m_layer_8h_source}{}\label{_l_s_t_m_layer_8h_source}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/LSTMLayer.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/LSTMLayer.h}}
+\mbox{\hyperlink{_l_s_t_m_layer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_i_json_serializable_8h}{IJsonSerializable.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_xavier_normalised_8h}{XavierNormalised.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_test___vector_8h}{Test\_Vector.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_l_s_t_m_cell_8h}{LSTMCell.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_gate_gradient_8h}{GateGradient.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_lstm_gradients_8h}{LstmGradients.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_sigmoid_8h}{Sigmoid.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_tanh_8h}{Tanh.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_l_s_t_m_layer_aea2b7134d09aa8a64c93f938c7307eb3}{LSTMLayer}}:\ \mbox{\hyperlink{class_i_json_serializable}{IJsonSerializable}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{comment}{//numarul\ de\ unitati\ ascunse\ este\ si\ numarul\ de\ iesiri.}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_feature,\ num\_unit\_ascuns,\ num\_intrari;}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{class_l_s_t_m_cell}{LSTMCell}}*\ cell\_gates;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ matrici\ cu\ num\_unit\_ascuns\ randuri\ si\ num\_feature\ coloane.\ sau\ num\_unit\_ascuns\ x\ num\_feature}}
+\DoxyCodeLine{00019\ \ \ \ \ std::vector<std::vector<double>>\ Wf;\ }
+\DoxyCodeLine{00020\ \ \ \ \ std::vector<std::vector<double>>\ Wi;\ }
+\DoxyCodeLine{00021\ \ \ \ \ std::vector<std::vector<double>>\ Wo;\ }
+\DoxyCodeLine{00022\ \ \ \ \ std::vector<std::vector<double>>\ Wa;\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ matrici\ de\ dimensiune\ num\_unit\_ascuns\ x\ num\_unit\_ascuns\ }}
+\DoxyCodeLine{00024\ \ \ \ \ std::vector<std::vector<double>>\ Uf;\ }
+\DoxyCodeLine{00025\ \ \ \ \ std::vector<std::vector<double>>\ Ui;\ }
+\DoxyCodeLine{00026\ \ \ \ \ std::vector<std::vector<double>>\ Uo;\ }
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<std::vector<double>>\ Ua;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ o\ coloana\ de\ num\_unit\_ascuns\ randuri}}
+\DoxyCodeLine{00029\ \ \ \ \ std::vector<double>\ bf;}
+\DoxyCodeLine{00030\ \ \ \ \ std::vector<double>\ bi;}
+\DoxyCodeLine{00031\ \ \ \ \ std::vector<double>\ bo;}
+\DoxyCodeLine{00032\ \ \ \ \ std::vector<double>\ ba;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ vector<LSTMCell>*\ gates;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_i_activation_function}{IActivationFunction}}*\ sigmoid;}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{class_i_activation_function}{IActivationFunction}}*\ tanh;}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{class_xavier_normalised}{XavierNormalised}}*\ num\_generator;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{double}\ CalcEroareTinta(std::vector<Test\_Vector>*\ test\_set);}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ TrainLSTM(\mbox{\hyperlink{class_test___vector}{Test\_Vector}}\ test\_vect,\ \textcolor{keywordtype}{double}\ lambda);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{double}\ TestLSTM(std::vector<Test\_Vector>*\ test\_set);}
+\DoxyCodeLine{00045\ \ \ \ \ vector<LstmGradients>\ BackwardPass(vector<vector<double>>\&\ deltaLoss);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Functie\ care\ primeste\ un\ vector\ de\ valori,\ si\ il\ imparte\ in\ training\ set\ si\ test\ set\ dupa\ regula\ 70\%-\/30\%}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ PrepareTraining(std::vector<std::vector<double>>\ in\_set,\ std::vector<Test\_Vector>*\ training\_set,\ std::vector<Test\_Vector>*\ test\_set,\ \textcolor{keywordtype}{int}\ stride);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{class_l_s_t_m_layer_aea2b7134d09aa8a64c93f938c7307eb3}{LSTMLayer}}()\ }
+\DoxyCodeLine{00051\ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ num\_feature\ =\ 0;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ num\_unit\_ascuns\ =\ 0;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ num\_intrari\ =\ 0;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ gates\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ num\_generator\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_xavier_normalised}{XavierNormalised}}(0,0);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ sigmoid\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_sigmoid}{Sigmoid}}();\ tanh\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_tanh}{Tanh}}();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ cell\_gates\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_l_s_t_m_cell}{LSTMCell}}();}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{class_l_s_t_m_layer_ace010a6d97faa9570bd1d0bf2038ed11}{LSTMLayer}}(\textcolor{keywordtype}{int}\ nrFe,\ \textcolor{keywordtype}{int}\ nrAsc,\ \textcolor{keywordtype}{int}\ nrIn)\ :\ num\_feature(nrFe),\ num\_unit\_ascuns(nrAsc),\ num\_intrari(nrIn)}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ cell\_gates\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_l_s_t_m_cell}{LSTMCell}}(nrAsc);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ gates\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ num\_generator\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_xavier_normalised}{XavierNormalised}}(nrIn,\ nrAsc);}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//initializam\ ponderile\ la\ porti\ cu\ generatorul\ de\ numere\ ales.\ Initial\ folosim\ doar\ Xavier\ normalizat}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//https://machinelearningmastery.com/weight-\/initialization-\/for-\/deep-\/learning-\/neural-\/networks/}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ https://arxiv.org/abs/1912.10454\ -\/\ "{}On\ the\ Initialization\ of\ Long\ Short-\/Term\ Memory\ Networks"{}\ de\ M.\ Ghazi\ et\ al.}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//TODO:\ de\ creat\ diferite\ functii\ de\ initializare\ pentru\ LSTM,\ xavier,\ normalised\ xavier,\ orthogonal\ initialization.\ we\ will\ use\ normalised\ xavier.}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ Wf\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ Wi\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ Wo\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ Wa\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrIn);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ Uf\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ Ui\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ Uo\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ Ua\ =\ num\_generator-\/>generateMatrix(nrAsc,\ nrAsc);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ bf\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ bi\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ bo\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ ba\ =\ num\_generator-\/>generateVector(nrAsc);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ sigmoid\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_sigmoid}{Sigmoid}}();\ tanh\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_tanh}{Tanh}}();}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a25170370d83ceab87e7c9aafa4504df8}{setNumFeature}}(\textcolor{keywordtype}{int}\ val)\ \{\ num\_feature\ =\ val;\ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_l_s_t_m_layer_ac0b896b8f3e8b6aa878501be58f3e867}{getNumFeature}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ num\_feature;\ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a299caf9440fc24e06c9f49042edb8be7}{setNumUnitAscuns}}(\textcolor{keywordtype}{int}\ val)\ \{\ num\_unit\_ascuns\ =\ val;\ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_l_s_t_m_layer_a1bd23c17965747caf00240831d8f74cd}{getNumUnitAscuns}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ num\_unit\_ascuns;\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_aa263fad012248350c5cd0aecda986c1f}{setNumIntrari}}(\textcolor{keywordtype}{int}\ val)\ \{\ num\_intrari\ =\ val;\ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_l_s_t_m_layer_a61748af58f6b885479101706f6115d9d}{getNumIntrari}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ num\_intrari;\ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Setter\ \&\ Getter\ pentru\ matrici}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_ad45fe65eaa02df1842010371030de7ca}{setWf}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Wf\ =\ matrix;\ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a7531a8486da619e2def9769113735a97}{setWi}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Wi\ =\ matrix;\ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_af304349594051adf90fb6479f5704aed}{setWo}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Wo\ =\ matrix;\ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_aa6ea7ee254ef0ef77bcc6563d7e6cd87}{setWa}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Wa\ =\ matrix;\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a78107560a3ef181fccd53eaed7f5f842}{setUf}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Uf\ =\ matrix;\ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_ae7e09c08ba7792cbcfebc414e5a921f3}{setUi}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Ui\ =\ matrix;\ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a35935d5eb987ec30149b4f978fb1e882}{setUo}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Uo\ =\ matrix;\ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a6ad4ebdcfc28f210e711c1e28f9b1a53}{setUa}}(\textcolor{keyword}{const}\ std::vector<std::vector<double>>\&\ matrix)\ \{\ Ua\ =\ matrix;\ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_ac12e8dede227c4cd915ed7f2d7ec6c85}{setBf}}(\textcolor{keyword}{const}\ std::vector<double>\&\ vec)\ \{\ bf\ =\ vec;\ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a2c268207694fc797070b76c605e5f4ea}{setBi}}(\textcolor{keyword}{const}\ std::vector<double>\&\ vec)\ \{\ bi\ =\ vec;\ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a6f101f613913eda4084e2a05f1d51b8e}{setBo}}(\textcolor{keyword}{const}\ std::vector<double>\&\ vec)\ \{\ bo\ =\ vec;\ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a015e66ecbc3cc2d5cbdd9a59f267177d}{setBa}}(\textcolor{keyword}{const}\ std::vector<double>\&\ vec)\ \{\ ba\ =\ vec;\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{class_l_s_t_m_layer_a942a479e46e292a9ae5d55c0a40de5e6}{ForwardPass}}(std::vector<double>\ input);}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_s_t_m_layer_a7cda7d757ba226a65d522b8cb6ae3d67}{Train}}(vector<vector<double>>\ in\_set,\ \textcolor{keywordtype}{int}\ stride,\ \textcolor{keywordtype}{double}\ lambda);}
+\DoxyCodeLine{00128\ \ \ \ \ std::string\ \mbox{\hyperlink{class_l_s_t_m_layer_a6250ee69154a5479db143a7c271d1f60}{toJson}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_l_s_t_m_layer}{LSTMLayer}}*\ \mbox{\hyperlink{class_l_s_t_m_layer_a764c8edf3bfb64c94f44d1a19ea9f3d8}{fromJson}}(\textcolor{keyword}{const}\ std::string\&\ json);}
+\DoxyCodeLine{00130\ \};\ }
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ }
+
+\end{DoxyCode}

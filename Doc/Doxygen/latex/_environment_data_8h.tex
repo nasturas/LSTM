@@ -1,5 +1,19 @@
 \doxysection{C\+:/\+\_\+work/\+UVABc Informatik/\+AI\+\_\+\+LSTM/\+Prezicere\+Pret\+Actiuni/\+Prezicere\+Pret\+Actiuni/\+Environment\+Data.h File Reference}
 \hypertarget{_environment_data_8h}{}\label{_environment_data_8h}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/EnvironmentData.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/EnvironmentData.h}}
+{\ttfamily \#include "{}IData\+Normalisation.\+h"{}}\newline
+{\ttfamily \#include "{}IJson\+Serializable.\+h"{}}\newline
+{\ttfamily \#include "{}Logaritm\+Normalisation.\+h"{}}\newline
+{\ttfamily \#include "{}ZScore\+Normalisation.\+h"{}}\newline
+{\ttfamily \#include "{}Mean\+Square\+Error.\+h"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for Environment\+Data.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_environment_data_8h__incl}
+\end{center}
+\end{figure}
 This graph shows which files directly or indirectly include this file\+:
 \nopagebreak
 \begin{figure}[H]
@@ -13,3 +27,72 @@ This graph shows which files directly or indirectly include this file\+:
 \item 
 class \mbox{\hyperlink{class_environment_data}{Environment\+Data}}
 \end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_environment_data_8h_a8fb5b33edeed7e9008e29a3b0f3732ef}{IDX\+\_\+\+PREDICTED\+\_\+\+FEATURE}}~0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa}{Data\+Normalisation\+Style}} \{ \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faaff4127d5ee8c8a5dbc4a408c024fdc7f}{Logaritm}} =0
+, \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faa285ec4fc7c39ad24deb92101c7d96eef}{ZScore}} =1
+, \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faa871af7f6a607fe62f2f90064b7bd767b}{Roling\+Average}} =2
+ \}
+\begin{DoxyCompactList}\small\item\em Tipuri de normalisari dupa \href{http://www.mirlabs.org/ijcisim/regular_papers_2014/IJCISIM_24.pdf}{\texttt{ http\+://www.\+mirlabs.\+org/ijcisim/regular\+\_\+papers\+\_\+2014/\+IJCISIM\+\_\+24.\+pdf}}. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196}{Loss\+Function\+Style}} \{ \mbox{\hyperlink{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196aafb483e0e91a566ecdf90b7a3b277f99}{MSE}}
+, \mbox{\hyperlink{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196a2ba2ac63e193f34b4bdfa879e7c4717f}{RMSE}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_environment_data_8h_a8fb5b33edeed7e9008e29a3b0f3732ef}\index{EnvironmentData.h@{EnvironmentData.h}!IDX\_PREDICTED\_FEATURE@{IDX\_PREDICTED\_FEATURE}}
+\index{IDX\_PREDICTED\_FEATURE@{IDX\_PREDICTED\_FEATURE}!EnvironmentData.h@{EnvironmentData.h}}
+\doxysubsubsection{\texorpdfstring{IDX\_PREDICTED\_FEATURE}{IDX\_PREDICTED\_FEATURE}}
+{\footnotesize\ttfamily \label{_environment_data_8h_a8fb5b33edeed7e9008e29a3b0f3732ef} 
+\#define IDX\+\_\+\+PREDICTED\+\_\+\+FEATURE~0}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa}\index{EnvironmentData.h@{EnvironmentData.h}!DataNormalisationStyle@{DataNormalisationStyle}}
+\index{DataNormalisationStyle@{DataNormalisationStyle}!EnvironmentData.h@{EnvironmentData.h}}
+\doxysubsubsection{\texorpdfstring{DataNormalisationStyle}{DataNormalisationStyle}}
+{\footnotesize\ttfamily \label{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa} 
+enum \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa}{Data\+Normalisation\+Style}}}
+
+
+
+Tipuri de normalisari dupa \href{http://www.mirlabs.org/ijcisim/regular_papers_2014/IJCISIM_24.pdf}{\texttt{ http\+://www.\+mirlabs.\+org/ijcisim/regular\+\_\+papers\+\_\+2014/\+IJCISIM\+\_\+24.\+pdf}}. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Logaritm@{Logaritm}!EnvironmentData.h@{EnvironmentData.h}}\index{EnvironmentData.h@{EnvironmentData.h}!Logaritm@{Logaritm}}}\Hypertarget{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faaff4127d5ee8c8a5dbc4a408c024fdc7f}\label{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faaff4127d5ee8c8a5dbc4a408c024fdc7f} 
+Logaritm&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZScore@{ZScore}!EnvironmentData.h@{EnvironmentData.h}}\index{EnvironmentData.h@{EnvironmentData.h}!ZScore@{ZScore}}}\Hypertarget{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faa285ec4fc7c39ad24deb92101c7d96eef}\label{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faa285ec4fc7c39ad24deb92101c7d96eef} 
+ZScore&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RolingAverage@{RolingAverage}!EnvironmentData.h@{EnvironmentData.h}}\index{EnvironmentData.h@{EnvironmentData.h}!RolingAverage@{RolingAverage}}}\Hypertarget{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faa871af7f6a607fe62f2f90064b7bd767b}\label{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2faa871af7f6a607fe62f2f90064b7bd767b} 
+Roling\+Average&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196}\index{EnvironmentData.h@{EnvironmentData.h}!LossFunctionStyle@{LossFunctionStyle}}
+\index{LossFunctionStyle@{LossFunctionStyle}!EnvironmentData.h@{EnvironmentData.h}}
+\doxysubsubsection{\texorpdfstring{LossFunctionStyle}{LossFunctionStyle}}
+{\footnotesize\ttfamily \label{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196} 
+enum \mbox{\hyperlink{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196}{Loss\+Function\+Style}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSE@{MSE}!EnvironmentData.h@{EnvironmentData.h}}\index{EnvironmentData.h@{EnvironmentData.h}!MSE@{MSE}}}\Hypertarget{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196aafb483e0e91a566ecdf90b7a3b277f99}\label{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196aafb483e0e91a566ecdf90b7a3b277f99} 
+MSE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RMSE@{RMSE}!EnvironmentData.h@{EnvironmentData.h}}\index{EnvironmentData.h@{EnvironmentData.h}!RMSE@{RMSE}}}\Hypertarget{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196a2ba2ac63e193f34b4bdfa879e7c4717f}\label{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196a2ba2ac63e193f34b4bdfa879e7c4717f} 
+RMSE&\\
+\hline
+
+\end{DoxyEnumFields}

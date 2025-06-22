@@ -4,6 +4,26 @@
 
 {\ttfamily \#include $<$Environment\+Data.\+h$>$}
 
+
+
+Inheritance diagram for Environment\+Data\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_environment_data__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Environment\+Data\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_environment_data__coll__graph}
+\end{center}
+\end{figure}
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -11,16 +31,26 @@
 \item 
 \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \& \mbox{\hyperlink{class_environment_data_afa938b7599e462b8047bad9983f0aaff}{operator=}} (const \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \&)=delete
 \item 
+const \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa}{Data\+Normalisation\+Style}} \mbox{\hyperlink{class_environment_data_ac6f213dd33e78d67d84098e3464f6f7f}{get\+Normalisation\+Style}} ()
+\item 
 const int \mbox{\hyperlink{class_environment_data_ab49a52deeedb397acaebbd890c524434}{get\+Numar\+Maxim\+Antrenari}} ()
 \item 
 const int \mbox{\hyperlink{class_environment_data_a24e5fce641541740f903fb949c4a21ee}{get\+Procent\+Precizie\+Antrenament}} ()
 \item 
 const double \mbox{\hyperlink{class_environment_data_a22beecca51f0dc53435e33e6309209a0}{get\+Lamda}} ()
+\item 
+const \mbox{\hyperlink{class_i_data_normalisation}{IData\+Normalisation}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_environment_data_a318fa644a728df25c7c67178b7a8e007}{get\+Normalisation}} ()
+\item 
+const \mbox{\hyperlink{class_i_loss_function}{ILoss\+Function}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_environment_data_ad376d456900fafc0e42082ae6ce42a51}{Get\+Loss\+Function}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_environment_data_ab16ba49d0f77bec49835026c5af96211}{to\+Json}} () const override
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_environment_data_a9171e52e0e87966bd1abfb996ec5d8a0}{get\+Instance}} (int val, int proc, double lambda)
+static \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_environment_data_a0bae23175931072a7adba6784dfeeafe}{get\+Instance}} (int val, int proc, double lambda, \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa}{Data\+Normalisation\+Style}} norm\+Style, \mbox{\hyperlink{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196}{Loss\+Function\+Style}} loss\+FStyle)
+\item 
+static \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_environment_data_a5786f764e24604139825874e0a55f943}{from\+Json}} (const std\+::string \&json)
 \end{DoxyCompactItemize}
 
 
@@ -34,17 +64,49 @@ Environment\+Data\+::\+Environment\+Data (\begin{DoxyParamCaption}\item[{const \
 
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{class_environment_data_a9171e52e0e87966bd1abfb996ec5d8a0}\index{EnvironmentData@{EnvironmentData}!getInstance@{getInstance}}
+\Hypertarget{class_environment_data_a5786f764e24604139825874e0a55f943}\index{EnvironmentData@{EnvironmentData}!fromJson@{fromJson}}
+\index{fromJson@{fromJson}!EnvironmentData@{EnvironmentData}}
+\doxysubsubsection{\texorpdfstring{fromJson()}{fromJson()}}
+{\footnotesize\ttfamily \label{class_environment_data_a5786f764e24604139825874e0a55f943} 
+\mbox{\hyperlink{class_environment_data}{Environment\+Data}} \texorpdfstring{$\ast$}{*} Environment\+Data\+::from\+Json (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{json}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_environment_data_a5786f764e24604139825874e0a55f943_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_environment_data_a0bae23175931072a7adba6784dfeeafe}\index{EnvironmentData@{EnvironmentData}!getInstance@{getInstance}}
 \index{getInstance@{getInstance}!EnvironmentData@{EnvironmentData}}
 \doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
-{\footnotesize\ttfamily \label{class_environment_data_a9171e52e0e87966bd1abfb996ec5d8a0} 
-static \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \texorpdfstring{$\ast$}{*} Environment\+Data\+::get\+Instance (\begin{DoxyParamCaption}\item[{int}]{val}{, }\item[{int}]{proc}{, }\item[{double}]{lambda}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+{\footnotesize\ttfamily \label{class_environment_data_a0bae23175931072a7adba6784dfeeafe} 
+static \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \texorpdfstring{$\ast$}{*} Environment\+Data\+::get\+Instance (\begin{DoxyParamCaption}\item[{int}]{val}{, }\item[{int}]{proc}{, }\item[{double}]{lambda}{, }\item[{\mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa}{Data\+Normalisation\+Style}}}]{norm\+Style}{, }\item[{\mbox{\hyperlink{_environment_data_8h_a71babe65616d1fc970935c90a9dd2196}{Loss\+Function\+Style}}}]{loss\+FStyle}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 \Hypertarget{class_environment_data_a22beecca51f0dc53435e33e6309209a0}\index{EnvironmentData@{EnvironmentData}!getLamda@{getLamda}}
 \index{getLamda@{getLamda}!EnvironmentData@{EnvironmentData}}
 \doxysubsubsection{\texorpdfstring{getLamda()}{getLamda()}}
 {\footnotesize\ttfamily \label{class_environment_data_a22beecca51f0dc53435e33e6309209a0} 
 const double Environment\+Data\+::get\+Lamda (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_data_ad376d456900fafc0e42082ae6ce42a51}\index{EnvironmentData@{EnvironmentData}!GetLossFunction@{GetLossFunction}}
+\index{GetLossFunction@{GetLossFunction}!EnvironmentData@{EnvironmentData}}
+\doxysubsubsection{\texorpdfstring{GetLossFunction()}{GetLossFunction()}}
+{\footnotesize\ttfamily \label{class_environment_data_ad376d456900fafc0e42082ae6ce42a51} 
+const \mbox{\hyperlink{class_i_loss_function}{ILoss\+Function}} \texorpdfstring{$\ast$}{*} Environment\+Data\+::\+Get\+Loss\+Function (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_data_a318fa644a728df25c7c67178b7a8e007}\index{EnvironmentData@{EnvironmentData}!getNormalisation@{getNormalisation}}
+\index{getNormalisation@{getNormalisation}!EnvironmentData@{EnvironmentData}}
+\doxysubsubsection{\texorpdfstring{getNormalisation()}{getNormalisation()}}
+{\footnotesize\ttfamily \label{class_environment_data_a318fa644a728df25c7c67178b7a8e007} 
+const \mbox{\hyperlink{class_i_data_normalisation}{IData\+Normalisation}} \texorpdfstring{$\ast$}{*} Environment\+Data\+::get\+Normalisation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_environment_data_ac6f213dd33e78d67d84098e3464f6f7f}\index{EnvironmentData@{EnvironmentData}!getNormalisationStyle@{getNormalisationStyle}}
+\index{getNormalisationStyle@{getNormalisationStyle}!EnvironmentData@{EnvironmentData}}
+\doxysubsubsection{\texorpdfstring{getNormalisationStyle()}{getNormalisationStyle()}}
+{\footnotesize\ttfamily \label{class_environment_data_ac6f213dd33e78d67d84098e3464f6f7f} 
+const \mbox{\hyperlink{_environment_data_8h_aa1ea80fbf065b105c09d01273045f2fa}{Data\+Normalisation\+Style}} Environment\+Data\+::get\+Normalisation\+Style (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 \Hypertarget{class_environment_data_ab49a52deeedb397acaebbd890c524434}\index{EnvironmentData@{EnvironmentData}!getNumarMaximAntrenari@{getNumarMaximAntrenari}}
 \index{getNumarMaximAntrenari@{getNumarMaximAntrenari}!EnvironmentData@{EnvironmentData}}
@@ -63,6 +125,16 @@ const int Environment\+Data\+::get\+Procent\+Precizie\+Antrenament (\begin{DoxyP
 \doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
 {\footnotesize\ttfamily \label{class_environment_data_afa938b7599e462b8047bad9983f0aaff} 
 \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \& Environment\+Data\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_environment_data}{Environment\+Data}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_environment_data_ab16ba49d0f77bec49835026c5af96211}\index{EnvironmentData@{EnvironmentData}!toJson@{toJson}}
+\index{toJson@{toJson}!EnvironmentData@{EnvironmentData}}
+\doxysubsubsection{\texorpdfstring{toJson()}{toJson()}}
+{\footnotesize\ttfamily \label{class_environment_data_ab16ba49d0f77bec49835026c5af96211} 
+std\+::string Environment\+Data\+::to\+Json (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_i_json_serializable}{IJson\+Serializable}}.
 
 
 

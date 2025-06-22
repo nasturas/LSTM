@@ -1,17 +1,26 @@
 <map id="C:/_work/UVABc Informatik/AI_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/Test_Vector.h" name="C:/_work/UVABc Informatik/AI_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/Test_Vector.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="327,5,530,80"/>
-<area shape="rect" id="Node000002" href="$_l_s_t_m__cell_8cpp.html" title=" " alt="" coords="5,251,209,325"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="314,85,272,105,234,130,202,158,174,190,130,252,126,249,170,187,199,155,231,126,270,101,311,80"/>
-<area shape="rect" id="Node000003" href="$_l_s_t_m__cell_8h.html" title=" " alt="" coords="244,136,466,195"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="400,95,375,137,370,134,396,92"/>
-<area shape="rect" id="Node000004" href="$_prezicere_pret_actiuni_8cpp.html" title=" " alt="" coords="501,251,729,325"/>
-<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="460,92,530,201,575,248,571,252,526,204,455,95"/>
-<area shape="rect" id="Node000007" href="$_test___vector_8cpp.html" title=" " alt="" coords="540,128,743,203"/>
-<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="508,86,578,125,575,130,505,90"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="284,204,184,252,182,248,282,199"/>
-<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="431,199,537,248,534,252,429,204"/>
-<area shape="rect" id="Node000005" href="$_stock_predictor_8h.html" title=" " alt="" coords="232,259,478,317"/>
-<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="358,210,358,258,352,258,352,210"/>
-<area shape="rect" id="Node000006" href="$_stock_predictor_8cpp.html" title=" " alt="" coords="225,373,485,432"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="358,333,358,373,352,373,352,333"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="720,5,923,80"/>
+<area shape="rect" id="Node000002" href="$_i_loss_function_8h.html" title=" " alt="" coords="314,136,555,195"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="705,83,527,138,526,133,704,78"/>
+<area shape="rect" id="Node000008" href="$_prezicere_pret_actiuni_8cpp.html" title=" " alt="" coords="596,464,823,539"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="841,94,857,162,868,245,868,289,864,333,854,377,837,417,817,444,791,466,787,461,813,441,832,415,849,375,859,333,863,289,863,245,852,163,836,96"/>
+<area shape="rect" id="Node000010" href="$_l_s_t_m_layer_8h.html" title=" " alt="" coords="596,357,822,416"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="807,96,721,358,716,356,802,94"/>
+<area shape="rect" id="Node000011" href="$_test___vector_8cpp.html" title=" " alt="" coords="897,128,1100,203"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="890,87,946,125,943,130,887,91"/>
+<area shape="rect" id="Node000003" href="$_i_loss_function_8cpp.html" title=" " alt="" coords="26,251,281,309"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="350,203,226,253,224,248,348,198"/>
+<area shape="rect" id="Node000004" href="$_mean_square_error_8h.html" title=" " alt="" coords="304,251,565,309"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="437,210,437,250,432,250,432,210"/>
+<area shape="rect" id="Node000005" href="$_environment_data_8h.html" title=" " alt="" coords="12,357,273,416"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="341,317,223,359,222,354,339,312"/>
+<area shape="rect" id="Node000009" href="$_mean_square_error_8cpp.html" title=" " alt="" coords="297,357,572,416"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="437,325,437,357,432,357,432,325"/>
+<area shape="rect" id="Node000006" href="$_environment_data_8cpp.html" title=" " alt="" coords="5,472,280,531"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="145,431,145,471,140,471,140,431"/>
+<area shape="rect" id="Node000007" href="$_l_s_t_m_layer_8cpp.html" title=" " alt="" coords="318,472,559,531"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="233,419,364,469,362,474,231,424"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="289,414,432,436,571,461,596,467,595,472,570,467,431,442,288,419"/>
+<area shape="poly" id="edge10_Node000010_Node000007" title=" " alt="" coords="627,425,508,474,506,469,625,420"/>
+<area shape="poly" id="edge11_Node000010_Node000008" title=" " alt="" coords="712,431,712,464,706,464,706,431"/>
 </map>

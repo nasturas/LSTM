@@ -1,0 +1,17 @@
+\doxysection{Mean\+Square\+Error.\+h}
+\hypertarget{_mean_square_error_8h_source}{}\label{_mean_square_error_8h_source}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/MeanSquareError.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/MeanSquareError.h}}
+\mbox{\hyperlink{_mean_square_error_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_i_loss_function_8h}{ILossFunction.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mean_square_error}{MeanSquareError}}\ :}
+\DoxyCodeLine{00004\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_i_loss_function}{ILossFunction}}}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_mean_square_error_aa054794fc66b3fe12e08da2db62c8aaa}{GetLoss}}(vector<double>\ y\_true,\ vector<double>\ y\_pred)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_mean_square_error_aa054794fc66b3fe12e08da2db62c8aaa}{GetLoss}}(vector<vector<double>>\ y\_true,\ vector<vector<double>>\ y\_pred)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00009\ \ \ \ \ vector<double>\ \mbox{\hyperlink{class_mean_square_error_adac7b68f0fbf0435764cf489b24020b7}{GetLossDerivate}}(vector<double>\ y\_true,\ vector<double>\ y\_pred)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00010\ \};}
+\DoxyCodeLine{00011\ }
+
+\end{DoxyCode}

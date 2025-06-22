@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['test_5fvector_0',['Test_Vector',['../class_test___vector.html',1,'Test_Vector'],['../class_test___vector.html#a929586a5cad9fba9fc6ed794267f1411',1,'Test_Vector::Test_Vector()']]],
-  ['test_5fvector_2ecpp_1',['Test_Vector.cpp',['../_test___vector_8cpp.html',1,'']]],
-  ['test_5fvector_2eh_2',['Test_Vector.h',['../_test___vector_8h.html',1,'']]],
-  ['testlstm_3',['TestLSTM',['../class_l_s_t_m__cell.html#ab1b4406c31a9f5f3c11b2f275ec98d0a',1,'LSTM_cell']]],
-  ['train_4',['Train',['../class_l_s_t_m__cell.html#a953c7b5a4dfb71481711aa91bd221f34',1,'LSTM_cell']]],
-  ['trainlstm_5',['TrainLSTM',['../class_l_s_t_m__cell.html#a9172dc2e8302f38da37e19055512436d',1,'LSTM_cell']]]
+  ['readfromfile_0',['readFromFile',['../class_file_handler.html#a3e95aa66ddba0ae4a981625427e3c7ab',1,'FileHandler']]],
+  ['readinputjson_1',['readInputJson',['../_prezicere_pret_actiuni_8cpp.html#abdcf5e6d13cb153906c0c54c1d59bdb9',1,'PrezicerePretActiuni.cpp']]],
+  ['resize_2',['resize',['../class_gate_gradient.html#a2027d9a40be69026de5bec88698b4c3e',1,'GateGradient::resize()'],['../class_l_s_t_m_cell.html#a64ae1b97d1f1d2535e6200e95b6ded44',1,'LSTMCell::resize()'],['../class_lstm_gradients.html#a3d670781bfd0d6b57f32b19fb602c9ce',1,'LstmGradients::resize()']]],
+  ['rmse_3',['RMSE',['../_environment_data_8h.html#a71babe65616d1fc970935c90a9dd2196a2ba2ac63e193f34b4bdfa879e7c4717f',1,'EnvironmentData.h']]],
+  ['rolingaverage_4',['RolingAverage',['../_environment_data_8h.html#aa1ea80fbf065b105c09d01273045f2faa871af7f6a607fe62f2f90064b7bd767b',1,'EnvironmentData.h']]]
 ];

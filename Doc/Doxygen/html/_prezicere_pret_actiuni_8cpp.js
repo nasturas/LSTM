@@ -1,5 +1,5 @@
 var _prezicere_pret_actiuni_8cpp =
 [
-    [ "main", "_prezicere_pret_actiuni_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4", null ],
-    [ "envData", "_prezicere_pret_actiuni_8cpp.html#a16142a5efcbee1bbd55e4b762ccc67b8", null ]
+    [ "main", "_prezicere_pret_actiuni_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97", null ],
+    [ "readInputJson", "_prezicere_pret_actiuni_8cpp.html#abdcf5e6d13cb153906c0c54c1d59bdb9", null ]
 ];

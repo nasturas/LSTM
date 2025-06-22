@@ -1,0 +1,18 @@
+\doxysection{ILoss\+Function.\+h}
+\hypertarget{_i_loss_function_8h_source}{}\label{_i_loss_function_8h_source}\index{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/ILossFunction.h@{C:/\_work/UVABc Informatik/AI\_LSTM/PrezicerePretActiuni/PrezicerePretActiuni/ILossFunction.h}}
+\mbox{\hyperlink{_i_loss_function_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_test___vector_8h}{Test\_Vector.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_i_loss_function}{ILossFunction}}}
+\DoxyCodeLine{00006\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_i_loss_function_a03fe61f409e371f62c7ce89c19e1bdd8}{GetLoss}}(vector<double>\ y\_true,\ vector<double>\ y\_pred)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_i_loss_function_a4422a03396b37e8c7e2325e3160caf51}{GetLoss}}(vector<vector<double>>\ y\_true,\ vector<vector<double>>\ y\_pred)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ vector<double>\ \mbox{\hyperlink{class_i_loss_function_ae4664a0d388d1929b92df6960e0074ed}{GetLossDerivate}}(vector<double>\ y\_true,\ vector<double>\ y\_pred)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00011\ \};}
+\DoxyCodeLine{00012\ }
+
+\end{DoxyCode}
