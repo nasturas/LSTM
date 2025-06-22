@@ -141,6 +141,7 @@ namespace WinFormsGui
             try
             {
                 doubleResult = rezultat.GetDouble();
+                MessageBox.Show($"Estimare: {doubleResult}", "INfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex) { }
             DateTime dateTime = priceList[priceList.Count-1].Date.AddDays(1);
