@@ -111,6 +111,8 @@ namespace WinFormsGui
             if (plot.Plot.GetPlottables().Count() == 0)
             {
                 int rtnplot = await PlotPrices();
+                if (rtnplot > 0)
+                    return;
             }
             if (numarZilePrezicere>priceList.Count)
             {
@@ -229,6 +231,8 @@ namespace WinFormsGui
             if(plot.Plot.GetPlottables().Count()==0)
             {
                 int plotrtn = await PlotPrices();
+                if (plotrtn > 0) 
+                    return;
             }
 
             //cream un json numit training.json care sa aiba datele de antrenament
