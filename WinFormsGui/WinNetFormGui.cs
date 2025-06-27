@@ -54,12 +54,17 @@ namespace WinFormsGui
 
         private async void LoadStockPriceBt_Click(object sender, EventArgs e)
         {
+            int rtn = await PlotPrices();
+        }
+
+        private async Task<int> PlotPrices()
+        {
             try
             {
                 if (tickerTB.Text.Length == 0)
                 {
                     MessageBox.Show("Nu ati ales o actiune", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return 1;
                 }
                 DateTime startDate = new DateTime(2024, 1, 1);
                 priceList = await fetcher.GetClosePrices(tickerTB.Text, startDate);
@@ -71,14 +76,16 @@ namespace WinFormsGui
                 plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.DateTimeAutomatic();
                 plot.Plot.Axes.AutoScale();
                 plot.Refresh();
+                return 0;
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Eroare: " + ex.Message);
+                return 1;
             }
-        }
 
+        }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -89,7 +96,7 @@ namespace WinFormsGui
             MessageBox.Show("Prezicere Pret Actiuni folosind LSTM. Lucrare licenta 2025, Universitatea Bacau", "Informatii", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void EstimeazaPretBt_Click(object sender, EventArgs e)
+        private async void EstimeazaPretBt_Click(object sender, EventArgs e)
         {
 
             if (int.TryParse(numarZileTB.Text, out numarZilePrezicere))
@@ -103,7 +110,7 @@ namespace WinFormsGui
             }
             if (plot.Plot.GetPlottables().Count() == 0)
             {
-                LoadStockPriceBt_Click(sender, e);
+                int rtnplot = await PlotPrices();
             }
             if (numarZilePrezicere>priceList.Count)
             {
@@ -215,13 +222,13 @@ namespace WinFormsGui
                 MessageBox.Show($"Erori: {error}");
             }
         }
-        private void AntreneazaReteaBt_Click(object sender, EventArgs e)
+        private async void AntreneazaReteaBt_Click(object sender, EventArgs e)
         {
 
 
             if(plot.Plot.GetPlottables().Count()==0)
             {
-                LoadStockPriceBt_Click(sender, e);
+                int plotrtn = await PlotPrices();
             }
 
             //cream un json numit training.json care sa aiba datele de antrenament

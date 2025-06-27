@@ -62,6 +62,7 @@ namespace WinFormsGui
             label1 = new Label();
             tickerTB = new TextBox();
             PlotPanel = new Panel();
+            checkBox1 = new CheckBox();
             menuStrip1.SuspendLayout();
             mainPanel.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -139,6 +140,7 @@ namespace WinFormsGui
             // 
             // panel1
             // 
+            panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(numarZileTB);
             panel1.Controls.Add(EstimeazaPretBt);
@@ -222,6 +224,16 @@ namespace WinFormsGui
             PlotPanel.Size = new Size(780, 786);
             PlotPanel.TabIndex = 0;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(556, 60);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(124, 29);
+            checkBox1.TabIndex = 7;
+            checkBox1.Text = "multi input";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // WinNetFormGui
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -261,5 +273,6 @@ namespace WinFormsGui
         private ToolStripMenuItem exitToolStripMenuItem;
         private Label label2;
         private TextBox numarZileTB;
+        private CheckBox checkBox1;
     }
 }
